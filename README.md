@@ -1,3 +1,3 @@
-# Rate Your Coworker
+# Joule
 
-Rate Your Coworker is a web app that keeps track of coworker ratings.
+Joule is a web app that keeps track of coworker ratings.
