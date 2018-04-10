@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+::selection {
+    color: #FFF;
+    background: #FF8282;
+}
+
+html, body {
+    height: 100%;
+}
+
+a {
+    color: #2D7EFF;
+}
+
+body {
+    background: #FFF8DE;
+    font-family: system-ui;
+    font-size: 12pt;
+    color: #565361;
+}
+
+em {
+    font-style: italic;
+}
+
+h1 {
+    font-family: 'Archivo-Web';
+    font-size: 24pt;
+    font-weight: 700;
+}
+
+h2 {
+    font-family: 'Archivo-Web';
+    font-size: 20pt;
+    font-weight: 700;
+}
+
+strong {
+    font-style: bold;
+}
+
