@@ -2,11 +2,6 @@
     box-sizing: border-box;
 }
 
-::selection {
-    color: #FFF;
-    background: #FF8282;
-}
-
 html, body {
     height: 100%;
 }
