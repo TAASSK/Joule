@@ -25,8 +25,10 @@ install:
 #  Deploy                       #
 #################################
 
-deploy: build install
+deploy_dev: install
 	docker-compose --file $(DOCKER_COMPOSE_FILE) up -d --force-recreate
+
+deploy_prod: build deploy_dev
 
 __destroy:
 	@echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -38,4 +40,4 @@ __destroy:
 stop:
 	docker-compose --file $(DOCKER_COMPOSE_FILE) stop
 
-.PHONY: build deploy __destroy install stop
+.PHONY: build deploy_dev deploy_prod __destroy install stop
