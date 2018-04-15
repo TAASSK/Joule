@@ -1,0 +1,25 @@
+localhost:8080 {
+
+	tls off
+	gzip
+
+	root /var/www/joule
+
+	log /var/log/caddy/access.log {
+		rotate_keep 10
+	}
+	errors /var/log/caddy/error.log {
+		rotate_keep 10
+	}
+
+	proxy /api api:3000 {
+		fail_timeout 300s
+		transparent
+	}
+
+	rewrite {
+		if {path} not_match ^/api
+		to {path} {path}/ /index.html
+	}
+
+}

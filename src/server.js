@@ -8,9 +8,13 @@ server.connection({
 	port: 3000
 });
 
+// adds global URI path prefix to incoming requests
+// e.g. <domain>/api/dummy will get routed to /dummy
+server.realm.modifiers.route.prefix = '/api';
+
 //Initialize the mysql variable and create the connection object with necessary values
 //Uses the https://www.npmjs.com/package/mysql package.
-var mysql      = require('mysql');
+var mysql = require('mysql');
 var connection = mysql.createConnection({
 
 	//host will be the name of the service from the docker-compose file.
@@ -21,10 +25,9 @@ var connection = mysql.createConnection({
 	password: process.env.MYSQL_PASSWORD,
 });
 
-
 server.route({
 	method: 'GET',
-	path: '/',
+	path: '/dummy',
 	handler: function (request, reply) {
 		console.log('Server processing a / request');
 		reply('Hello, world!');
@@ -250,7 +253,6 @@ server.route({
 });
 
 server.start((err) => {
-
 	if (err) {
 		throw err;
 	}
