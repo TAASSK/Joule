@@ -1,0 +1,38 @@
+JOULE BRANDING
+
+should be presented on a site with a background matching the background color listed, and main content can be contained within a white box. Very lightly (~5px) rounded corners recommended on containers and buttons, as well as form elements. Subtle shadows recommended.
+
+The app icon version of the Joule logo should only be used in contexts such as the iOS home screen (see apple-touch-icon for websites), and favicons (look up a support matrix for png and svg favicons on modern browsers). Otherwise, only the version with text underneath should be used, and the Joule branding text should never appear horizontally adjacent to the Jewel glyph.
+
+On printed documents, the Joule icon can appear on a white background (paper), but on the web, the Joule icon should only appear on the light yellow background color given, not on white, and especially not on darker or unsaturated colors (e.g. grey).
+
+Font:
+Archivo Bold is used, under the SIL Open Font License.
+Archivo is acceptable as a display font, for headings, and for body text down to a certain size. However, a more standard body font is preferable in printings and webpages — pair Archivo (at weights lighter than Bold) in your headings with the system sans-serif font (see Google for info about using the "system font stack" in CSS to match the user's system font).
+
+Colors:
+  Background: #FFF8DE
+    this color should be used as the website background color, and at a minimum should always accompany the immediate surroundings of the Joule logo in digital contexts or color printing contexts whenever possible.
+
+  Joule Text and Jewel Border: #3D0060
+    this color should be used for sitewide headings but may appear too saturated for use in the main content area of your site (the recommended white box).
+
+  Main Content area: #FFFFFF
+    although the site background should be the background color above, the main content area below the heading should be contained within a white box.
+
+  Main Content area shadow against Background: box-shadow(0,1px,11px,#F2E4AE);
+
+  Body Text: #565361
+    We use a barely bluish dark gray instead of pure black to keep with the overall pastel scheme of the branding. AVOID PURE BLACK (#000)!
+
+  Call-to-action: #FF8282
+    one of the colors from the Jewel glyph, this light red should be used sparingly for primary call-to-action buttons and hyperlinks. Do not use for all hyperlinks, which should be a more neutral and agreeable off-blue.
+
+  Call-to-action button color: #FFEFEF
+    this reddish white better complements the surrounding light red of the call to action button.
+
+  General hyperlinks: #2D7EFF
+    This off-blue is less jarring than the pure blue used by default. Always underline hyperlinks even if using different colors for accessiblity reasons.
+
+  Default button: #D1D1D6
+    Most buttons should use this light gray background to not distract from more important call-to-action buttons. Text should be the body text color.

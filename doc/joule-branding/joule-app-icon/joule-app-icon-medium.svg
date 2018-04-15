@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFF8DE;">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>joule-app-icon-medium</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="joule-app-icon-medium" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Crimson-Jewel" transform="translate(19.692308, 30.696833)">
+            <polygon id="Path-2" fill="#FF4444" points="44.5353472 66.9896759 0.383346047 22.6041766 28.5230021 22.6041766"></polygon>
+            <polygon id="Path-2-Copy" fill="#FF5252" transform="translate(66.611348, 44.814978) scale(-1, 1) translate(-66.611348, -44.814978) " points="88.6873483 67.0077281 44.5353472 22.6222288 72.6750032 22.6222288"></polygon>
+            <polygon id="Path-3" fill="#FF6868" points="44.5354866 67.0077281 61.1357865 22.6063172 28.5183647 22.6063172"></polygon>
+            <polygon id="Path-4" fill="#FB7A7A" points="88.6814197 22.6220482 61.1284552 22.6220482 74.9049375 0.464567286"></polygon>
+            <polygon id="Path-4-Copy-2" fill="#FF5E5E" points="28.5183647 22.6222288 0.383346047 22.6222288 14.4508554 0.464747889"></polygon>
+            <polygon id="Path-4-Copy-3" fill="#FF8181" transform="translate(29.694843, 11.644391) scale(1, -1) translate(-29.694843, -11.644391) " points="44.9388313 22.8240333 14.4508554 22.8240333 28.3392972 0.464747889"></polygon>
+            <polygon id="Path-4-Copy-4" fill="#FDA0A0" transform="translate(59.660949, 11.644210) scale(-1, -1) translate(-59.660949, -11.644210) " points="74.9049375 22.8238527 44.4169615 22.8238527 58.3054033 0.464567286"></polygon>
+            <polygon id="Path-4-Copy" fill="#FF8B8B" points="61.1284552 22.6041766 28.5110335 22.6041766 44.8197444 0.446695706"></polygon>
+        </g>
+        <polygon id="Jewel-Outline" stroke="#3D0060" stroke-width="6" points="64.2286305 97.6909545 20.0839571 53.3079553 34.1415207 31.157121 94.5946217 31.157121 108.341816 53.3079553"></polygon>
+    </g>
+</svg>
