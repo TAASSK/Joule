@@ -25,7 +25,7 @@ install:
 #  Deploy                       #
 #################################
 
-deploy: install
+deploy: build install
 	docker-compose --file $(DOCKER_COMPOSE_FILE) up -d --force-recreate
 
 __destroy:

@@ -33,10 +33,9 @@ git clone https://github.com/TAASSK/Joule
 cd Joule
 ```
 
-2. Create the `.env` file and populate it.
+2. Create the `.env` file and populate it (see comments in `.env.dist` for more details).
 
 ```bash
-cd config
 cp .env.dist .env
 vim .env
 ```
