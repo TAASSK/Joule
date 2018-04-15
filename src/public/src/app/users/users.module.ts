@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 /*
  * Modules
  * */
-import { AccountsRoutingModule } from './accounts-routing.module';
+import { UsersRoutingModule } from './users-routing.module';
 
 /*
  * Components
@@ -20,7 +20,7 @@ import { RegistrationComponent } from './registration/registration.component';
 @NgModule({
 	imports: [
 		CommonModule,
-		AccountsRoutingModule
+		UsersRoutingModule
 	],
 	declarations: [
 		HomePageComponent,
@@ -29,4 +29,4 @@ import { RegistrationComponent } from './registration/registration.component';
 	],
 	providers: [  ]
 })
-export class AccountsModule { }
+export class UsersModule { }

@@ -9,7 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 /*
  * Modules
  * */
-import { AccountsModule } from './accounts/accounts.module';
+import { UsersModule } from './users/users.module';
 
 /*
  * Components
@@ -23,7 +23,7 @@ let defaultRoute = 'home';
 		AppComponent
 	],
 	imports: [
-        AccountsModule,
+        UsersModule,
 		BrowserModule,
 		HttpClientModule,
 		RouterModule.forRoot([
