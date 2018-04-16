@@ -15,19 +15,28 @@ import { UsersModule } from './users/users.module';
  * Components
  * */
 import { AppComponent } from './app.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 let defaultRoute = 'home';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		HomePageComponent,
+		LoginComponent,
+		RegistrationComponent
 	],
 	imports: [
         UsersModule,
 		BrowserModule,
 		HttpClientModule,
 		RouterModule.forRoot([
-			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' }
+			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
+			{ path: 'home', component: HomePageComponent },
+			{ path: 'login', component: LoginComponent },
+			{ path: 'registration', component: RegistrationComponent }
 		])
 	],
 	providers: [],

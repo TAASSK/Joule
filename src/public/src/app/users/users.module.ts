@@ -13,9 +13,9 @@ import { UsersRoutingModule } from './users-routing.module';
 /*
  * Components
  * */
-import { HomePageComponent } from './home-page/home-page.component';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AccountComponent } from './account/account.component';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
 	imports: [
@@ -23,9 +23,9 @@ import { RegistrationComponent } from './registration/registration.component';
 		UsersRoutingModule
 	],
 	declarations: [
-		HomePageComponent,
-		LoginComponent,
-		RegistrationComponent
+		ProfileComponent,
+		AccountComponent,
+		ReviewComponent
 	],
 	providers: [  ]
 })
