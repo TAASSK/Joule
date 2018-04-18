@@ -15,7 +15,8 @@ import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-	
+	{ path: 'user/:id', component: ProfileComponent },
+	{ path: 'user/:id/account', component: AccountComponent }
 ];
 
 @NgModule({
