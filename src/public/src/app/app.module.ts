@@ -34,11 +34,12 @@ let defaultRoute = 'home';
 		BrowserModule,
 		HttpClientModule,
 		RouterModule.forRoot([
-			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
 			{ path: 'registration', component: RegistrationComponent },
-			{ path: 'profile', component: ProfileComponent}
+			{ path: 'profile', component: ProfileComponent},
+			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
+			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		])
 	],
 	providers: [],
