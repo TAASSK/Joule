@@ -83,7 +83,7 @@ server.route({
         connection.query('SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num="' + eid + '"', function (error, results, fields) {
             if (error)
                 throw error;
-            reply('Employee one\'s hotness is :' + results[0]);
+            reply('Employee one\'s hotness is :' + results[0].hotness);
             console.log(results);
         });
 
@@ -101,7 +101,7 @@ server.route({
         connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error, results, fields) {
             if (error)
                 throw error;
-            reply ('Employee name where the company name is '+ name + ":"+ results[0]);
+            reply ('Employee name where the company name is '+ name + ":"+ results[0].last_name);
             console.log(results);
         });
     }
@@ -114,13 +114,47 @@ server.route({
     path: '/getEmployees',
     handler: function (request, reply) {
         console.log('Server processing a /getEmployees request');
-
-        //connection.query('SELECT * FROM employee', function (error, results, fields) {
         connection.query('SELECT * FROM employee', function (error, results, fields) {
             if (error)
                 throw error;
             reply ('The first employee\'s name is : ' + results[0].first_name);
+            console.log(results);
+        });
 
+    }
+});
+
+//Deleting a user and all of their reviews
+server.route({
+    method: 'DELETE',
+    path: '/deleteUser/{eid}',
+    handler: function (request, reply) {
+        console.log('Server processing a /deleteUser request');
+        const eid = request.params.eid;
+        connection.query('DELETE FROM employee WHERE employee_num="' + eid + '"' , function (error, results, fields) {
+            if (error)
+                throw error;
+            reply ('Account deleted for employee with id: ' + eid);
+            console.log(results);
+        });
+        connection.query('DELETE FROM employee_review WHERE employee_num="' + eid + '"' , function (error, results, fields) {
+            if (error)
+                throw error;
+            console.log(results);
+        });
+    }
+});
+
+//Getting all employee info
+server.route({
+    method: 'GET',
+    path: '/getReviews',
+    handler: function (request, reply) {
+        console.log('Server processing a /getReviews request');
+        connection.query('SELECT * FROM employee_review', function (error, results, fields) {
+            if (error)
+                throw error;
+            reply ('The first employee\'s id is : ' + results[0].employee_num);
             console.log(results);
         });
 
