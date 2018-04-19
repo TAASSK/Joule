@@ -13,20 +13,20 @@ import { UsersRoutingModule } from './users-routing.module';
 /*
  * Components
  * */
-import { ProfileComponent } from './profile/profile.component';
+// import { ProfileComponent } from './profile/profile.component';
 import { AccountComponent } from './account/account.component';
 import { ReviewComponent } from './review/review.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		UsersRoutingModule
-	],
-	declarations: [
-		ProfileComponent,
-		AccountComponent,
-		ReviewComponent
-	],
-	providers: [  ]
+imports: [
+CommonModule,
+UsersRoutingModule],
+
+declarations: [
+// ProfileComponent,
+AccountComponent,
+ReviewComponent],
+
+providers: [  ]
 })
 export class UsersModule { }

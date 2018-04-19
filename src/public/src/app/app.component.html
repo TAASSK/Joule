@@ -4,13 +4,16 @@
 			<span class="navbar-toggler-icon"></span>
 		</button> <!-- hamburger menu button -->
 		<div class="collapse navbar-collapse" id="page-navbarToggler">
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" [routerLink]="['/home']">
 				<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="125" height="125" alt="Joule">
 			</a> <!-- .navbar-brand -->
 
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
-				<a href="#">Log In</a>
+				<a class="nav-link" [routerLink]="['/registration']">Sign Up</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/login']">Log In</a>
 			</li>
 		</ul>
 

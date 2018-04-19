@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import '../../../css/styles.css';
 import '../../../css/_profile.css';
-let progress = require('progressbar.js');
+// let progress = require('progressbar.js');
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
 
@@ -14,10 +14,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() { }
 
-
 }
-drawCircle(value ){
-    let draw = new progress.Circle(container, {
+/* drawCircle(value ){
+  let draw = new progress.Circle(container, {
 	strokeWidth: 6,
 	easing: 'easeInOut',
 	duration: 1400,
@@ -26,7 +25,8 @@ drawCircle(value ){
 	trailWidth: 1,
 	svgStyle: null
 });
-  	draw.animate(1.0)
+    draw.animate(1.0)
+}*/
 
-}
+
 
