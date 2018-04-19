@@ -13,7 +13,7 @@ import { UsersRoutingModule } from './users-routing.module';
 /*
  * Components
  * */
-// import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AccountComponent } from './account/account.component';
 import { ReviewComponent } from './review/review.component';
 
@@ -23,7 +23,7 @@ CommonModule,
 UsersRoutingModule],
 
 declarations: [
-// ProfileComponent,
+ProfileComponent,
 AccountComponent,
 ReviewComponent],
 

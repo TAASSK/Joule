@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { ProfileComponent } from './users/profile/profile.component';
 
 let defaultRoute = 'home';
 
@@ -36,6 +37,7 @@ let defaultRoute = 'home';
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
 			{ path: 'registration', component: RegistrationComponent },
+			{ path: 'profile', component: ProfileComponent},
 			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		])
