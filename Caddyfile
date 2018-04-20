@@ -1,6 +1,6 @@
-localhost:8080 {
+gojoule.me {
 
-	tls off
+	tls rrash@smu.edu
 	gzip
 
 	root /var/www/joule
