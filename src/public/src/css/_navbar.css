@@ -1,0 +1,26 @@
+
+.navbar {
+	width: 100%;
+	padding: 2rem 1.5rem;
+}
+
+.navbar-center-brand {
+	display: flex;
+	flex-basis: auto;
+	flex-grow: 1;
+	justify-content: center;
+}
+
+.navbar-items {
+	display: flex;
+	flex-direction: row;
+	flex-basis: 100%;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.nav-link {
+	color: inherit !important;
+	font-family: 'Archivo-Web';
+	font-weight: 500;
+}
