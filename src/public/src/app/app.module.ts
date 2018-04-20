@@ -19,11 +19,17 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 
+/*
+ * Directives
+ * */
+import { FocusOnLoadDirective } from './shared';
+
 let defaultRoute = 'home';
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		FocusOnLoadDirective,
 		HomePageComponent,
 		LoginComponent,
 		RegistrationComponent
