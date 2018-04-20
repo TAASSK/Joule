@@ -24,3 +24,29 @@
 	font-family: 'Archivo-Web';
 	font-weight: 500;
 }
+
+.nav-search-bar {
+	background-image: url('../assets/img/np_magnifying-glass.svg');
+	background-repeat: no-repeat;
+	background-position: 0.3rem center;
+	background-size: auto 1.75rem;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	box-shadow: none;
+	color: inherit;
+	font-family: 'Archivo-Web';
+	padding-left: 2.3rem;
+	width: 2.3rem;
+	transition: 0.4s width ease-in-out;
+}
+
+/* keep search bar open if it's in focus or has content */
+.nav-search-bar:focus, .nav-search-bar:not(:placeholder-shown) {
+	width: 15rem;
+}
+
+.nav-search-bar::placeholder {
+	color: inherit;
+	opacity: 0.75;
+}
