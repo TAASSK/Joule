@@ -83,7 +83,7 @@ server.route({
         connection.query('SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num="' + eid + '"', function (error, results, fields) {
             if (error)
                 throw error;
-            reply('Employee one\'s hotness is :' + results[0].hotness);
+            reply(results);
             console.log(results);
         });
 
@@ -101,7 +101,7 @@ server.route({
         connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error, results, fields) {
             if (error)
                 throw error;
-            reply ('Employee name where the company name is '+ name + ":"+ results[0].last_name);
+            reply (results);
             console.log(results);
         });
     }
@@ -117,7 +117,7 @@ server.route({
         connection.query('SELECT * FROM employee', function (error, results, fields) {
             if (error)
                 throw error;
-            reply ('The first employee\'s name is : ' + results[0].first_name);
+            reply (results);
             console.log(results);
         });
 
@@ -154,7 +154,7 @@ server.route({
         connection.query('SELECT * FROM employee_review', function (error, results, fields) {
             if (error)
                 throw error;
-            reply ('The first employee\'s id is : ' + results[0].employee_num);
+            reply (results);
             console.log(results);
         });
 
