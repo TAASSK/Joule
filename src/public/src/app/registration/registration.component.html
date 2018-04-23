@@ -1,4 +1,42 @@
-<section class="col-lg-12">
-	<h1>Registration Component</h1>
-	<p>The registration page <a href="#">works!</a></p>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<div class="navbar-center-brand">
+		<a class="navbar-brand" [routerLink]="['/home']">
+			<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="125" height="125" alt="Joule">
+		</a> <!-- .navbar-brand -->
+	</div> <!-- .navbar-center-brand -->
+</nav> <!-- navbar -->
+
+<section class="col col-sm-4 col-md-6 col-lg-4 site-content">
+	<h1>Sign Up</h1>
+
+	<form>
+
+		<!-- Email address -->
+		<section class="form-group">
+			<input type="email" class="form-control" id="registrationInputEmailAddress" placeholder="Email address" focusOnLoad>
+		</section>
+
+		<!-- First Name -->
+		<section class="form-group">
+			<input type="text" class="form-control" id="registrationInputFirstName" placeholder="First name">
+		</section>
+
+		<!-- Last Name -->
+		<section class="form-group">
+			<input type="text" class="form-control" id="registrationInputLastName" placeholder="Last name">
+		</section>
+
+		<!-- Password -->
+		<section class="form-group">
+			<input type="password" class="form-control" id="registrationInputPassword" placeholder="Create a password">
+		</section>
+
+	</form>
+
+	<button type="submit" class="button button-call-to-action button-block">Sign Up</button>
+
+	<hr>
+
+	<p class="text-center">Already have an account? <a [routerLink]="['/login']">Log In</a></p>
+
 </section> <!-- .row (section) -->
