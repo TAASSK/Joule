@@ -1,1 +1,5 @@
 /* Sitewide form styling */
+
+.form-control {
+	font-size: inherit;
+}

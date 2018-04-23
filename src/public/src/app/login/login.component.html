@@ -1,4 +1,32 @@
-<section class="col-lg-12">
-	<h1>Login Component</h1>
-	<p>The login page <a href="#">works!</a></p>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<div class="navbar-center-brand">
+		<a class="navbar-brand" [routerLink]="['/home']">
+			<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="125" height="125" alt="Joule">
+		</a> <!-- .navbar-brand -->
+	</div> <!-- .navbar-center-brand -->
+</nav> <!-- navbar -->
+
+<section class="col col-sm-4 col-md-6 col-lg-4 site-content">
+	<h1>Log In</h1>
+
+	<form>
+
+		<!-- Email address -->
+		<section class="form-group">
+			<input type="email" class="form-control" id="loginInputEmailAddress" placeholder="Email address" focusOnLoad>
+		</section>
+
+		<!-- Password -->
+		<section class="form-group">
+			<input type="password" class="form-control" id="loginInputPassword" placeholder="Password">
+		</section>
+
+	</form>
+
+	<button type="submit" class="button button-call-to-action button-block">Log In</button>
+
+	<hr>
+
+	<p class="text-center">Need an account? <a [routerLink]="['/registration']">Sign Up</a></p>
+
 </section> <!-- .row (section) -->

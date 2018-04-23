@@ -1,4 +1,13 @@
+/*
+ * Angular library
+ * */
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+/*
+ * Directives
+ * */
+import { FocusOnLoadDirective } from '../shared';
 
 @Component({
 	selector: 'app-login',
@@ -6,7 +15,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router
+	) { }
 
 	ngOnInit() { }
 
