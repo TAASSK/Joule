@@ -1,3 +1,4 @@
+import { Review } from './../../domain/models/review';
 import { Component, OnInit } from '@angular/core';
 // let progress = require('progressbar.js');
 

@@ -20,6 +20,7 @@ import { ReviewComponent } from './review/review.component';
 @NgModule({
 imports: [
 CommonModule,
+FormsModule,
 UsersRoutingModule],
 
 declarations: [
