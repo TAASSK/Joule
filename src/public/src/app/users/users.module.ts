@@ -18,15 +18,16 @@ import { AccountComponent } from './account/account.component';
 import { ReviewComponent } from './review/review.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		UsersRoutingModule
-	],
-	declarations: [
-		ProfileComponent,
-		AccountComponent,
-		ReviewComponent
-	],
-	providers: [  ]
+imports: [
+CommonModule,
+FormsModule,
+UsersRoutingModule],
+
+declarations: [
+ProfileComponent,
+AccountComponent,
+ReviewComponent],
+
+providers: [  ]
 })
 export class UsersModule { }

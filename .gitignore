@@ -63,3 +63,6 @@ typings/
 # temp files
 *.swp
 .DS_Store
+
+# stupid VSCode file
+.angulardoc.json
