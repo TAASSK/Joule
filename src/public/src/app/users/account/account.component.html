@@ -1,42 +1,30 @@
-<!--Update User -->
-<div class="container">
-		<h3>Update User Settings</h3><br>
-		<form>
-			<!--First Name -->
-			<div class="form-group row">
-				<label for="inputFirstName" class="col-sm-6 col-form-label">First Name</label>
-				<div class="col-sm-6">
-				  <input class="form-control" id="inputFirstName" placeholder="First Name">
-				</div>
-			</div>
-			<!--Last Name -->
-			<div class="form-group row">
-				<label for="inputLastName" class="col-sm-6 col-form-label">Last Name</label>
-				<div class="col-sm-6">
-				  <input class="form-control" id="inputLastName" placeholder="Last Name">
-				</div>
-			</div>
-			<!--Email -->
-			<div class="form-group row">
-				<label for="inputEmail" class="col-sm-6 col-form-label">Email</label>
-				<div class="col-sm-6">
-				  <input class="form-control" id="inputEmail" placeholder="Email">
-				</div>
-			</div>
-			<!--Company Name -->
-			<div class="form-group row">
-				<label for="inputCompany" class="col-sm-6 col-form-label">Current Company</label>
-				<div class="col-sm-6">
-					<input class="form-control" id="inputCompany" placeholder="Company Name">
-				</div>
-			</div>
-			<!--Password -->
-			<div class="form-group row">
-				<label for="inputPassword" class="col-sm-6 col-form-label">Password</label>
-				<div class="col-sm-6">
-					<input type="password" id="inputPassword"  aria-describedby="passwordHelpInline" placeholder="Password">
-				</div>
-			</div>
-			<button type="submit" class="btn btn-primary" style="float:right">Submit</button>
-		</form>
-</div>
+<header class="row">
+
+	<nav class="navbar navbar-expand-lg navbar-light">
+
+		<div class="navbar-items">
+
+			<a class="navbar-brand" [routerLink]="['/home']">
+				<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="100" height="100" alt="Joule">
+			</a> <!-- .navbar-brand -->
+
+			<ul class="navbar-nav">
+				<input type="search" class="nav-search-bar" placeholder="Search">
+				<li class="nav-item">
+					<a class="nav-link" href="#">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Log Out</a>
+				</li>
+			</ul>
+
+		</div> <!-- .collapse .navbar-collapse -->
+
+	</nav> <!-- navbar -->
+
+</header> <!-- .row (header) -->
+
+<section class="site-content">
+	<h1>Account Component</h1>
+	<p>The account component <a href="#">works!</a></p>
+</section> <!-- .row (section) -->

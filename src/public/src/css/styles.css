@@ -1,10 +1,14 @@
-@import 'css/_globals.css'; /* color palette and font stack */
+@import 'css/_globals.css';
 
-@import 'css/_general.css'; /* sitewide content formatting */
+@import 'css/_general.css';
 
-@import 'css/_site.css'; /*  */
+@import 'css/_site.css';
 
 @import 'css/_forms.css';
+
+@import 'css/_navbar.css';
+
+@import 'css/_buttons.css';
 
 @import 'css/_homepage.css';
 
