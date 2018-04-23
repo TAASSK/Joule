@@ -15,10 +15,11 @@ export class ProfileComponent implements OnInit {
 		private router: Router
 	) { }
 
-	ngOnInit() { }
+ngOnInit() { }
 
 	gotoAccount(id: number) {
 		this.router.navigateByUrl('/user/'+String(id)+'/account');
 	}
 
 }
+
