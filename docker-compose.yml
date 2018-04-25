@@ -14,12 +14,13 @@ services:
             - ./src:/home/app/joule
             - /home/app/joule/node_modules
             - ./log/api:/var/log/joule
+            - ./log/api/npm:/home/app/.npm
     database:
         env_file:
             - .env
         image: mysql:latest
         ports:
-            - "3306"
+            - "3306:3306"
         restart: always
         volumes:
             - db-data:/var/lib/mysql
