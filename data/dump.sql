@@ -70,7 +70,7 @@ CREATE TABLE `employee_review` (
   `comments` varchar(45) NOT NULL,
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-ALTER TABLE `joule2`.`employee_review` 
+ALTER TABLE `joule2`.`employee_review`
 DROP PRIMARY KEY;
 INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments)
 VALUES(1113, 2, 3, 4, 5, 6, "you'\re an employer"),
