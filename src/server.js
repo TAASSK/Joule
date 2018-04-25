@@ -3,33 +3,11 @@
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 
-// bring your own validation function
-/*const validate = async function (decoded, request) {
-
-    // do your checks to see if the person is valid
-    if (!people[decoded.id]) {
-      return { isValid: false };
-    }
-    else {
-      return { isValid: true };
-    }
-};*/
-
 const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
-    port: 3000,
-    routes: { cors: true}
+	port: 3000
 });
-//await server.register(require('hapi-auth-jwt2'));
-
-/*server.auth.strategy('jwt', 'jwt',
-  { key: 'DonaldTrump\'sLeftNut',          // Never Share your secret key
-    validate: validate,            // validate function defined above
-    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
-  });
-
-server.auth.default('jwt');*/
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -74,6 +52,12 @@ server.route({
 //USER ACCOUNT ROUTES
 //adding a new user -> making an account
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'POST',
     path: '/newUser',
     handler: function(request, reply) {
@@ -142,32 +126,22 @@ server.route({
 });
 
 //SEARCH ROUTES
-//search by company name or by name, using "first_name last_name" format
+//search by company name
 server.route({
     method: 'GET',
     path: '/company/{name}',
     handler: function (request, reply) {
         console.log('Server processing a /company/{name} request');
-        var name = request.params.name;
-        console.log(name);
-        connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error1, results1, fields1) {
-            //if (error)
-                //throw error;
-            var isEmpty = (results1 || []).length === 0;
-            if (isEmpty) {
-                var nameArr = name.split(" ");
-                connection.query('SELECT first_name,last_name FROM employee WHERE first_name="' + nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
-                    reply (results);
-                    console.log(results);
-                });
-            }
-            else {
-                reply (results1);
-                console.log(results1);
-            }
+        const name = request.params.name;
+        connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+            console.log(results);
         });
     }
 });
+
 
 //Getting all employee info
 server.route({
@@ -236,24 +210,8 @@ server.route({
             reply (results);
             console.log(results);
         });
-    }
-});
 
-server.route({
-	method: 'PUT',
-	path: '/updateUser',
-	handler: function (request, reply) {
-			console.log('Server is updating a user profile...');
-			var first_name = request.payload.first_name;
-			var last_name = request.payload.last_name;
-			var email = request.payload.email;
-			var company = request.payload.company;
-			var password = request.payload.password;
-			var current_emp_no = request.payload.current_emp_no;
-			connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-				reply('Information updated for employee number: ' + current_emp_no);
-			});
-		}
+    }
 });
 
 server.start((err) => {
