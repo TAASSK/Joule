@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('hapi');
+var bcrypt = require('bcrypt');
 
 const server = new Hapi.Server();
 server.connection({
@@ -64,7 +65,10 @@ server.route({
         var email = request.payload.email;
         var employer = request.payload.employer;
         var location = request.payload.location;
-        connection.query('INSERT INTO employee(username, password, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + password + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
+        bcrypt.hash(myPlaintextPassword, 10, function(err, hash) {
+               var newPass = hash;
+          });
+        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
             if (error)
                 throw error;
             reply('Employee Added: ' + first_name + ', '+ last_name);
@@ -121,6 +125,25 @@ server.route({
             console.log(results);
         });
 
+    }
+});
+
+//updating a user account
+server.route({
+    method: 'PUT',
+    path: '/updateUser',
+    handler: function (request, reply) {
+        console.log('Server is updating a user profile...');
+        var first_name = request.payload.first_name;
+        var last_name = request.payload.last_name;
+        var email = request.payload.email;
+        var company = request.payload.company;
+        var password = request.payload.password;
+        var current_emp_no = request.payload.current_emp_no;
+        connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
+            reply('Information updated for employee number: ' + current_emp_no);
+            console.log("TEST");
+        });
     }
 });
 

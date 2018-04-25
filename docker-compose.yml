@@ -14,6 +14,7 @@ services:
             - ./src:/home/app/joule
             - /home/app/joule/node_modules
             - ./log/api:/var/log/joule
+            - ./log/api/npm:/home/app/.npm
     database:
         env_file:
             - .env
