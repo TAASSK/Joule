@@ -72,6 +72,12 @@ server.route({
 //USER ACCOUNT ROUTES
 //adding a new user -> making an account
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'POST',
     path: '/newUser',
     handler: function(request, reply) {
@@ -235,23 +241,6 @@ server.route({
             console.log(results);
         });
     }
-});
-
-server.route({
-	method: 'PUT',
-	path: '/updateUser',
-	handler: function (request, reply) {
-			console.log('Server is updating a user profile...');
-			var first_name = request.payload.first_name;
-			var last_name = request.payload.last_name;
-			var email = request.payload.email;
-			var company = request.payload.company;
-			var password = request.payload.password;
-			var current_emp_no = request.payload.current_emp_no;
-			connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-				reply('Information updated for employee number: ' + current_emp_no);
-			});
-		}
 });
 
 server.start((err) => {
