@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 /*
  * Modules
@@ -18,12 +19,19 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { ProfileComponent } from './users/profile/profile.component';
+
+/*
+ * Directives
+ * */
+import { FocusOnLoadDirective } from './shared';
 
 let defaultRoute = 'home';
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		FocusOnLoadDirective,
 		HomePageComponent,
 		LoginComponent,
 		RegistrationComponent
@@ -31,12 +39,15 @@ let defaultRoute = 'home';
 	imports: [
         UsersModule,
 		BrowserModule,
-		HttpClientModule,
+    HttpClientModule,
+    FormsModule,
 		RouterModule.forRoot([
-			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
-			{ path: 'registration', component: RegistrationComponent }
+			{ path: 'registration', component: RegistrationComponent },
+			{ path: 'profile', component: ProfileComponent},
+			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
+			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		])
 	],
 	providers: [],

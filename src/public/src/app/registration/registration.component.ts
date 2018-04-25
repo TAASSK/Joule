@@ -1,4 +1,8 @@
+/*
+ * Angular library
+ * */
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-registration',
@@ -6,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router
+	) { }
 
 	ngOnInit() { }
 
