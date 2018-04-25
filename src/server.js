@@ -7,6 +7,7 @@ server.connection({
 	host: '0.0.0.0',
 	port: 3000
 });
+var sha1 = require('sha1');
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -29,23 +30,23 @@ var connection = mysql.createConnection({
 //REVIEW ROUTES
 //adding a new review
 server.route({
-        method: 'POST',
-        path: '/addReview',
-        handler: function(request, reply) {
-          var employee_num = request.payload.employee_num;
-          var hotness = request.payload.hotness;
-          var accountability = request.payload.accountability;
-          var availability = request.payload.availability;
-          var politeness = request.payload.politeness;
-          var efficiency = request.payload.efficiency;
+        method: 'POST',
+        path: '/addReview',
+        handler: function(request, reply) {
+          var employee_num = request.payload.employee_num;
+          var hotness = request.payload.hotness;
+          var accountability = request.payload.accountability;
+          var availability = request.payload.availability;
+          var politeness = request.payload.politeness;
+          var efficiency = request.payload.efficiency;
           var comments = request.payload.comments;
-          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
-           if (error)
-             throw error;
-          reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
-          console.log(results);
-        });
-      }
+          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
+           if (error)
+             throw error;
+          reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
+          console.log(results);
+        });
+      }
 });
 
 //USER ACCOUNT ROUTES
@@ -55,7 +56,7 @@ server.route({
     path: '/newUser',
     handler: function(request, reply) {
         var username = request.payload.username;
-        var password = request.payload.password;
+        var password = sha1(request.payload.password);
         var first_name = request.payload.first_name;
         var last_name = request.payload.last_name;
         var employee_num = request.payload.employee_num;
@@ -83,7 +84,7 @@ server.route({
         connection.query('SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num="' + eid + '"', function (error, results, fields) {
             if (error)
                 throw error;
-            reply('Employee one\'s hotness is :' + results[0]);
+            reply(results);
             console.log(results);
         });
 
@@ -101,7 +102,7 @@ server.route({
         connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error, results, fields) {
             if (error)
                 throw error;
-            reply ('Employee name where the company name is '+ name + ":"+ results[0]);
+            reply (results);
             console.log(results);
         });
     }
@@ -114,13 +115,47 @@ server.route({
     path: '/getEmployees',
     handler: function (request, reply) {
         console.log('Server processing a /getEmployees request');
-
-        //connection.query('SELECT * FROM employee', function (error, results, fields) {
         connection.query('SELECT * FROM employee', function (error, results, fields) {
             if (error)
                 throw error;
-            reply ('The first employee\'s name is : ' + results[0].first_name);
+            reply (results);
+            console.log(results);
+        });
 
+    }
+});
+
+//Deleting a user and all of their reviews
+server.route({
+    method: 'DELETE',
+    path: '/deleteUser/{eid}',
+    handler: function (request, reply) {
+        console.log('Server processing a /deleteUser request');
+        const eid = request.params.eid;
+        connection.query('DELETE FROM employee WHERE employee_num="' + eid + '"' , function (error, results, fields) {
+            if (error)
+                throw error;
+            reply ('Account deleted for employee with id: ' + eid);
+            console.log(results);
+        });
+        connection.query('DELETE FROM employee_review WHERE employee_num="' + eid + '"' , function (error, results, fields) {
+            if (error)
+                throw error;
+            console.log(results);
+        });
+    }
+});
+
+//Getting all employee info
+server.route({
+    method: 'GET',
+    path: '/getReviews',
+    handler: function (request, reply) {
+        console.log('Server processing a /getReviews request');
+        connection.query('SELECT * FROM employee_review', function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
             console.log(results);
         });
 
@@ -128,21 +163,21 @@ server.route({
 });
 
 server.route({
-		method: 'PUT',
+	method: 'PUT',
 		path: '/updateUser',
-		handler: function (request, reply) {
-			console.log('Server is updating a user profile...');
-			var first_name = request.payload.first_name;
-			var last_name = request.payload.last_name;
-			var email = request.payload.email;
-			var company = request.payload.company;
-			var password = request.payload.password;
-			var current_emp_no = request.payload.current_emp_no;
-			connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-				reply('Information updated for employee number: ' + current_emp_no);
-			});
-		}
-});
+			handler: function (request, reply) {
+					console.log('Server is updating a user profile...');
+					var first_name = request.payload.first_name;
+					var last_name = request.payload.last_name;
+					var email = request.payload.email;
+					var company = request.payload.company;
+					var password = request.payload.password;
+					var current_emp_no = request.payload.current_emp_no;
+					connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
+						reply('Information updated for employee number: ' + current_emp_no);
+					});
+			}
+		});
 
 server.start((err) => {
 

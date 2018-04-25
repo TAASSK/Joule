@@ -12,6 +12,7 @@
 	"dependencies": {
 		"hapi": "^16.6.3",
 		"mysql": "^2.15.0",
-		"nodemon": "^1.17.1"
+		"nodemon": "^1.17.1",
+		"sha1": "^1.1.1"
 	}
 }
