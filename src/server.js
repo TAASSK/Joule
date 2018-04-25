@@ -86,16 +86,41 @@ server.route({
         var email = request.payload.email;
         var employer = request.payload.employer;
         var location = request.payload.location;
-        bcrypt.hash(myPlaintextPassword, 10, function(err, hash) {
-               var newPass = hash;
+        var newPass;
+        bcrypt.hash(password, 10, function(err, hash) {
+               console.log(hash);
+               newPass = hash;
+               connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
+                if (error)
+                    throw error;
+                reply('Employee Added: ' + first_name + ', '+ last_name);
+                console.log(results);
+            });
           });
-        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
-            if (error)
-                throw error;
-            reply('Employee Added: ' + first_name + ', '+ last_name);
-            console.log(results);
-        });
     }
+});
+
+//login route
+server.route({
+        method: 'POST',
+        path: '/login',
+        handler: function(request, reply) {
+          var email = request.payload.email;
+          var password = request.payload.password;
+          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
+              if (error)
+                  throw error;
+              console.log(results[0].password_hashes);
+              var hash = results[0].password_hashes;
+              bcrypt.compare(password, hash, function(err, res) {
+                  console.log(res);
+                  if(res==true)
+                    reply("login successful");
+                  else 
+                    reply("access denied");
+              });
+        });
+      }
 });
 
 //User getting all of their reviews
@@ -173,7 +198,6 @@ server.route({
         var current_emp_no = request.payload.current_emp_no;
         connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
             reply('Information updated for employee number: ' + current_emp_no);
-            console.log("TEST");
         });
     }
 });
