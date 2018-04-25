@@ -92,6 +92,8 @@ server.route({
         var employer = request.payload.employer;
         var location = request.payload.location;
         var newPass;
+        if(employee_num===undefined)
+            employee_num = 2;
         bcrypt.hash(password, 10, function(err, hash) {
                console.log(hash);
                newPass = hash;
