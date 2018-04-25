@@ -2,9 +2,9 @@ import { Serializable } from '../interfaces';
 
 export class User implements Serializable<User> {
 
-	id: number;
-	email: string;
-	name: string;
+	id?: number;
+	email?: string;
+	name?: string;
 
 	deserialize(input: object) {
 		let user = new User();
