@@ -3,11 +3,30 @@
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 
+// bring your own validation function
+/*const validate = async function (decoded, request) {
+    // do your checks to see if the person is valid
+    if (!people[decoded.id]) {
+      return { isValid: false };
+    }
+    else {
+      return { isValid: true };
+    }
+};*/
+
 const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
 	port: 3000
 });
+//await server.register(require('hapi-auth-jwt2'));
+
+/*server.auth.strategy('jwt', 'jwt',
+  { key: 'DonaldTrump\'sLeftNut',          // Never Share your secret key
+    validate: validate,            // validate function defined above
+    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+  });
+server.auth.default('jwt');*/
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -30,23 +49,23 @@ var connection = mysql.createConnection({
 //REVIEW ROUTES
 //adding a new review
 server.route({
-        method: 'POST',
-        path: '/addReview',
-        handler: function(request, reply) {
-          var employee_num = request.payload.employee_num;
-          var hotness = request.payload.hotness;
-          var accountability = request.payload.accountability;
-          var availability = request.payload.availability;
-          var politeness = request.payload.politeness;
-          var efficiency = request.payload.efficiency;
+        method: 'POST',
+        path: '/addReview',
+        handler: function(request, reply) {
+          var employee_num = request.payload.employee_num;
+          var hotness = request.payload.hotness;
+          var accountability = request.payload.accountability;
+          var availability = request.payload.availability;
+          var politeness = request.payload.politeness;
+          var efficiency = request.payload.efficiency;
           var comments = request.payload.comments;
-          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
-           if (error)
-             throw error;
-          reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
-          console.log(results);
-        });
-      }
+          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
+           if (error)
+             throw error;
+          reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
+          console.log(results);
+        });
+      }
 });
 
 //USER ACCOUNT ROUTES
@@ -72,6 +91,8 @@ server.route({
         var employer = request.payload.employer;
         var location = request.payload.location;
         var newPass;
+        if(employee_num===undefined)
+            employee_num = 2;
         bcrypt.hash(password, 10, function(err, hash) {
                console.log(hash);
                newPass = hash;
@@ -87,14 +108,14 @@ server.route({
 
 //login route
 server.route({
-        method: 'POST',
-        path: '/login',
-        handler: function(request, reply) {
-          var email = request.payload.email;
-          var password = request.payload.password;
-          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
-              if (error)
-                  throw error;
+        method: 'POST',
+        path: '/login',
+        handler: function(request, reply) {
+          var email = request.payload.email;
+          var password = request.payload.password;
+          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
+              if (error)
+                  throw error;
               console.log(results[0].password_hashes);
               var hash = results[0].password_hashes;
               bcrypt.compare(password, hash, function(err, res) {
@@ -104,8 +125,8 @@ server.route({
                   else 
                     reply("access denied");
               });
-        });
-      }
+        });
+      }
 });
 
 //User getting all of their reviews
@@ -210,10 +231,8 @@ server.route({
             reply (results);
             console.log(results);
         });
-
     }
-});
-
+    });
 server.start((err) => {
 
     if (err) {
@@ -221,3 +240,4 @@ server.start((err) => {
     }
     console.log(`Server running at: ${server.info.uri}`);
 });
+    
