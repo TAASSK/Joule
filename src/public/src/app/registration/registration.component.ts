@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
 
 	
 	public save(){
-		this.user.id = 15789;
+		//this.user.id = 15789;
 		this.signup.add(this.user).subscribe(x => {
 			this.router.navigateByUrl('user/{user.id}');
 		});

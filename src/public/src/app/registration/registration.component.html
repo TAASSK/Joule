@@ -20,17 +20,17 @@
 
 		<!-- First Name -->
 		<section class="form-group">
-			<input [(ngModel)]="user.name" type="text" class="form-control" id="registrationInputFirstName" placeholder="First name" [ngModelOptions]="{standalone: true}">
+			<input [(ngModel)]="user.first_name" type="text" class="form-control" id="registrationInputFirstName" placeholder="First name" [ngModelOptions]="{standalone: true}">
 		</section>
 
 		<!-- Last Name -->
 		<section class="form-group">
-			<input type="text" class="form-control" id="registrationInputLastName" placeholder="Last name">
+			<input [(ngModel)]="user.last_name" type="text" class="form-control" id="registrationInputLastName" placeholder="Last name" [ngModelOptions]="{standalone: true}">
 		</section>
 
 		<!-- Password -->
 		<section class="form-group">
-			<input type="password" class="form-control" id="registrationInputPassword" placeholder="Create a password">
+			<input [(ngModel)]="user.password"type="password" class="form-control" id="registrationInputPassword" placeholder="Create a password" [ngModelOptions]="{standalone: true}">
 		</section>
 
 	</form>

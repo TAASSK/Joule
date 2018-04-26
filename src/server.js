@@ -2,6 +2,7 @@
 
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
+var id = Math.floor((Math.random()*800) + 120);
 
 // bring your own validation function
 /*const validate = async function (decoded, request) {
@@ -92,10 +93,11 @@ server.route({
         var employer = request.payload.employer;
         var location = request.payload.location;
         var newPass;
-        if(employee_num===undefined)
-            employee_num = 2;
+        if(employee_num===undefined){
+            employee_num = id;
+            id+=1;
+        }
         bcrypt.hash(password, 10, function(err, hash) {
-               console.log(hash);
                newPass = hash;
                connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
                 if (error)
