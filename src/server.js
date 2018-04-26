@@ -2,11 +2,11 @@
 
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
-const jwt = require('hapi-auth-jwt2');
+var id = Math.floor((Math.random()*800) + 120);
+var jwt = require('jsonwebtoken');
 
 // bring your own validation function
 /*const validate = async function (decoded, request) {
-
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
       return { isValid: false };
@@ -16,35 +16,22 @@ const jwt = require('hapi-auth-jwt2');
     }
 };*/
 
-exports.register = (server, options, next) => {
-    server.register(jwt, registerAuth);
-  
-    function registerAuth (err) {
-      if (err) { return next(err); }
-  
-      server.auth.strategy('jwt', 'jwt', {
-        key: 'Donald Trump\'s left nut',
-        validateFunc: validate,
-        verifyOptions: {algorithms: [ 'HS256' ]}
-      });
-  
-      server.auth.default('jwt');
-  
-      return next();
-    }
-  
-    function validate (decoded, request, cb) {
-      //write the validate function here
-        });
-      });
-    }
-  };
-
 const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
-	port: 3000
+    port: 3000,
+    routes: { cors: true}
 });
+
+server.auth.strategy('jwt', 'jwt',
+{ key: 'whatifwearealllivinginasimulationcreatedbynaziscientistsandtheyactuallywonwwIIandtheyareexperimentingonthehumanrace', // Never Share your secret key
+  validate: validate,            // validate function defined above
+  verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+});
+
+server.auth.default('jwt');
+
+//await server.register(require('hapi-auth-jwt2'));
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -67,28 +54,34 @@ var connection = mysql.createConnection({
 //REVIEW ROUTES
 //adding a new review
 server.route({
-        method: 'POST',
-        path: '/addReview',
-        handler: function(request, reply) {
-          var employee_num = request.payload.employee_num;
-          var hotness = request.payload.hotness;
-          var accountability = request.payload.accountability;
-          var availability = request.payload.availability;
-          var politeness = request.payload.politeness;
-          var efficiency = request.payload.efficiency;
+        method: 'POST',
+        path: '/addReview',
+        handler: function(request, reply) {
+          var employee_num = request.payload.employee_num;
+          var hotness = request.payload.hotness;
+          var accountability = request.payload.accountability;
+          var availability = request.payload.availability;
+          var politeness = request.payload.politeness;
+          var efficiency = request.payload.efficiency;
           var comments = request.payload.comments;
-          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
-           if (error)
-             throw error;
-          reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
-          console.log(results);
-        });
-      }
+          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
+           if (error)
+             throw error;
+          reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
+          console.log(results);
+        });
+      }
 });
 
 //USER ACCOUNT ROUTES
 //adding a new user -> making an account
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'POST',
     path: '/newUser',
     handler: function(request, reply) {
@@ -103,8 +96,11 @@ server.route({
         var employer = request.payload.employer;
         var location = request.payload.location;
         var newPass;
+        if(employee_num===undefined){
+            employee_num = id;
+            id+=1;
+        }
         bcrypt.hash(password, 10, function(err, hash) {
-               console.log(hash);
                newPass = hash;
                connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
                 if (error)
@@ -118,14 +114,14 @@ server.route({
 
 //login route
 server.route({
-        method: 'POST',
-        path: '/login',
-        handler: function(request, reply) {
-          var email = request.payload.email;
-          var password = request.payload.password;
-          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
-              if (error)
-                  throw error;
+        method: 'POST',
+        path: '/login',
+        handler: function(request, reply) {
+          var email = request.payload.email;
+          var password = request.payload.password;
+          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
+              if (error)
+                  throw error;
               console.log(results[0].password_hashes);
               var hash = results[0].password_hashes;
               bcrypt.compare(password, hash, function(err, res) {
@@ -135,8 +131,8 @@ server.route({
                   else 
                     reply("access denied");
               });
-        });
-      }
+        });
+      }
 });
 
 //User getting all of their reviews
@@ -210,8 +206,17 @@ server.route({
         var company = request.payload.company;
         var password = request.payload.password;
         var current_emp_no = request.payload.current_emp_no;
+        var newPass;
+        bcrypt.hash(password,10,function(err,hash) {
+            newPass = hash;
+        });
+        var token = jwt.sign({
+            emp_no:current_emp_no,
+            email:email,
+            password_hashes:newPass
+        }, 'secret');
         connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-            reply('Information updated for employee number: ' + current_emp_no);
+            reply(token);
         });
     }
 });

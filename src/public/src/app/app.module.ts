@@ -24,7 +24,7 @@ import { ProfileComponent } from './users/profile/profile.component';
 /*
  * Directives
  * */
-import { FocusOnLoadDirective } from './shared';
+import { FocusOnLoadDirective, SignupService } from './shared';
 
 let defaultRoute = 'home';
 
@@ -50,7 +50,7 @@ let defaultRoute = 'home';
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		])
 	],
-	providers: [],
+	providers: [SignupService],
 	bootstrap: [
 		AppComponent
 	]
