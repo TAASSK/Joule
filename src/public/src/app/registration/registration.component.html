@@ -1,3 +1,5 @@
+<div class="container" *ngIf="user">
+
 <nav class="navbar navbar-expand-lg navbar-light">
 	<div class="navbar-center-brand">
 		<a class="navbar-brand" [routerLink]="['/home']">
@@ -9,34 +11,35 @@
 <section class="col col-sm-4 col-md-6 col-lg-4 site-content">
 	<h1>Sign Up</h1>
 
-	<form>
+	<form> 
 
 		<!-- Email address -->
 		<section class="form-group">
-			<input type="email" class="form-control" id="registrationInputEmailAddress" placeholder="Email address" focusOnLoad>
+			<input [(ngModel)]="user.email" type="email" class="form-control" id="registrationInputEmailAddress" placeholder="Email address" focusOnLoad [ngModelOptions]="{standalone: true}">
 		</section>
 
 		<!-- First Name -->
 		<section class="form-group">
-			<input type="text" class="form-control" id="registrationInputFirstName" placeholder="First name">
+			<input [(ngModel)]="user.first_name" type="text" class="form-control" id="registrationInputFirstName" placeholder="First name" [ngModelOptions]="{standalone: true}">
 		</section>
 
 		<!-- Last Name -->
 		<section class="form-group">
-			<input type="text" class="form-control" id="registrationInputLastName" placeholder="Last name">
+			<input [(ngModel)]="user.last_name" type="text" class="form-control" id="registrationInputLastName" placeholder="Last name" [ngModelOptions]="{standalone: true}">
 		</section>
 
 		<!-- Password -->
 		<section class="form-group">
-			<input type="password" class="form-control" id="registrationInputPassword" placeholder="Create a password">
+			<input [(ngModel)]="user.password"type="password" class="form-control" id="registrationInputPassword" placeholder="Create a password" [ngModelOptions]="{standalone: true}">
 		</section>
 
 	</form>
 
-	<button type="submit" class="button button-call-to-action button-block">Sign Up</button>
+	<button type="submit" class="button button-call-to-action button-block"  (click)=save()>Sign Up</button>
 
 	<hr>
 
 	<p class="text-center">Already have an account? <a [routerLink]="['/login']">Log In</a></p>
 
 </section> <!-- .row (section) -->
+</div>
