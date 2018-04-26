@@ -8,6 +8,9 @@ ENV HOME=/home/app
 COPY ./src/package.json $HOME/joule/
 RUN chown -R app:app $HOME/*
 
+USER root
+RUN apt-get install -y openssl 
+
 USER app
 WORKDIR $HOME/joule
 RUN npm install --silent --progress=false
@@ -15,6 +18,8 @@ RUN npm install --silent --progress=false
 USER root
 COPY ./src/. $HOME/joule
 RUN chown -R app:app $HOME/*
+
 USER app
+
 
 CMD [ "npm", "start" ]

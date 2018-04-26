@@ -24,6 +24,7 @@
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",
+    "node": "^9.11.0",
     "popper.js": "^1.14.3",
     "progressbar.js": "^1.0.1",
     "rxjs": "^5.5.6",
