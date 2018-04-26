@@ -121,8 +121,6 @@ server.route({
         var name = request.params.name;
         console.log(name);
         connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error1, results1, fields1) {
-            //if (error)
-                //throw error;
             var isEmpty = (results1 || []).length === 0;
             if (isEmpty) {
                 var nameArr = name.split(" ");
