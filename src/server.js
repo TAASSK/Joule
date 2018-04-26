@@ -2,6 +2,7 @@
 
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
+const jwt = require('hapi-auth-jwt2');
 
 // bring your own validation function
 /*const validate = async function (decoded, request) {
@@ -15,20 +16,35 @@ var bcrypt = require('bcrypt');
     }
 };*/
 
+exports.register = (server, options, next) => {
+    server.register(jwt, registerAuth);
+  
+    function registerAuth (err) {
+      if (err) { return next(err); }
+  
+      server.auth.strategy('jwt', 'jwt', {
+        key: 'Donald Trump\'s left nut',
+        validateFunc: validate,
+        verifyOptions: {algorithms: [ 'HS256' ]}
+      });
+  
+      server.auth.default('jwt');
+  
+      return next();
+    }
+  
+    function validate (decoded, request, cb) {
+      //write the validate function here
+        });
+      });
+    }
+  };
+
 const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
 	port: 3000
 });
-//await server.register(require('hapi-auth-jwt2'));
-
-/*server.auth.strategy('jwt', 'jwt',
-  { key: 'DonaldTrump\'sLeftNut',          // Never Share your secret key
-    validate: validate,            // validate function defined above
-    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
-  });
-
-server.auth.default('jwt');*/
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -234,23 +250,6 @@ server.route({
             console.log(results);
         });
     }
-});
-
-server.route({
-	method: 'PUT',
-	path: '/updateUser',
-	handler: function (request, reply) {
-			console.log('Server is updating a user profile...');
-			var first_name = request.payload.first_name;
-			var last_name = request.payload.last_name;
-			var email = request.payload.email;
-			var company = request.payload.company;
-			var password = request.payload.password;
-			var current_emp_no = request.payload.current_emp_no;
-			connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-				reply('Information updated for employee number: ' + current_emp_no);
-			});
-		}
 });
 
 server.start((err) => {
