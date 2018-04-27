@@ -1,4 +1,6 @@
-<section class="rating-box" [ngStyle]="{ 'background-color': ratingGradient(rating) }">
-	<div class="rating-number">{{ rating | percent }}</div>
+<section class="rating-box" [ngStyle]="{ 'background-color': ratingGradient(rating), 'color': ratingText(rating) }">
+	<div class="rating-number">
+		<span countUp [endVal]="rating | percent">0</span>%
+	</div>
 	<div class="rating-label">{{ descriptor }}</div>
 </section>

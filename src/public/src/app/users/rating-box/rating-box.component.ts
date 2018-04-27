@@ -2,14 +2,14 @@
  * Angular library
  * */
 import {
+	NgStyle,
+	PercentPipe
+} from '@angular/common';
+import {
 	Component,
 	Input,
 	OnInit
 } from '@angular/core';
-import {
-	NgStyle,
-	PercentPipe
-} from '@angular/common';
 
 @Component({
 	selector: 'app-rating-box',
@@ -22,6 +22,8 @@ export class RatingBoxComponent implements OnInit {
 
 	// short string describing the type of rating
 	@Input() public descriptor: string;
+
+	state: string;
 
 	constructor() { }
 
@@ -58,6 +60,10 @@ export class RatingBoxComponent implements OnInit {
 
 	}
 
-	
+	ratingText(percent: number): string {
+
+		return (percent > 0.75) ? '#000' : '#fff';
+
+	}
 
 }

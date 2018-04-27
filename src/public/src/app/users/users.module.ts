@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 /*
  * Modules
  * */
+import { CountUpModule } from 'countup.js-angular2';
 import { UsersRoutingModule } from './users-routing.module';
 
 /*
@@ -21,6 +22,7 @@ import { RatingBoxComponent } from './rating-box/rating-box.component';
 @NgModule({
 	imports: [
 		CommonModule,
+		CountUpModule,
 		FormsModule,
 		UsersRoutingModule
 	],
