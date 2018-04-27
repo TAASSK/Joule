@@ -5,6 +5,7 @@
 	justify-content: center;
 	width: 7rem;
 	height: 7rem;
+	padding: 1rem;
 	margin-right: 1rem;
 	background-color: #000;
 	color: #fff;
@@ -12,7 +13,10 @@
 }
 
 .rating-label {
-	
+	font-size: 0.9rem;
+	font-family: 'Archivo-Web';
+	font-weight: 500;
+	text-transform: uppercase;
 }
 
 .rating-number {

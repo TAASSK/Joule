@@ -8,26 +8,37 @@ import {
 import {
 	Component,
 	Input,
-	OnInit
+	AfterViewInit
 } from '@angular/core';
 
 @Component({
 	selector: 'app-rating-box',
 	templateUrl: './rating-box.component.html'
 })
-export class RatingBoxComponent implements OnInit {
+export class RatingBoxComponent implements AfterViewInit {
 
 	// must be a number between 0 and 1
 	@Input() public rating: number;
 
+	// shown rating
+	public displayedRating: number = 0;
+
 	// short string describing the type of rating
 	@Input() public descriptor: string;
 
-	state: string;
-
 	constructor() { }
 
-	ngOnInit() { }
+	ngAfterViewInit() {
+		window.setTimeout(() => {
+			const animateRating = () => {
+				if(this.displayedRating != this.rating) {
+					this.displayedRating += (this.rating - this.displayedRating) * 0.075;
+					window.requestAnimationFrame(animateRating);
+				}
+			};
+			window.requestAnimationFrame(animateRating);
+		}, 200);
+	}
 
 	// Interpolated color palette based on Seaborn Cubehelix Colormap
 	//
@@ -60,10 +71,10 @@ export class RatingBoxComponent implements OnInit {
 
 	}
 
+	// compensate for lighter backgrounds at high percentage scores
+	// by switching to black text.
 	ratingText(percent: number): string {
-
-		return (percent > 0.75) ? '#000' : '#fff';
-
+		return (percent > 0.70) ? '#000' : '#fff';
 	}
 
 }
