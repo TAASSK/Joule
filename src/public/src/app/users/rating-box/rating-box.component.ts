@@ -1,32 +1,31 @@
 /*
  * Angular library
  * */
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+	Component,
+	Input,
+	OnInit
+} from '@angular/core';
+import {
+	NgStyle,
+	PercentPipe
+} from '@angular/common';
 
 @Component({
-	selector: 'app-profile',
-	templateUrl: './profile.component.html',
+	selector: 'app-rating-box',
+	templateUrl: './rating-box.component.html'
 })
-export class ProfileComponent implements OnInit {
+export class RatingBoxComponent implements OnInit {
 
-	username: string = 'John Doe';
-	jobTitle: string = 'Employee';
-	workPlace: string = 'Random Corp.';
+	// must be a number between 0 and 1
+	@Input() public rating: number;
 
-	overallRating: number = 0.70;
-	recommend: number = 1;
+	// short string describing the type of rating
+	@Input() public descriptor: string;
 
-	constructor(
-		private route: ActivatedRoute,
-		private router: Router
-	) { }
+	constructor() { }
 
 	ngOnInit() { }
-
-	gotoAccount(id: number) {
-		this.router.navigateByUrl('/user/'+String(id)+'/account');
-	}
 
 	// Interpolated color palette based on Seaborn Cubehelix Colormap
 	//
@@ -59,7 +58,6 @@ export class ProfileComponent implements OnInit {
 
 	}
 
-
+	
 
 }
-
