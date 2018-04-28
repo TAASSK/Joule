@@ -10,12 +10,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
+	id: number = 101;
+	username: string = 'John Doe';
+	jobTitle: string = 'Employee';
+	workPlace: string = 'Random Corp.';
+
+	overallRating: number = 0.74;
+	recommend: number = 1;
+
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router
 	) { }
 
-ngOnInit() { }
+	ngOnInit() { }
 
 	gotoAccount(id: number) {
 		this.router.navigateByUrl('/user/'+String(id)+'/account');

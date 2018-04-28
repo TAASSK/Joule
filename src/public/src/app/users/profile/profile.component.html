@@ -11,7 +11,7 @@
 			<ul class="navbar-nav">
 				<input type="search" class="nav-search-bar" placeholder="Search">
 				<li class="nav-item">
-					<a class="nav-link" href="#">Account</a>
+					<a class="nav-link" [routerLink]="['/user', id, 'account']">Account</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Log Out</a>
@@ -25,29 +25,33 @@
 </header> <!-- .row (header) -->
 
 <section class="site-content">
-	<h1>Profile Component</h1>
-	<p>The profile component <a href="#">works!</a></p>
+
+	<section class="profile-header">
+
+		<img class="profile-picture" src="/assets/img/np_profile.svg" alt="profile-picture">
+
+		<section class="profile-employee-information">
+
+			<h1>{{ username }}</h1>
+			<h2>{{ jobTitle }}, {{ workPlace }}</h2>
+
+		</section>
+
+	</section>
+
+	<section class="profile-dashboard">
+
+		<app-rating-box [rating]="overallRating" [descriptor]="'Rating'"></app-rating-box>
+		<app-rating-box [rating]="recommend" [descriptor]="'Recommend'"></app-rating-box>
+
+	</section>
+
+	<section class="profile-reviews">
+
+		<app-review class="review-component"></app-review>
+		<app-review class="review-component"></app-review>
+		<app-review class="review-component"></app-review>
+
+	</section>
+
 </section> <!-- .row (section) -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="card mb-8">
-            <div class="card-header" >
-              <h1>Tristan Knotts</h1>
-              <h3 class="strong">Southern Methodist University</h3>
-            </div>
-            <div class="card-body" style="background-color:#2D7EFF">
-              <span>
-                <h3>Overall Rating</h3>
-              </span>
-
-            </div>
-
-
-            </div>
-            <hr/>
-
-            <app-review></app-review>
-
-
-    </div>
-  </div>

@@ -19,7 +19,10 @@ Returns a user of a given ID.
 	"id": 101,
 	"email": "jp.joule18@gojoule.me",
 	"first_name": "James",
-	"last_name": "Joule"
+	"last_name": "Joule",
+	"job_title": "Brewer",
+	"employer": "Self Employed",
+	"location": "Lancashire, UK"
 }
 ```
 
