@@ -20,7 +20,7 @@ const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
     port: 3000,
-    routes: { cors: true}
+    routes: { cors: true }
 });
 
 server.auth.strategy('jwt', 'jwt',
@@ -117,7 +117,7 @@ server.route({
         handler: function(request, reply) {
           var email = request.payload.email;
           var password = request.payload.password;
-          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
+          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) {
               if (error)
                   throw error;
               console.log(results[0].password_hashes);
@@ -126,7 +126,7 @@ server.route({
                   console.log(res);
                   if(res==true)
                     reply("login successful");
-                  else 
+                  else
                     reply("access denied");
               });
         });
