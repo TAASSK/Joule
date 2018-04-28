@@ -2,7 +2,7 @@
 
 Returns a list of users based on a given search term, either by a user's name OR by a user's company name.
 
-**_N.B._** For the moment, only returns results based on exact search terms.
+**_N.B._** For the moment, this route only returns results based on exact search terms.
 
 **URL** : `/api/search`
 
