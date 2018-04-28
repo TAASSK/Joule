@@ -24,7 +24,7 @@ Search by name:
 
 ```json
 {
-	"search_term": "James Prescott Joule"
+	"search_term": "James Joule"
 }
 ```
 
@@ -45,14 +45,29 @@ Search by company:
 ```json
 {
 	"users": [
-		{},
-		{},
-		{}
+		{
+			"id": 101,
+			"email": "jp.joule18@gojoule.me",
+			"first_name": "James",
+			"last_name": "Joule"
+		},
+		{
+			"id": 535,
+			"email": "jjoule@kelvin.com",
+			"first_name": "James",
+			"last_name": "Joule"
+		},
+		{
+			"id": 27,
+			"email": "electricityluver@aol.com",
+			"first_name": "James",
+			"last_name": "Joule"
+		}
 	]
 }
 ```
 
-\* the list of users can be an empty list
+\* it is possible for the list of users to be an empty list
 
 ## Error Response
 
@@ -64,6 +79,7 @@ Search by company:
 
 ```json
 {
-	"error_message": "Experienced error when attempting to search for: <repeat search term here>"
+	"success": true,
+	"message": "Experienced error when attempting to search for: <repeat search term here>"
 }
 ```
