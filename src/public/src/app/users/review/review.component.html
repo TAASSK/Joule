@@ -1,11 +1,22 @@
 <section class="review-box">
-	<h1>Review Component</h1>
-	<p>The review component <a href="#">works!</a></p>
 
-	<button (click)="logUserDeserialize();">USER SERIALIZE</button>
-	<button (click)="logReviewDeserialize();">REVIEW SERIALIZE</button>
+	<section class="review-metadata">
 
-	<button (click)="logUserSerialize();">USER SERIALIZE</button>
-	<button (click)="logReviewSerialize();">REVIEW SERIALIZE</button>
+		<div class="review-metadata-employment-information">
 
-</section> <!-- .row (section) -->
+			<h2>{{ review.jobTitle }}</h2>
+			<h3>{{ review.employer }}</h3>
+
+		</div>
+
+		<p>{{ review.datestamp | date:'longDate' }}</p>
+
+	</section>
+
+	<section class="review-comment">
+
+		<p>{{ review.comment }}</p>
+
+	</section>
+
+</section>
