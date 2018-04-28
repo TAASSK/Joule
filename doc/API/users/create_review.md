@@ -23,6 +23,8 @@ Authorization: Bearer <token>
 
 ```json
 {
+	"job_title": "[job title]",
+	"employer": "[employer name]"
 	"quality_rating": <integer>,
 	"recommend_rating": <integer>,
 	"comment": "[comment body]",
@@ -34,6 +36,8 @@ Authorization: Bearer <token>
 
 ```json
 {
+	"job_title": "Brewer",
+	"employer": "Self Employed",
 	"quality_rating": 78,
 	"recommend_rating": 84,
 	"comment": "Hard worker.",
