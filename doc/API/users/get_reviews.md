@@ -20,7 +20,7 @@ Returns all reviews for a user of a given ID.
 		{
 			"review_id": 101,
 			"job_title": "Brewer",
-			"employer": "Self Employed"
+			"employer": "Self Employed",
 			"quality_rating": 78,
 			"recommend_rating": 84,
 			"comment": "Shows up to work.",
