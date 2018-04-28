@@ -18,29 +18,23 @@ Returns all reviews for a user of a given ID.
 {
 	"reviews": [
 		{
-			"review_id": 489,
-			"reviewer_id": 101,
+			"job_title": "Brewer",
+			"employer": "Self Employed"
 			"quality_rating": 78,
 			"recommend_rating": 84,
 			"comment": "Shows up to work.",
-			"datestamp": "2018-04-28T01:55:51.834Z",
-			"is_anonymous": false,
-			"is_edited": false,
-			"edit_datestamp": null
+			"datestamp": "2018-04-28T01:55:51.834Z"
 		},
 		
 		...
 
 		{
-			"review_id": 3194,
-			"reviewer_id": 27,
+			"job_title": "Scientist",
+			"employer": "London Electrical Society",
 			"quality_rating": 50,
 			"recommend_rating": 50,
 			"comment": "Pretty good, I guess.",
-			"datestamp": "2018-04-28T02:09:09.724Z",
-			"is_anonymous": true,
-			"is_edited": false,
-			"edit_datestamp": null
+			"datestamp": "2018-04-28T02:09:09.724Z"
 		}
 	]
 }
