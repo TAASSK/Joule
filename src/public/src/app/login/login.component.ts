@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /*
  * Directives
  * */
+import { AuthenticationService } from './../shared/services/authentication.service';
 import { FocusOnLoadDirective } from '../shared';
 
 @Component({
@@ -15,11 +16,27 @@ import { FocusOnLoadDirective } from '../shared';
 })
 export class LoginComponent implements OnInit {
 
+  public email: string;
+  public password: string;
+
 	constructor(
+    private router: Router,
 		private route: ActivatedRoute,
-		private router: Router
+    private authenticate: AuthenticationService
 	) { }
 
-	ngOnInit() { }
+	ngOnInit() {
+    this.email = '';
+    this.password = '';
+  }
+
+public login() {
+  this.authenticate.logIn(this.email, this.password).subscribe(x => {
+    this.router.navigateByUrl('user/1'); });
+
+
+  }
 
 }
+
+
