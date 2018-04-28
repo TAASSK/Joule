@@ -24,7 +24,7 @@ Authorization: Bearer <token>
 ```json
 {
 	"job_title": "[job title]",
-	"employer": "[employer name]"
+	"employer": "[employer name]",
 	"quality_rating": <integer>,
 	"recommend_rating": <integer>,
 	"comment": "[comment body]",

@@ -13,17 +13,17 @@
 
 		<!-- Email address -->
 		<section class="form-group">
-			<input type="email" class="form-control" id="loginInputEmailAddress" placeholder="Email address" focusOnLoad>
+			<input [(ngModel)]="email" type="email" class="form-control" id="loginInputEmailAddress" placeholder="Email address" focusOnLoad [ngModelOptions]="{standalone: true}">
 		</section>
 
 		<!-- Password -->
 		<section class="form-group">
-			<input type="password" class="form-control" id="loginInputPassword" placeholder="Password">
+			<input [(ngModel)]="password" type="password" class="form-control" id="loginInputPassword" placeholder="Password" [ngModelOptions]="{standalone: true}">
 		</section>
 
 	</form>
 
-	<button type="submit" class="button button-call-to-action button-block">Log In</button>
+	<button type="submit" class="button button-call-to-action button-block" (click)="login()" >Log In</button>
 
 	<hr>
 
