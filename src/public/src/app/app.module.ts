@@ -2,6 +2,7 @@
  * Angular library
  * */
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
@@ -37,10 +38,10 @@ let defaultRoute = 'home';
 		RegistrationComponent
 	],
 	imports: [
-        UsersModule,
 		BrowserModule,
-    HttpClientModule,
-    FormsModule,
+		BrowserAnimationsModule,
+		HttpClientModule,
+		FormsModule,
 		RouterModule.forRoot([
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
@@ -48,7 +49,8 @@ let defaultRoute = 'home';
 			{ path: 'profile', component: ProfileComponent},
 			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
-		])
+		]),
+		UsersModule
 	],
 	providers: [SignupService],
 	bootstrap: [
