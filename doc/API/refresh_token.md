@@ -30,24 +30,28 @@ Authorization: Bearer <token>
 
 **HTTP Status Code** : `400 Bad Request`
 
-**Condition** : The token could not be refreshed because it could not be decoded.
+**Condition** : The token fails to be decoded.
 
 **Content example**
 
 ```json
 {
-	"error_message": "Given token could not be decoded."
+	"success": false,
+	"message": "Given token could not be decoded."
 }
 ```
 
+OR
+
 **HTTP Status Code** : `500 Internal Server Error`
 
-**Condition** : The token could not be refreshed due to a server error.
+**Condition** : The token is not refreshed due to a server error.
 
 **Content example**
 
 ```json
 {
-	"error_message": "Unable to refresh the given token."
+	"success": false,
+	"message": "Unable to refresh the given token."
 }
 ```
