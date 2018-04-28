@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
 	ngOnInit() {
 		this.user = new User();
 
-	 }
+	}
 
 	
 	public save(){
