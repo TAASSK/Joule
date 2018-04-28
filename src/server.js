@@ -6,7 +6,7 @@ var id = Math.floor((Math.random()*800) + 120);
 var jwt = require('jsonwebtoken');
 
 // bring your own validation function
-/*const validate = async function (decoded, request) {
+const validate = async function (decoded, request) {
     // do your checks to see if the person is valid
     if (!people[decoded.id]) {
       return { isValid: false };
@@ -14,7 +14,7 @@ var jwt = require('jsonwebtoken');
     else {
       return { isValid: true };
     }
-};*/
+};
 
 const server = new Hapi.Server();
 server.connection({
@@ -30,8 +30,6 @@ server.auth.strategy('jwt', 'jwt',
 });
 
 server.auth.default('jwt');
-
-//await server.register(require('hapi-auth-jwt2'));
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
