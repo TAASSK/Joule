@@ -3,6 +3,7 @@
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 var id = Math.floor((Math.random()*800) + 120);
+var jwt = require('jsonwebtoken');
 
 // bring your own validation function
 /*const validate = async function (decoded, request) {
@@ -19,16 +20,18 @@ const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
     port: 3000,
-    routes: { cors: true}
+    routes: { cors: true }
 });
-//await server.register(require('hapi-auth-jwt2'));
 
-/*server.auth.strategy('jwt', 'jwt',
-  { key: 'DonaldTrump\'sLeftNut',          // Never Share your secret key
-    validate: validate,            // validate function defined above
-    verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
-  });
-server.auth.default('jwt');*/
+server.auth.strategy('jwt', 'jwt',
+{ key: 'whatifwearealllivinginasimulationcreatedbynaziscientistsandtheyactuallywonwwIIandtheyareexperimentingonthehumanrace', // Never Share your secret key
+  validate: validate,            // validate function defined above
+  verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+});
+
+server.auth.default('jwt');
+
+//await server.register(require('hapi-auth-jwt2'));
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -116,7 +119,7 @@ server.route({
         handler: function(request, reply) {
           var email = request.payload.email;
           var password = request.payload.password;
-          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
+          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) {
               if (error)
                   throw error;
               console.log(results[0].password_hashes);
@@ -125,7 +128,7 @@ server.route({
                   console.log(res);
                   if(res==true)
                     reply("login successful");
-                  else 
+                  else
                     reply("access denied");
               });
         });
@@ -159,8 +162,6 @@ server.route({
         var name = request.params.name;
         console.log(name);
         connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error1, results1, fields1) {
-            //if (error)
-                //throw error;
             var isEmpty = (results1 || []).length === 0;
             if (isEmpty) {
                 var nameArr = name.split(" ");
@@ -205,8 +206,17 @@ server.route({
         var company = request.payload.company;
         var password = request.payload.password;
         var current_emp_no = request.payload.current_emp_no;
+        var newPass;
+        bcrypt.hash(password,10,function(err,hash) {
+            newPass = hash;
+        });
+        var token = jwt.sign({
+            emp_no:current_emp_no,
+            email:email,
+            password_hashes:newPass
+        }, 'secret');
         connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-            reply('Information updated for employee number: ' + current_emp_no);
+            reply(token);
         });
     }
 });
