@@ -38,17 +38,33 @@ Returns a JSON Web Token for a registered user.
 }
 ```
 
-## Error Response
+## Error Responses
 
 **HTTP Status Code** : `400 Bad Request`
 
-**Condition** : The supplied username and password combo could not be verified.
+**Condition** : The supplied username and password combo are not verified.
 
 **Content example**
 
 ```json
 {
-	"error_message": "Unable to log in with provided credentials."
+	"success": false,
+	"message": "Unable to log in with provided credentials."
+}
+```
+
+OR
+
+**HTTP Status Code** : `500 Internal Server Error`
+
+**Condition** : The server experiences an error when attempting to verify the credentials.
+
+**Content example**
+
+```json
+{
+	"success": true,
+	"message": "Experienced error when attempting to verify the credentials."
 }
 ```
 
