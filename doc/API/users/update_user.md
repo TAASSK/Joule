@@ -49,7 +49,7 @@ Changing password:
 	"email": null,
 	"first_name" : null,
 	"last_name": null,
-	"password": pa$$w0rd,
+	"password": "pa$$w0rd",
 	"job_title": null,
 	"employer": null
 }
