@@ -19,3 +19,8 @@
 	background-size: cover;
 	box-shadow: 0 1px 11px #dadada;
 }
+
+.profile-reviews {
+	display: flex;
+	flex-direction: column;
+}
