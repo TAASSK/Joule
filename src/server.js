@@ -3,30 +3,45 @@
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 var id = Math.floor((Math.random()*800) + 120);
-var jwt = require('jsonwebtoken');
+var jwt2 = require('hapi-auth-jwt2');
 
 // bring your own validation function
-const validate = async function (decoded, request) {
+const validate = async function (email, passwordhash) {
     // do your checks to see if the person is valid
-    if (!people[decoded.id]) {
-      return { isValid: false };
+    var res = true;
+    connection.query('SELECT email, password_hashes FROM employee WHERE email = "' + email + '"', function (error, results, fields) {
+        if (email === results[0].email) {
+            if (passwordhash === results[0].password_hashes) {
+                res = true;
+            }
+            else {
+                res = false;
+            }
+        }
+        else {
+            res = false;
+        }
+    });
+    if (res) {
+        return {isValid: true};
     }
-    else {
-      return { isValid: true };
-    }
-};
+    return {isValid: false};
+}
 
-const server = new Hapi.Server();
+const init = async () => {
+
+var server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
     port: 3000,
-    routes: { cors: true }
+    routes: { cors: true}
 });
+server.register(require('hapi-auth-jw2'));
 
-server.auth.strategy('jwt', 'jwt',
-{ key: 'whatifwearealllivinginasimulationcreatedbynaziscientistsandtheyactuallywonwwIIandtheyareexperimentingonthehumanrace', // Never Share your secret key
-  validate: validate,            // validate function defined above
-  verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+server.auth.strategy('jwt', 'jwt', true,
+ { key: 'whatifwearealllivinginasimulationcreatedbynaziscientistsandtheyactuallywonwwIIandtheyareexperimentingonthehumanrace', // Never Share your secret key
+   validate: validate,            // validate function defined above
+   verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
 });
 
 server.auth.default('jwt');
@@ -39,7 +54,6 @@ server.realm.modifiers.route.prefix = '/api';
 //Uses the https://www.npmjs.com/package/mysql package.
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-
 	//host will be the name of the service from the docker-compose file.
 	host: 'database',
 	port: 3306,
@@ -117,7 +131,7 @@ server.route({
         handler: function(request, reply) {
           var email = request.payload.email;
           var password = request.payload.password;
-          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) {
+          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
               if (error)
                   throw error;
               console.log(results[0].password_hashes);
@@ -126,7 +140,7 @@ server.route({
                   console.log(res);
                   if(res==true)
                     reply("login successful");
-                  else
+                  else 
                     reply("access denied");
               });
         });
@@ -254,11 +268,15 @@ server.route({
         });
     }
 });
+await server.start();
+return server;
+};
 
-server.start((err) => {
 
-    if (err) {
-        throw err;
-    }
+
+init().then(server => {
     console.log(`Server running at: ${server.info.uri}`);
+  })
+  .catch(error => {
+    console.log(error);
 });
