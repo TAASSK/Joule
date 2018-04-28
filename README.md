@@ -45,6 +45,13 @@ ng serve
 
 Directly developing with the database requires that the database's credentials be registered as environment variables in the database's Docker container. This is accomplished through the use of a `.env` file. Since these files contain sensitive information, they should not be included with Git check-ins. A `.env.dist` file with the proper environment variables and formatting has been provided. Simply copy this file to another file named `.env` and populate it. **This must happen before moving forward to avoid errors.**
 
+There are two values that must be in this file for everything to work as things are currently arranged:
+
+* `MYSQL_DATABASE=joule2`
+* `MYSQL_USER=root`
+
+The two subsequent entries, `MYSQL_PASSWORD` and `MYSQL_ROOT_PASSWORD` should contain different values, but they do not need to match those from another person's copy of the repository.
+
 ```bash
 cp .env.dist .env
 vim .env

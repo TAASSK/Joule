@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password_hashes` varchar(65) NOT NULL,
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
   `employee_num` int(11) NOT NULL,
@@ -37,11 +37,6 @@ CREATE TABLE `employee` (
   `location` varchar(45) NOT NULL,
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-INSERT INTO employee(username, password, first_name, last_name, employee_num, department_name, position, email, employer, location)
-VALUES('vanilla_ice', 'iceicebaby', 'vanilla', 'ice', 1111, 'vanilla', 'vanilla of ice', 'vice@vanilla.ice', 'vanilla', 'colorado'),
-('SGlasford', 'chris', 'Samantha', 'Glasford', 1112, 'cs', 'gui person', 'sglasford@smu.edu', 'somecompany', 'dallas'),
-('SamGiles', 'googleit', 'Sam', 'Giles', 1113, 'cs', 'db person', 'samg@smu.edu', 'company', 'notdallas'),
-('KatelynD', 'password', 'Katelyn', 'Dunn', 1114, 'cs', 'db person', 'kdunn@smu.edu', 'company', 'dallas');
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +65,7 @@ CREATE TABLE `employee_review` (
   `comments` varchar(45) NOT NULL,
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-ALTER TABLE `joule2`.`employee_review` 
+ALTER TABLE `joule2`.`employee_review`
 DROP PRIMARY KEY;
 INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments)
 VALUES(1113, 2, 3, 4, 5, 6, "you'\re an employer"),
