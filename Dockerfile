@@ -14,6 +14,11 @@ RUN apt-get install -y openssl
 USER app
 WORKDIR $HOME/joule
 RUN npm install --silent --progress=false
+RUN npm install node-gyp -g
+RUN npm install bcrypt -g
+RUN npm install bcrypt -save
+
+
 
 USER root
 COPY ./src/. $HOME/joule

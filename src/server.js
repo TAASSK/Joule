@@ -1,7 +1,7 @@
 'use strict';
 
 const Hapi = require('hapi');
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 
 // bring your own validation function
 /*const validate = async function (decoded, request) {
@@ -93,7 +93,7 @@ server.route({
         var newPass;
         if(employee_num===undefined)
             employee_num = 2;
-        bcrypt.hash(password, 10, function(err, hash) {
+        /*bcrypt.hash(password, 10, function(err, hash) {
                console.log(hash);
                newPass = hash;
                connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
@@ -102,10 +102,10 @@ server.route({
                 reply('Employee Added: ' + first_name + ', '+ last_name);
                 console.log(results);
             });
-          });
+          });*/
     }
 });
-
+/*
 //login route
 server.route({
         method: 'POST',
@@ -127,7 +127,7 @@ server.route({
               });
         });
       }
-});
+});*/
 
 //User getting all of their reviews
 server.route({

@@ -15,6 +15,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class RegistrationComponent implements OnInit {
 
 	public user: User;
+	public myForm: FormGroup;
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
@@ -24,14 +25,24 @@ export class RegistrationComponent implements OnInit {
 	ngOnInit() {
 		this.user = new User();
 
-		/*
-		this.user = new FormGroup({
-			'name': new FormControl(this.user.name, [
-			  Validators.required,
-			  Validators.minLength(4),
+		
+		this.myForm = new FormGroup({
+			name: new FormGroup({
+				firstName: new FormControl('', Validators.required), 
+				lastName: new FormControl('', Validators.required),
+			}),
+			email: new FormControl('', [ 
+				Validators.required,
+				Validators.pattern("[^ @]*@[^ @]*") 
 			]),
-		  });
-		  */
+			password: new FormControl('', [
+				Validators.minLength(8), 
+				Validators.required
+			]),
+
+
+		});
+		
 
 	}
 
