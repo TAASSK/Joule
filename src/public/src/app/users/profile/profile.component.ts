@@ -4,16 +4,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+/*
+ * Models
+ * */
+import {
+	Review,
+	User
+} from '../../shared';
+
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
 
-	id: number = 101;
-	username: string = 'John Doe';
-	jobTitle: string = 'Employee';
-	workPlace: string = 'Random Corp.';
+	user: User;
+	reviews: Array<Review>;
 
 	overallRating: number = 0.74;
 	recommend: number = 1;
@@ -21,7 +27,19 @@ export class ProfileComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router
-	) { }
+	) {
+
+		this.user = new User();
+
+		this.user.id = 101;
+		this.user.email = "jp.joule18@gojoule.me";
+		this.user.firstName = "John";
+		this.user.lastName = "Doe";
+		this.user.jobTitle = "Employee";
+		this.user.employer = "Random Corp.";
+		this.user.location = "Dallas, TX";
+
+	}
 
 	ngOnInit() { }
 

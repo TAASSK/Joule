@@ -32,8 +32,9 @@
 
 		<section class="profile-employee-information">
 
-			<h1>{{ username }}</h1>
-			<h2>{{ jobTitle }}, {{ workPlace }}</h2>
+			<h1>{{ user.firstName }} {{ user.lastName }}</h1>
+			<h2>{{ user.jobTitle }}, {{ user.employer }}</h2>
+			<h3>{{ user.location }}</h3>
 
 		</section>
 
