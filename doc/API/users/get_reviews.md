@@ -18,6 +18,7 @@ Returns all reviews for a user of a given ID.
 {
 	"reviews": [
 		{
+			"review_id": 101,
 			"job_title": "Brewer",
 			"employer": "Self Employed"
 			"quality_rating": 78,
@@ -29,6 +30,7 @@ Returns all reviews for a user of a given ID.
 		...
 
 		{
+			"review_id": 694,
 			"job_title": "Scientist",
 			"employer": "London Electrical Society",
 			"quality_rating": 50,
