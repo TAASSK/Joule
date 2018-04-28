@@ -23,7 +23,8 @@ Authorization: Bearer <token>
 	"last_name": "[last name]",
 	"password": "[password in plain text]",
 	"job_title": "[job title]",
-	"employer": "[employer]"
+	"employer": "[employer]",
+	"location": "[location]"
 }
 ```
 
@@ -38,7 +39,8 @@ Updating employment information:
 	"last_name": null,
 	"password": null,
 	"job_title": "Brewer, Science Hobbyist",
-	"employer": "Self Employed"
+	"employer": "Self Employed",
+	"location": "Lancashire, UK"
 }
 ```
 
@@ -51,7 +53,8 @@ Changing password:
 	"last_name": null,
 	"password": "pa$$w0rd",
 	"job_title": null,
-	"employer": null
+	"employer": null,
+	"location": null
 }
 ```
 

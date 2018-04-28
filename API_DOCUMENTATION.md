@@ -20,7 +20,5 @@
 ### Users
 
 * [Create Review for User](doc/API/users/create_review.md) : `POST /api/users/{user_id}/reviews`
-* [Update Review](doc/API/users/update_review.md) : `PUT /api/users/{user_id}/reviews/{review_id}`
 * [Update User](doc/API/users/update_user.md) : `PUT /api/users/{user_id}`
-* [Delete Review](doc/API/users/delete_review.md) : `DELETE /api/users/{user_id}/reviews/{review_id}`
 * [Delete User](doc/API/users/delete_user.md) : `DELETE /api/users/{user_id}`
