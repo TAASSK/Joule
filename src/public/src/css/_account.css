@@ -7,18 +7,27 @@
 	flex-direction: column;
 	justify-content: start;
 	margin: 0;
-	padding: 1rem 0;
-	background: #908299;
+	padding: 3rem 0;
+/*	background: #908299;*/
+	background: #3D0060;
 	color: #fff;
 	width: 15rem;
+	font-family: 'Archivo-Web';
 }
 
 .account-tabnav-item {
-	padding: 0.25rem 1rem;
+	padding: 0.25rem 1.5rem;
 }
 
 .account-tabnav-item:hover {
-	background: #84778c;
+/*	background: #84778c;*/
+	background: #8f6ea3;
+}
+
+.account-tabnav-item-current, .account-tabnav-item-current:hover {
+/*	background: #fff;
+	color: #210b2d;*/
+	text-decoration: underline;
 }
 
 .account-settings-pane {
