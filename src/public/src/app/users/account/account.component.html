@@ -11,7 +11,7 @@
 			<ul class="navbar-nav">
 				<input type="search" class="nav-search-bar" placeholder="Search">
 				<li class="nav-item">
-					<a class="nav-link" href="#">Profile</a>
+					<a class="nav-link" [routerLink]="['/user', user.id]">Profile</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Log Out</a>
@@ -24,7 +24,25 @@
 
 </header> <!-- .row (header) -->
 
-<section class="site-content">
-	<h1>Account Component</h1>
-	<p>The account component <a href="#">works!</a></p>
-</section> <!-- .row (section) -->
+<section class="site-content no-padding">
+
+	<div class="account-container">
+
+		<ul class="account-tabnav">
+			<li class="account-tabnav-item">
+				Profile
+			</li>
+			<li class="account-tabnav-item">
+				Security
+			</li>
+		</ul>
+
+		<section class="account-settings-pane">
+
+			<div class="test-item">Item One</div>
+
+		</section>
+
+	</div>
+
+</section>

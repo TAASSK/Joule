@@ -2,7 +2,7 @@
  * Angular library
  * */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /*
  * Models
@@ -17,7 +17,9 @@ export class AccountComponent implements OnInit {
 
 	user: User;
 
-	constructor() {
+	constructor(
+		private router: Router
+	) {
 
 		this.user = new User();
 
