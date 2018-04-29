@@ -12,6 +12,7 @@
 	"dependencies": {
 		"bcrypt": "^2.0.1",
 		"hapi": "^16.6.3",
+		"jsonwebtoken": "^8.2.1",
 		"mysql": "^2.15.0",
 		"node": "^9.11.0",
 		"nodemon": "^1.17.1"

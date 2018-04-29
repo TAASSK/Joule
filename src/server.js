@@ -3,6 +3,7 @@
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 var id = Math.floor((Math.random()*800) + 120);
+//var jwt = require('jsonwebtoken');
 
 // bring your own validation function
 /*const validate = async function (decoded, request) {
@@ -82,34 +83,77 @@ server.route({
     method: 'POST',
     path: '/newUser',
     handler: function(request, reply) {
-        var username = request.payload.username;
-        var password = request.payload.password;
-        var first_name = request.payload.first_name;
-        var last_name = request.payload.last_name;
-        var employee_num = request.payload.employee_num;
-        var department_name = request.payload.department_name;
-        var position = request.payload.position;
-        var email = request.payload.email;
-        var employer = request.payload.employer;
-        var location = request.payload.location;
-        var newPass;
-        if(employee_num===undefined){
-            employee_num = id;
-            id+=1;
-        }
-        bcrypt.hash(password, 10, function(err, hash) {
-               newPass = hash;
-               connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, employee_num, department_name, position, email, employer, location) VALUES("' + username + '", "' + newPass + '", "' + first_name + '", "' + last_name + '","' + employee_num + '","' + department_name + '", "' + position + '", "' + email + '", "' + employer +'", "' + location + '")', function (error, results, fields) {
-                if (error)
-                    throw error;
-                reply('Employee Added: ' + first_name + ', '+ last_name);
-                console.log(results);
+        var user_payload = request.payload;
+        var password = user_payload['password'];
+        var first_name = user_payload['first_name'];
+        var last_name = user_payload['last_name'];
+        var email = user_payload['email'];
+
+        connection.query('SELECT first_name FROM employee WHERE email= ?',[email], function (error, results, fields) { 
+            if (error)
+                throw error;
+            if(results.length > 0)
+               reply("Account already exists for user with given email address.");//.code(409);
+            else
+                return;
+        });
+        if(password===undefined||first_name===undefined||last_name===undefined||email===undefined)
+            console.log("Request body had missing or malformed fields.").code(400);
+        else{
+            var newPass;
+            var employee_id = id;
+            id += 1;
+            bcrypt.hash(password, 10, function(err, hash) {
+                newPass = hash;
+                console.log(password)
+                console.log(first_name)
+                console.log(last_name)
+                console.log(email)
+
+                // connection.query('INSERT INTO employee(username,password_hashes,first_name,last_name,employee_num,department_name,position,email,employer,location) VALUES(username = ?,password_hashes = ?,first_name = ?,last_name = ?,employee_num = employee_num,department_name = ?,position = ?,email = ?,employer = ?,location = ?)',[null,newPass,first_name,last_name,employee_num,null,null,email,null,null], function (error, results, fields) {
+                
+                var queryString = `INSERT INTO employee (
+                    password_hashes,
+                    first_name,
+                    last_name,
+                    email,
+                    employee_id)
+                    VALUES 
+                    (
+                        password_hashes,
+                        first_name,
+                        last_name,
+                        email,
+                        employee_id)
+                    `;
+
+                connection.query(
+                    queryString,
+                    [
+                        newPass,
+                        first_name,
+                        last_name,
+                        email,
+                        employee_id
+                    ],
+                    function (error, results, fields) {
+                        if(error) {
+                            throw error;
+                        }
+                        
+                        if(results != []) {
+                            reply('Successfully created account').code(200);
+                        }
+                        //else
+                        //  reply("Experienced error when attempting to create the user.").code(500);
+                        console.log(results);
+                });
             });
-          });
+        }
     }
 });
 
-//login route
+//login route (NOT PROTECTED)
 server.route({
         method: 'POST',
         path: '/login',
@@ -121,25 +165,31 @@ server.route({
                   throw error;
               console.log(results[0].password_hashes);
               var hash = results[0].password_hashes;
+              /*const response = {data: "token goes here", statusCode: 200,
+                                success: false, message: "unable to login with provided credentials.", statusCode : 400} */
+              //return response;
               bcrypt.compare(password, hash, function(err, res) {
                   console.log(res);
                   if(res==true)
-                    reply("login successful");
-                  else 
-                    reply("access denied");
+                    reply("token goes here").code(200);//reply("login successful");
+                  else if(res==false) 
+                    reply("unable to login with given credentials.").code(400);
+                  else
+                    reply("Experienced error when attempting to verify the credentials.").code(500);
               });
         });
       }
 });
 
-//User getting all of their reviews
+//User getting all of their reviews (PROTECTED)
 server.route({
     method: 'GET',
     path: '/getEmployeeRevs/{eid}',
     handler: function (request, reply) {
         console.log('Server processing a /getEmployeeRevs request');
         const eid = request.params.eid;
-        connection.query('SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num="' + eid + '"', function (error, results, fields) {
+        var sql = 'SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num= ' + connection.escape(eid);
+        connection.query(sql, function (error, results, fields) {
             if (error)
                 throw error;
             reply(results);
@@ -150,21 +200,21 @@ server.route({
 });
 
 //SEARCH ROUTES
-//search by company name or by name, using "first_name last_name" format
+//search by company name or by name, using "first_name last_name" format (PROTECTED)
 server.route({
     method: 'GET',
     path: '/company/{name}',
     handler: function (request, reply) {
         console.log('Server processing a /company/{name} request');
         var name = request.params.name;
-        console.log(name);
+        connection.escapeId(console.log(name));
         connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error1, results1, fields1) {
             //if (error)
                 //throw error;
             var isEmpty = (results1 || []).length === 0;
             if (isEmpty) {
                 var nameArr = name.split(" ");
-                connection.query('SELECT first_name,last_name FROM employee WHERE first_name="' + nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
+                connection.query('SELECT first_name,last_name FROM employee WHERE first_name="' +nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
                     reply (results);
                     console.log(results);
                 });
@@ -177,7 +227,7 @@ server.route({
     }
 });
 
-//Getting all employee info
+//Getting all employee info 
 server.route({
     method: 'GET',
     path: '/getEmployees',
@@ -211,7 +261,7 @@ server.route({
     }
 });
 
-//Deleting a user and all of their reviews
+//Deleting a user and all of their reviews (PROTECTED)
 server.route({
     method: 'DELETE',
     path: '/deleteUser/{eid}',
