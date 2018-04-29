@@ -43,9 +43,5 @@ export class ProfileComponent implements OnInit {
 
 	ngOnInit() { }
 
-	gotoAccount(id: number) {
-		this.router.navigateByUrl('/user/'+String(id)+'/account');
-	}
-
 }
 
