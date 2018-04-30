@@ -42,6 +42,14 @@
 
 <section class="site-content">
 
-	<h1>Results for: {{ query }}</h1>
+	<h1>Results</h1>
+	<p>{{ results.length }} results found for {{ query }}.</p>
+
+	<div
+	 *ngFor="let result of results"
+	 class="search-result-container"
+	>
+		<p>{{ result.firstName }} {{ result.lastName }}</p>
+	</div>
 
 </section>
