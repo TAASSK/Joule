@@ -8,7 +8,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 /*
  * Directives
  * */
-import { FocusOnLoadDirective } from './directives';
+import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 
 @NgModule({
 	imports: [
