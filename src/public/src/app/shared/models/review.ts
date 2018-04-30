@@ -22,7 +22,19 @@ export class Review implements Serializable<Review> {
 		efficiencyRating: number,
 		comment: string,
 		datestamp: Date = new Date()
-	) {}
+	) {
+
+		this.id = id;
+		this.jobTitle = jobTitle;
+		this.employer = employer;
+		this.accountabilityRating = accountabilityRating;
+		this.availabilityRating = availabilityRating;
+		this.politenessRating = politenessRating;
+		this.efficiencyRating = efficiencyRating;
+		this.comment = comment;
+		this.datestamp = datestamp;
+
+	}
 
 	deserialize(input: object): Review {
 		let review = new Review(
