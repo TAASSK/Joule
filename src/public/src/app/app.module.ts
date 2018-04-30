@@ -49,7 +49,6 @@ let defaultRoute = 'home';
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
 			{ path: 'registration', component: RegistrationComponent },
-			{ path: 'profile', component: ProfileComponent},
 			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		]),
