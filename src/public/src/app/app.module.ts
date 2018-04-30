@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 /*
  * Modules
  * */
+import { SharedModule } from './shared/shared.module';
 import { UsersModule } from './users/users.module';
 
 /*
@@ -23,17 +24,18 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './users/profile/profile.component';
 
 /*
- * Directives
+ * Services
  * */
-import { FocusOnLoadDirective, SignupService } from './shared';
-import { AuthenticationService } from './shared/services/authentication.service';
+import {
+	AuthenticationService,
+	SignupService
+} from './shared';
 
 let defaultRoute = 'home';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		FocusOnLoadDirective,
 		HomePageComponent,
 		LoginComponent,
 		RegistrationComponent
@@ -47,13 +49,16 @@ let defaultRoute = 'home';
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
 			{ path: 'registration', component: RegistrationComponent },
-			{ path: 'profile', component: ProfileComponent},
 			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		]),
+		SharedModule,
 		UsersModule
 	],
-	providers: [SignupService, AuthenticationService],
+	providers: [
+		AuthenticationService,
+		SignupService
+	],
 	bootstrap: [
 		AppComponent
 	]
