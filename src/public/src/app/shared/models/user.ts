@@ -6,7 +6,7 @@ export class User implements Serializable<User> {
 	email: string;
 	firstName: string;
 	lastName: string;
-	password: string;
+	password?: string;
 	jobTitle?: string;
 	employer?: string;
 	location?: string;
@@ -14,14 +14,13 @@ export class User implements Serializable<User> {
 	constructor() {}
 
 	deserialize(input: object) {
-		let user = new User();
+		var user = new User();
 
 		user.id = input['id'];
 		user.email = input['email'];
-		user.firstName = input['first_name'];
-		user.lastName = input['last_name']; 
-		user.password = input['password'];
-		user.jobTitle = input['job_title'];
+		user.firstName = input['firstName'];
+		user.lastName = input['lastName'];
+		user.jobTitle = input['jobTitle'];
 		user.employer = input['employer'];
 		user.location = input['location'];
 

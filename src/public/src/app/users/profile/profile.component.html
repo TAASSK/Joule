@@ -5,35 +5,53 @@
 		<div class="navbar-items">
 
 			<a class="navbar-brand" [routerLink]="['/home']">
-				<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="100" height="100" alt="Joule">
-			</a> <!-- .navbar-brand -->
+				<img
+				 class="navbar-logo"
+				 src="/assets/img/logo/joule-cropped-transparent.svg"
+				 width="100"
+				 height="100"
+				 alt="Joule"
+				>
+			</a>
 
 			<ul class="navbar-nav">
-				<input type="search" class="nav-search-bar" placeholder="Search">
+				<app-search-bar class="nav-search-bar-container"></app-search-bar>
 				<li class="nav-item">
-					<a class="nav-link" [routerLink]="['/user', id, 'account']">Account</a>
+					<a 
+					 class="nav-link"
+					 [routerLink]="['/user', user.id, 'account', 'profile']"
+					>
+						Account
+					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Log Out</a>
+					<a class="nav-link" href="#">
+						Log Out
+					</a>
 				</li>
 			</ul>
 
-		</div> <!-- .collapse .navbar-collapse -->
+		</div>
 
-	</nav> <!-- navbar -->
+	</nav>
 
-</header> <!-- .row (header) -->
+</header>
 
 <section class="site-content">
 
 	<section class="profile-header">
 
-		<img class="profile-picture" src="/assets/img/np_profile.svg" alt="profile-picture">
+		<img
+		 class="profile-picture"
+		 src="/assets/img/np_profile.svg"
+		 alt="profile-picture"
+		>
 
 		<section class="profile-employee-information">
 
-			<h1>{{ username }}</h1>
-			<h2>{{ jobTitle }}, {{ workPlace }}</h2>
+			<h1>{{ user.firstName }} {{ user.lastName }}</h1>
+			<h2>{{ user.jobTitle }}, {{ user.employer }}</h2>
+			<h3>{{ user.location }}</h3>
 
 		</section>
 
@@ -41,17 +59,41 @@
 
 	<section class="profile-dashboard">
 
-		<app-rating-box [rating]="overallRating" [descriptor]="'Rating'"></app-rating-box>
-		<app-rating-box [rating]="recommend" [descriptor]="'Recommend'"></app-rating-box>
+		<app-rating-box
+		 [rating]="avgAccountabilityRating"
+		 [descriptor]="'Accountability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgAvailabilityRating"
+		 [descriptor]="'Availability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgPolitenessRating"
+		 [descriptor]="'Politeness'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgEfficiencyRating"
+		 [descriptor]="'Efficiency'"
+		>
+		</app-rating-box>
 
 	</section>
 
 	<section class="profile-reviews">
 
-		<app-review class="review-component"></app-review>
-		<app-review class="review-component"></app-review>
-		<app-review class="review-component"></app-review>
+		<app-review
+		 *ngFor="let review of reviews"
+		 class="review-component"
+		 [review]="review"
+		>
+		</app-review>
 
 	</section>
 
-</section> <!-- .row (section) -->
+</section>

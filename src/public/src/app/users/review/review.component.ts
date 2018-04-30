@@ -7,14 +7,12 @@ import {
 	NgModule,
 	OnInit
 } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 /*
  * Models
  * */
-import {
-	Review,
-	User
-} from '../../shared';
+import { Review } from '../../shared';
 
 @Component({
 	selector: 'app-review',
@@ -22,59 +20,25 @@ import {
 })
 export class ReviewComponent implements OnInit {
 
-	user: User;
+	@Input()
 	review: Review;
 
 	constructor() {
 
-		this.user = new User();
-		this.review = new Review();
-
-		this.user.email = "";
-		this.user.email = "";
-		this.user.firstName = "";
-		this.user.lastName = "";
-		this.user.password = "";
-		this.user.jobTitle = "";
-		this.user.employer = "";
-		this.user.location = "";
-
-		this.review.jobTitle = "";
-		this.review.employer = "";
-		this.review.qualityRating = 78;
-		this.review.recommendRating = 84;
-		this.review.comment = "";
-		this.review.datestamp = new Date();
-
-		var userObj = {
-			email: this.email,
-			first_name: this.firstName,
-			last_name: this.lastName,
-			password: this.password,
-			job_title: this.jobTitle,
-			employer: this.employer,
-			location: this.location
-		};
-
-		var reviewObj = {
-			job_title: this.jobTitle,
-			employer: this.employer,
-			quality_rating: this.qualityRating,
-			recommend_rating: this.recommendRating,
-			comment: this.comment,
-			datestamp: this.datestamp
-		};
+		// this.review = new Review(
+		// 	101,
+		// 	'Employee',
+		// 	'Random Corp.',
+		// 	92,
+		// 	44,
+		// 	34,
+		// 	13,
+		// 	`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi ante, finibus ut vehicula ac, cursus non nisl. Praesent malesuada, urna at volutpat semper, metus dolor faucibus turpis, vitae suscipit elit tellus sed est. Proin porta aliquet nisi sit amet ultrices. Ut efficitur tortor lectus, quis facilisis quam consequat sit.`,
+		// 	new Date()
+		// );
 
 	}
 
 	ngOnInit() { }
-
-	logUserSerialize() {
-		console.log(this.user.serialize());
-	}
-
-	logReviewSerialize() {
-		console.log(this.review.serialize());
-	}
 
 }

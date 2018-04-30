@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 //import { SignupService } from '../shared/services/index';
 import { User, SignupService } from '../shared';
 
+/*
+ * Angular library
+ * */
 
 @Component({
 	selector: 'app-registration',
@@ -13,7 +16,8 @@ import { User, SignupService } from '../shared';
 })
 export class RegistrationComponent implements OnInit {
 
-	public user: User;
+	user: User;
+
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
@@ -23,16 +27,13 @@ export class RegistrationComponent implements OnInit {
 	ngOnInit() {
 		this.user = new User();
 
-	 }
+	}
 
-	
-	public save(){
+	save(){
 		//this.user.id = 15789;
 		this.signup.add(this.user).subscribe(x => {
 			this.router.navigateByUrl('user/{user.id}');
 		});
 	}
-	
-	
 
 }

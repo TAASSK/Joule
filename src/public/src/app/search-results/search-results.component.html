@@ -15,7 +15,13 @@
 			</a>
 
 			<ul class="navbar-nav">
-				<app-search-bar class="nav-search-bar-container"></app-search-bar>
+
+				<app-search-bar
+				 class="nav-search-bar-container"
+				 [query]="query"
+				>
+				</app-search-bar>
+
 				<li class="nav-item">
 					<a class="nav-link" [routerLink]="['/registration']">
 						Sign Up
@@ -35,6 +41,7 @@
 </header>
 
 <section class="site-content">
-	<h1>Home Page Component</h1>
-	<p>The home page <a href="#">works!</a></p>
+
+	<h1>Results for: {{ query }}</h1>
+
 </section>
