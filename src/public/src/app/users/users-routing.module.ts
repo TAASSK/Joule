@@ -18,6 +18,7 @@ const routes: Routes = [
 		path: 'user/:id/account',
 		component: AccountComponent,
 		children: [
+			{ path: '', pathMatch: 'full', redirectTo: 'profile' },
 			{ path: 'profile', component: ProfileSettingsComponent },
 			{ path: 'security', component: SecuritySettingsComponent }
 		]

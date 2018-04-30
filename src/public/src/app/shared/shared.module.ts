@@ -6,6 +6,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 /*
+ * Components
+ * */
+import { SearchBarComponent } from './components/search-bar.component';
+
+/*
  * Directives
  * */
 import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
@@ -16,10 +21,12 @@ import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 		HttpClientModule
 	],
 	declarations: [
-		FocusOnLoadDirective
+		FocusOnLoadDirective,
+		SearchBarComponent
 	],
 	exports: [
-		FocusOnLoadDirective
+		FocusOnLoadDirective,
+		SearchBarComponent
 	]
 })
 export class SharedModule { }

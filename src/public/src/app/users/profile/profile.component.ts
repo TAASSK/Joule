@@ -31,15 +31,15 @@ export class ProfileComponent implements OnInit {
 		private router: Router
 	) {
 
-		this.user = new User(
-			101,
-			'jp.joule18@gojoule.me',
-			'John',
-			'Doe',
-			'Employee',
-			'Random Corp.',
-			'Dallas, TX'
-		);
+		this.user = new User();
+
+		this.user.id = 101;
+		this.user.email = 'jp.joule18@gojoule.me';
+		this.user.firstName = 'John';
+		this.user.lastName = 'Doe';
+		this.user.jobTitle = 'Employee';
+		this.user.employer = 'Random Corp.';
+		this.user.location = 'Dallas, TX';
 
 		this.reviews.push(
 			new Review(
@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
 			)
 		);
 
-		// average all ratings
+		// calculate the average for all rating types in all reviews
 		this.avgAccountabilityRating = Math.round(this.reviews.reduce(
 		(prevVal, elem) => {
 			return prevVal + elem.accountabilityRating

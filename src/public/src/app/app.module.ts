@@ -20,8 +20,9 @@ import { UsersModule } from './users/users.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './users/profile/profile.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 /*
  * Services
@@ -38,17 +39,19 @@ let defaultRoute = 'home';
 		AppComponent,
 		HomePageComponent,
 		LoginComponent,
-		RegistrationComponent
+		RegistrationComponent,
+		SearchResultsComponent
 	],
 	imports: [
-		BrowserModule,
 		BrowserAnimationsModule,
-		HttpClientModule,
+		BrowserModule,
 		FormsModule,
+		HttpClientModule,
 		RouterModule.forRoot([
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
 			{ path: 'registration', component: RegistrationComponent },
+			{ path: 'search', component: SearchResultsComponent },
 			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		]),
