@@ -41,7 +41,11 @@
 
 	<section class="profile-header">
 
-		<img class="profile-picture" src="/assets/img/np_profile.svg" alt="profile-picture">
+		<img
+		 class="profile-picture"
+		 src="/assets/img/np_profile.svg"
+		 alt="profile-picture"
+		>
 
 		<section class="profile-employee-information">
 
@@ -55,16 +59,40 @@
 
 	<section class="profile-dashboard">
 
-		<app-rating-box [rating]="overallRating" [descriptor]="'Rating'"></app-rating-box>
-		<app-rating-box [rating]="recommend" [descriptor]="'Recommend'"></app-rating-box>
+		<app-rating-box
+		 [rating]="avgAccountabilityRating"
+		 [descriptor]="'Accountability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgAvailabilityRating"
+		 [descriptor]="'Availability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgPolitenessRating"
+		 [descriptor]="'Politeness'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgEfficiencyRating"
+		 [descriptor]="'Efficiency'"
+		>
+		</app-rating-box>
 
 	</section>
 
 	<section class="profile-reviews">
 
-		<app-review class="review-component"></app-review>
-		<app-review class="review-component"></app-review>
-		<app-review class="review-component"></app-review>
+		<app-review
+		 *ngFor="let review of reviews"
+		 class="review-component"
+		 [review]="review"
+		>
+		</app-review>
 
 	</section>
 

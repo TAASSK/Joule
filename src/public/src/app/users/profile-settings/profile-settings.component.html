@@ -1,44 +1,121 @@
-<h1>Profile</h1>
+<section class="account-settings-pane">
 
-<!-- First Name -->
-<section class="form-group">
-	<label for="registrationInputFirstName">
-		First Name
-		<input
-		 type="text"
-		 class="form-control"
-		 id="registrationInputFirstName"
-		 placeholder="First name"
-		 [value]="user.firstName"
-		 focusOnLoad
-		>
-	</label>
-</section>
+	<section class="account-settings-pane-row">
 
-<!-- Last Name -->
-<section class="form-group">
-	<label for="registrationInputLastName">
-		Last Name
-		<input
-		 type="text"
-		 class="form-control"
-		 id="registrationInputLastName"
-		 placeholder="Last name"
-		 [value]="user.lastName"
-		>
-	</label>
-</section>
+		<h1>Profile Information</h1>
 
-<!-- Email address -->
-<section class="form-group">
-	<label for="registrationInputEmailAddress">
-		Email address
-		<input
-		 type="email"
-		 class="form-control"
-		 id="registrationInputEmailAddress"
-		 placeholder="Email address"
-		 [value]="user.email"
-		>
-	</label>
+		<form>
+
+			<section class="form-row">
+
+				<!-- First name -->
+				<section class="form-group col-md-6">
+					<label for="profileInputFirstName">
+						First Name
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputFirstName"
+					 placeholder="First name"
+					 [value]="user.firstName"
+					 focusOnLoad
+					>
+				</section>
+
+				<!-- Last name -->
+				<section class="form-group col-md-6">
+					<label for="profileInputLastName">
+						Last Name
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputLastName"
+					 placeholder="Last name"
+					 [value]="user.lastName"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Email address -->
+				<section class="form-group col-md-12">
+					<label for="profileInputEmailAddress">
+						Email address
+					</label>
+					<input
+					 type="email"
+					 class="form-control"
+					 id="profileInputEmailAddress"
+					 placeholder="Email address"
+					 [value]="user.email"
+					>
+					<small id="profileInputEmailAddressHelpText" class="form-text text-muted">
+						Email will not be displayed publicly.
+					</small>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Job title -->
+				<section class="form-group col-md-12">
+					<label for="profileInputJobTitle">
+						Job Title
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputJobTitle"
+					 placeholder="Job title"
+					 [value]="user.jobTitle"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Employer -->
+				<section class="form-group col-md-12">
+					<label for="profileInputEmployer">
+						Employer
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputEmployer"
+					 placeholder="Employer"
+					 [value]="user.employer"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Location -->
+				<section class="form-group col-md-12">
+					<label for="profileInputLocation">
+						Location
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputLocation"
+					 placeholder="Location"
+					 [value]="user.location"
+					>
+				</section>
+
+			</section>
+
+		</form>
+
+	</section>
+
 </section>

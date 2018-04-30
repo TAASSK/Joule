@@ -25,7 +25,15 @@ export class RegistrationComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.user = new User();
+		this.user = new User(
+			101,
+			'jp.joule18@gojoule.me',
+			'John',
+			'Doe',
+			'Employee',
+			'Random Corp.',
+			'Dallas, TX'
+		);
 	}
 
 	save(){

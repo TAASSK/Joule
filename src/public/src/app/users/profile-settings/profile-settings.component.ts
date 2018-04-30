@@ -18,15 +18,15 @@ export class ProfileSettingsComponent implements OnInit {
 
 	constructor() {
 
-		this.user = new User();
-
-		this.user.id = 101;
-		this.user.email = "jp.joule18@gojoule.me";
-		this.user.firstName = "John";
-		this.user.lastName = "Doe";
-		this.user.jobTitle = "Employee";
-		this.user.employer = "Random Corp.";
-		this.user.location = "Dallas, TX";
+		this.user = new User(
+			101,
+			'jp.joule18@gojoule.me',
+			'John',
+			'Doe',
+			'Employee',
+			'Random Corp.',
+			'Dallas, TX'
+		);
 
 	}
 
