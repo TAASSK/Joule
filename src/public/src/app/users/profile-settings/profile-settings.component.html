@@ -1,0 +1,44 @@
+<h1>Profile</h1>
+
+<!-- First Name -->
+<section class="form-group">
+	<label for="registrationInputFirstName">
+		First Name
+		<input
+		 type="text"
+		 class="form-control"
+		 id="registrationInputFirstName"
+		 placeholder="First name"
+		 [value]="user.firstName"
+		 focusOnLoad
+		>
+	</label>
+</section>
+
+<!-- Last Name -->
+<section class="form-group">
+	<label for="registrationInputLastName">
+		Last Name
+		<input
+		 type="text"
+		 class="form-control"
+		 id="registrationInputLastName"
+		 placeholder="Last name"
+		 [value]="user.lastName"
+		>
+	</label>
+</section>
+
+<!-- Email address -->
+<section class="form-group">
+	<label for="registrationInputEmailAddress">
+		Email address
+		<input
+		 type="email"
+		 class="form-control"
+		 id="registrationInputEmailAddress"
+		 placeholder="Email address"
+		 [value]="user.email"
+		>
+	</label>
+</section>

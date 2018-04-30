@@ -8,36 +8,32 @@
 	justify-content: start;
 	margin: 0;
 	padding: 3rem 0;
-/*	background: #908299;*/
-	background: #3D0060;
-	color: #fff;
+	background-color: #3D0060;
 	width: 15rem;
 	font-family: 'Archivo-Web';
 }
 
+.account-tabnav-link, .account-tabnav-link:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
 .account-tabnav-item {
 	padding: 0.25rem 1.5rem;
+	color: #fff;
 }
 
-.account-tabnav-item:hover {
-/*	background: #84778c;*/
-	background: #8f6ea3;
+.account-tabnav-item-current {
+	background-image: url('../assets/img/circle.svg');
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0.5rem center;
 }
 
-.account-tabnav-item-current, .account-tabnav-item-current:hover {
-/*	background: #fff;
-	color: #210b2d;*/
-	text-decoration: underline;
+.account-tabnav-link:hover {
+	background-color: #8f6ea3;
 }
 
 .account-settings-pane {
 	padding: 1.75rem 1.5rem;
-}
-
-.test-item {
-	background: rgba(0,0,255,0.2);
-	border: 3px solid #00f;
-	width: 60px;
-	margin: 10px;
-	text-align: center;
 }
