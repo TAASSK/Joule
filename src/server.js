@@ -101,8 +101,6 @@ server.route({
             console.log("Request body had missing or malformed fields.").code(400);
         else{
             var newPass;
-            var employee_id = id;
-            id += 1;
             bcrypt.hash(password, 10, function(err, hash) {
                 newPass = hash;
                 console.log(password)
@@ -116,25 +114,22 @@ server.route({
                     password_hashes,
                     first_name,
                     last_name,
-                    email,
-                    employee_id)
+                    email)
                     VALUES 
                     (
                         password_hashes,
                         first_name,
                         last_name,
-                        email,
-                        employee_id)
+                        email
+                    ) 
                     `;
-
                 connection.query(
                     queryString,
                     [
                         newPass,
                         first_name,
                         last_name,
-                        email,
-                        employee_id
+                        email
                     ],
                     function (error, results, fields) {
                         if(error) {
