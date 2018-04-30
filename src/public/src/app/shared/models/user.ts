@@ -11,7 +11,27 @@ export class User implements Serializable<User> {
 	employer?: string;
 	location?: string;
 
-	constructor() {}
+	constructor(
+		id: number = 0,
+		email: string,
+		firstName: string,
+		lastName: string,
+		password: string = '',
+		jobTitle: string = '',
+		employer: string = '',
+		location: string = ''
+	) {
+
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.jobTitle = jobTitle;
+		this.employer = employer;
+		this.location = location;
+
+	}
 
 	deserialize(input: object) {
 		let user = new User();
