@@ -2,9 +2,7 @@
 
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
-var id = Math.floor((Math.random()*800) + 120);
 var jwt = require('jsonwebtoken');
-var id = 1;
 var secretkey = 'whatifwearealllivinginasimulation';
 
 const server = new Hapi.Server();
@@ -64,8 +62,11 @@ server.route({
                     //if the passwords match
                     if(res==true) {
                         //creates a token with an expiration of 10 minutes
+                        var now = new Date();
+                        var expiresAt = new Date(now.getTime() + 10*60000);
                         var response = {
-                            "token": jwt.sign({"employee_num": results[0].employee_num, exp: Math.floor(Date.now() / 1000) + (60 * 10)}, secretkey)
+                            "token": jwt.sign({"employee_num": results[0].employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
+                            "expires_at": expiresAt
                         };
                         reply(JSON.stringify(response)).code(200);
                     }
@@ -90,7 +91,7 @@ server.route({
     path: '/search',
     handler: function (request, reply) {
         var search_term = request.payload["search_term"];
-        connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + search_term + '"', function (error1, results1, fields1) {
+        connection.query('SELECT employee_num, first_name,last_name, position, employer FROM employee WHERE employer="' + search_term + '"', function (error1, results1, fields1) {
             if (error1) {
                 var response = {
                     "success": false,
@@ -101,7 +102,7 @@ server.route({
             var isEmpty = (results1 || []).length === 0;
             if (isEmpty) {
                 var nameArr = search_term.split(" ");
-                connection.query('SELECT first_name,last_name FROM employee WHERE first_name="' + nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
+                connection.query('SELECT employee_num, first_name,last_name, position, employer FROM employee WHERE first_name="' + nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
                     if (error) {
                         var response = {
                             "success": false,
@@ -110,17 +111,37 @@ server.route({
                         reply(JSON.stringify(response)).code(500);
                     }
                     else {
+                        var formattedResults = results.map( (elem) => {
+                            return {
+                                id: elem.employee_num,
+                                first_name: elem.first_name,
+                                last_name: elem.last_name,
+                                job_title: elem.position,
+                                employer: elem.employer
+                            };
+                        });
+                        //whether reviews exist for that user or not
                         var response = {
-                            "users": results
-                        };
+                            "users": formattedResults            
+                        }
                         reply(JSON.stringify(response)).code(200);
                     }
                 });
             }
             else {
+                var formattedResults = results1.map( (elem) => {
+                    return {
+                        id: elem.employee_num,
+                        first_name: elem.first_name,
+                        last_name: elem.last_name,
+                        job_title: elem.position,
+                        employer: elem.employer
+                    };
+                });
+                //whether reviews exist for that user or not
                 var response = {
-                    "users": results1
-                };
+                    "users": formattedResults            
+                }
                 reply(JSON.stringify(response)).code(200);
             }
         });
@@ -143,8 +164,6 @@ server.route({
         var password = request.payload["password"];
         var first_name = request.payload["first_name"];
         var last_name = request.payload["last_name"];
-        var employee_num = id;
-        id += 1;
         //if any data is missing
         if(password===undefined||first_name===undefined||last_name===undefined||email===undefined) {
             var response = {
@@ -169,10 +188,8 @@ server.route({
                     bcrypt.hash(password, 10, function(err, hash) {
                         newPass = hash;
                         //if all is good, insert the user into the table
-                        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, email, employee_num) VALUES(NULL,"' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '","'  + employee_num + '")', function (error, results, fields) {
+                        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, email) VALUES(NULL,"' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '")', function (error, results, fields) {
                             if (error) {
-                                console.log("TEST");
-                                console.log(error);
                                 var response = {
                                     "success": false,
                                     "message": "Experienced error when attempting to create the user."
@@ -212,6 +229,7 @@ server.route({
         //if the parameters are defined
         else {
             connection.query('SELECT employee_num, email, first_name, last_name, position, employer, location FROM employee WHERE employee_num="' + user_id + '"', function (error, results, fields) {
+                
                 if (error) {
                     var response = {
                         "success" : false,
@@ -219,7 +237,7 @@ server.route({
                     };
                     reply(JSON.stringify(response)).code(500);
                 }
-                if (results.length==0) {
+                else if (results.length==0) {
                     var response = {
                         "success" : false,
                         "message" : "The user with ID " +  user_id + " does not exist."
@@ -228,8 +246,14 @@ server.route({
                 }
                 else {
                     var response = {
-                        "message": results
-                    }
+                        id: results[0].employee_num,
+                        email: results[0].employee_num,
+                        first_name: results[0].first_name,
+                        last_name: results[0].last_name,
+                        job_title: results[0].position,
+                        employer: results[0].employer,
+                        location: results[0].location
+                    };
                     reply(JSON.stringify(response)).code(200);
                 }
             });
@@ -271,11 +295,27 @@ server.route({
                         };
                         reply(JSON.stringify(response)).code(500);
                     }
-                    //whether reviews exist for that user or not
-                    var response = {
-                        "reviews": results            
+                    else {
+                        var formattedResults = results.map( (elem) => {
+                            return {
+                                review_id: elem.review_id,
+                                job_title: elem.position,
+                                employer: elem.employer,
+                                hotness_rating: elem.hotness,
+                                availability_rating: elem.availability,
+                                accountability_rating: elem.accountability,
+                                politeness_rating: elem.politeness,
+                                efficiency_rating: elem.efficiency,
+                                comment: elem.comments,
+                                datestamp: new Date(elem.review_time)
+                            }
+                        });
+                        //whether reviews exist for that user or not
+                        var response = {
+                            "reviews": formattedResults            
+                        }
+                        reply(JSON.stringify(response)).code(200);
                     }
-                    reply(JSON.stringify(response)).code(200);
                 });
             }
         });
@@ -309,8 +349,11 @@ server.route({
         else {
             try {
                 var verified = jwt.verify(token, secretkey);
+                var now = new Date();
+                var expiresAt = new Date(now.getTime() + 10*60000);
                 var response = {
-                    "token": jwt.sign({"employee_num": verified.employee_num, exp: (Math.floor(Date.now() / 1000) + (60 * 10))}, secretkey)
+                        "token": jwt.sign({"employee_num": verified.employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
+                        "expires_at": expiresAt
                 };
                 reply(JSON.stringify(response)).code(200);
             } catch (error) {
@@ -325,7 +368,7 @@ server.route({
 });
 
 //Creating review for user
-//NOT DONE :( (TIME ERROR)
+//Done :)
 server.route({
     method: 'POST',
     path: '/users/{user_id}/reviews',
@@ -340,8 +383,9 @@ server.route({
         var politeness = request.payload["politeness_rating"];
         var efficiency = request.payload["efficiency_rating"];
         var comment = request.payload["comment"];
-        var datestamp = new Date(request.payload["datestamp"]);
-        //console.log(typeof(datestamp));
+        var datestamp = request.payload["datestamp"].split('T');
+        //var datestamp = request.payload["datestamp"];
+        // console.log(datestamp);
         //if any of the fields are missing
         if (token===undefined || receiver === undefined || job_title===undefined || employer === undefined || hotness===undefined || accountability === undefined
             || availability===undefined || politeness=== undefined || efficiency===undefined || comment === undefined || datestamp===undefined) {
@@ -375,8 +419,9 @@ server.route({
                         }
                         //now we know that that token was valid
                         else {
-                            connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments, employer, position, review_time) VALUES("' + receiver + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comment + '", "' + employer + '", "' + job_title + '","' + datestamp + '")', function (error, results, fields) {
+                            connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments, employer, position, review_time) VALUES("' + receiver + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comment + '", "' + employer + '", "' + job_title + '","' + datestamp[0] + ' ' + datestamp[1].substring(0, -1) + '")', function (error, results, fields) {
                                 if (error) {
+                                    console.log("ERROR HERE");
                                     var response = {
                                         "success": false,
                                         "message": "Experienced error when attempting to create a review for a user."
