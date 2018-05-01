@@ -17,7 +17,7 @@
 			<ul class="navbar-nav">
 				<app-search-bar class="nav-search-bar-container"></app-search-bar>
 				<li class="nav-item">
-					<a
+					<a 
 					 class="nav-link"
 					 [routerLink]="['/user', user.id, 'account', 'profile']"
 					>
@@ -49,7 +49,7 @@
 
 		<section class="profile-employee-information">
 
-			<h1>{{ user.first_name }} {{ user.last_name }}</h1>
+			<h1>{{ user.firstName }} {{ user.lastName }}</h1>
 			<h2>{{ user.jobTitle }}, {{ user.employer }}</h2>
 			<h3>{{ user.location }}</h3>
 
@@ -68,6 +68,12 @@
 		<app-rating-box
 		 [rating]="avgAccountabilityRating"
 		 [descriptor]="'Accountability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgAvailabilityRating"
+		 [descriptor]="'Availability'"
 		>
 		</app-rating-box>
 

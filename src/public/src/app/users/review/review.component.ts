@@ -5,43 +5,29 @@ import {
 	Component,
 	Input,
 	NgModule,
-	AfterViewInit
+	OnInit
 } from '@angular/core';
-import {
-	NgStyle,
-	DatePipe,
-	PercentPipe
-} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 /*
  * Models
  * */
 import { Review } from '../../shared';
 
-/*
- * Services
- * */
-import { RatingGradientService } from '../../shared';
-
 @Component({
 	selector: 'app-review',
 	templateUrl: './review.component.html',
 })
-export class ReviewComponent implements AfterViewInit {
+export class ReviewComponent implements OnInit {
 
 	@Input()
 	review: Review;
 
-	// shown ratings
-	public hotnessDisplayedRating: number = 0;
-	public accountabilityDisplayedRating: number = 0;
-	public politenessDisplayedRating: number = 0;
-	public efficiencyDisplayedRating: number = 0;
+	constructor() {
 
-	constructor(
-		private rg: RatingGradientService
-	) { }
 
-	ngAfterViewInit() { }
+	}
+
+	ngOnInit() { }
 
 }

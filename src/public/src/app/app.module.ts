@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 /*
  * Modules
@@ -29,7 +29,6 @@ import { SearchResultsComponent } from './search-results/search-results.componen
  * */
 import {
 	AuthenticationService,
-	RatingGradientService,
 	SignupService
 } from './shared';
 
@@ -48,7 +47,6 @@ let defaultRoute = 'home';
 		BrowserModule,
 		FormsModule,
 		HttpClientModule,
-    ReactiveFormsModule,
 		RouterModule.forRoot([
 			{ path: 'home', component: HomePageComponent },
 			{ path: 'login', component: LoginComponent },
@@ -62,7 +60,6 @@ let defaultRoute = 'home';
 	],
 	providers: [
 		AuthenticationService,
-		RatingGradientService,
 		SignupService
 	],
 	bootstrap: [

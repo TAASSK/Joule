@@ -14,8 +14,7 @@ COPY ./src/. $HOME/joule
 
 USER app
 WORKDIR $HOME/joule
-
-RUN npm install
+RUN npm install --silent --progress=false
 
 USER root
 RUN chown -R app:app $HOME/*
