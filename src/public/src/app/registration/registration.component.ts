@@ -32,7 +32,9 @@ export class RegistrationComponent implements OnInit {
 	save(){
 		//this.user.id = 15789;
 		this.signup.add(this.user).subscribe(x => {
-			this.router.navigateByUrl('user/{user.id}');
+         this.router.navigateByUrl('login');
+
+			// this.router.navigateByUrl('user/{user.id}');
 		});
 	}
 

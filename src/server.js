@@ -4,6 +4,7 @@ const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 var id = Math.floor((Math.random()*800) + 120);
 var jwt = require('jsonwebtoken');
+var id = 6;
 var secretkey = 'whatifwearealllivinginasimulation';
 
 const server = new Hapi.Server();
@@ -72,7 +73,7 @@ server.route({
                 reply(JSON.stringify(response)).code(500);
             }
             //if the email doesn't match any in the table
-            if (results.length == 0) {
+            if (results.length === 0) {
                 var response = {
                     "success": false,
                     "message": "Unable to log in with provided credentials."
@@ -165,6 +166,12 @@ server.route({
         var password = request.payload["password"];
         var first_name = request.payload["first_name"];
         var last_name = request.payload["last_name"];
+        var employee_num = id;
+        id += 1;
+        console.log(email);
+        console.log(password);
+        console.log(first_name);
+        console.log(last_name);
         //if any data is missing
         if(password===undefined||first_name===undefined||last_name===undefined||email===undefined) {
             var response = {
@@ -189,12 +196,13 @@ server.route({
                     bcrypt.hash(password, 10, function(err, hash) {
                         newPass = hash;
                         //if all is good, insert the user into the table
-                        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, email) VALUES(NULL,"' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '")', function (error, results, fields) {
+                        connection.query('INSERT INTO employee(password_hashes, first_name, last_name, email, employee_num) VALUES("' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '","' + employee_num +'")', function (error, results, fields) {
                             if (error) {
                                 var response = {
                                     "success": false,
                                     "message": "Experienced error when attempting to create the user."
                                 };
+                                console.log(error);
                                 reply(JSON.stringify(response)).code(500);
                             }
                             else {
@@ -437,9 +445,10 @@ server.route({
         var password = request.payload.password;
         var current_emp_no = request.payload.current_emp_no;
         var newPass;
+        /*
         bcrypt.hash(password,10,function(err,hash) {
             newPass = hash;
-        });
+        }); */
         var token = jwt.sign({
             emp_no:current_emp_no,
             email:email,
