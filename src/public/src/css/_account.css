@@ -1,0 +1,63 @@
+.account-container {
+	display: flex;
+}
+
+.account-tabnav {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	margin: 0;
+	padding: 3rem 0;
+	background-color: #3D0060;
+	width: 15rem;
+	font-family: 'Archivo-Web';
+}
+
+.account-tabnav-link, .account-tabnav-link:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.account-tabnav-item {
+	padding: 0.25rem 1.5rem;
+	color: #fff;
+}
+
+.account-tabnav-item-current {
+	background-image: url('../assets/img/circle.svg');
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0.5rem center;
+}
+
+.account-tabnav-link:hover {
+	background-color: #8f6ea3;
+}
+
+.account-settings-container {
+	padding: 1.75rem 1.5rem;
+}
+
+.account-settings-pane {
+	display: flex;
+	flex-direction: column;
+	align-content: space-around; 
+}
+
+.account-settings-pane-row:first-child {
+	margin-top: 0;
+	margin-right: inherit;
+	margin-bottom: 1.5rem;
+	margin-left: inherit;
+}
+
+.account-settings-pane-row:last-child {
+	margin: 0 auto;
+}
+
+.account-settings-pane-row {
+	margin-top: 0;
+	margin-right: inherit;
+	margin-bottom: 1.5rem;
+	margin-left: inherit;
+}

@@ -5,9 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /*
- * Directives
+ * Services
  * */
-import { FocusOnLoadDirective } from '../shared';
+import { AuthenticationService } from '../shared';
 
 @Component({
 	selector: 'app-login',
@@ -15,11 +15,26 @@ import { FocusOnLoadDirective } from '../shared';
 })
 export class LoginComponent implements OnInit {
 
-	constructor(
-		private route: ActivatedRoute,
-		private router: Router
-	) { }
+	public email: string;
+	public password: string;
 
-	ngOnInit() { }
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private authenticate: AuthenticationService
+		) { }
+
+	ngOnInit() {
+		this.email = '';
+		this.password = '';
+	}
+
+	public login() {
+		this.authenticate.logIn(this.email, this.password).subscribe(x => {
+			this.router.navigateByUrl('user/1');
+		});
+	}
 
 }
+
+
