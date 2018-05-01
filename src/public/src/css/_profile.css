@@ -15,9 +15,8 @@
 	border-radius: 50%;
 	width: 15rem;
 	height: 15rem;
-	background-color: #fff;
+	background-color: #999;
 	background-size: cover;
-	box-shadow: 0 1px 11px #dadada;
 }
 
 .profile-reviews {

@@ -26,9 +26,20 @@ export class RatingBoxComponent implements AfterViewInit {
 	// short string describing the type of rating
 	@Input() public descriptor: string;
 
-	constructor() { }
+	constructor() {
+
+		// console.log('/////// begin ///////');
+		// console.log(this.ratingGradient(0));
+		// console.log(this.ratingGradient(.25));
+		// console.log(this.ratingGradient(.50));
+		// console.log(this.ratingGradient(.75));
+		// console.log(this.ratingGradient(1));
+		// console.log('///////  end  ///////');
+
+	}
 
 	ngAfterViewInit() {
+
 		window.setTimeout(() => {
 			const animateRating = () => {
 				if(this.displayedRating != this.rating) {
@@ -38,6 +49,7 @@ export class RatingBoxComponent implements AfterViewInit {
 			};
 			window.requestAnimationFrame(animateRating);
 		}, 200);
+
 	}
 
 	// Interpolated color palette based on Seaborn Cubehelix Colormap

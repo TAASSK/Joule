@@ -17,7 +17,28 @@
 
 		<p>{{ review.comment }}</p>
 
-		<div>
+		<table>
+
+			<thead>
+				<tr>
+					<th scope="col">Accountability</th>
+					<th scope="col">Availability</th>
+					<th scope="col">Politeness</th>
+					<th scope="col">Efficiency</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ review.accountabilityRating }}</td>
+					<td>{{ review.availabilityRating }}</td>
+					<td>{{ review.politenessRating }}</td>
+					<td>{{ review.efficiencyRating }}</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+<!-- 		<div>
 			<p>Accountability: {{ review.accountabilityRating }}</p>
 		</div>
 
@@ -31,7 +52,7 @@
 
 		<div>
 			<p>Efficiency: {{ review.efficiencyRating }}</p>
-		</div>
+		</div> -->
 
 	</section>
 
