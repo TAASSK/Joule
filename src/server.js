@@ -4,6 +4,7 @@ const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 var id = Math.floor((Math.random()*800) + 120);
 var jwt = require('jsonwebtoken');
+var id = 1;
 var secretkey = 'whatifwearealllivinginasimulation';
 
 const server = new Hapi.Server();
@@ -12,14 +13,6 @@ server.connection({
     port: 3000,
     routes: { cors: true }
 });
-
-/*server.auth.strategy('jwt', 'jwt',
-{ key: secret,
-  validate,
-  verifyOptions: {}
-});
-
-server.auth.default('jwt');*/
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -36,21 +29,6 @@ var connection = mysql.createConnection({
 	user: process.env.MYSQL_USER,
 	password: process.env.MYSQL_PASSWORD,
 });
-
-/*const validate = async function (decoded, request, h) {
-  
-    connection.query('SELECT * FROM employee WHERE employee_num ="' + input + '")', function (error, results, fields) {
-        if (error)
-            throw error;
-        if (results) {
-            return { isValid: false };
-        }
-        else {
-            return { isValid : true };
-        }
-    });
-}*/
-  
 
 //ROUTES ARE ORDERED BASED ON THE DOCUMENTATION
 //START UNAUTHENTICATED ROUTES
@@ -150,7 +128,7 @@ server.route({
 });
 
 //Create User
-//DONE :)
+//NEEDS TO HAVE EMPLOYEE_NUM AUTO GENERATED
 server.route({
     config: {
         cors: {
@@ -165,6 +143,8 @@ server.route({
         var password = request.payload["password"];
         var first_name = request.payload["first_name"];
         var last_name = request.payload["last_name"];
+        var employee_num = id;
+        id += 1;
         //if any data is missing
         if(password===undefined||first_name===undefined||last_name===undefined||email===undefined) {
             var response = {
@@ -189,8 +169,10 @@ server.route({
                     bcrypt.hash(password, 10, function(err, hash) {
                         newPass = hash;
                         //if all is good, insert the user into the table
-                        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, email) VALUES(NULL,"' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '")', function (error, results, fields) {
+                        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, email, employee_num) VALUES(NULL,"' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '","'  + employee_num + '")', function (error, results, fields) {
                             if (error) {
+                                console.log("TEST");
+                                console.log(error);
                                 var response = {
                                     "success": false,
                                     "message": "Experienced error when attempting to create the user."
@@ -276,7 +258,7 @@ server.route({
                 var response = {
                     "success" : false,
                     "message" : "The user with ID " +  user_id + " does not exist."
-                }
+                };
                 reply(JSON.stringify(response)).code(404);
             }
             //if the user exists
@@ -343,7 +325,7 @@ server.route({
 });
 
 //Creating review for user
-//NOT DONE :(
+//NOT DONE :( (TIME ERROR)
 server.route({
     method: 'POST',
     path: '/users/{user_id}/reviews',
@@ -424,52 +406,211 @@ server.route({
 });
 
 //updating a user account
-//STILL NEEDS TO BE DONE, REQUIRES ACCEPTANCE OF A TOKEN
+//Done :)
 server.route({
     method: 'PUT',
-    path: '/updateUser',
+    path: '/users/{user_id}',
     handler: function (request, reply) {
-        console.log('Server is updating a user profile...');
-        var first_name = request.payload.first_name;
-        var last_name = request.payload.last_name;
-        var email = request.payload.email;
-        var company = request.payload.company;
-        var password = request.payload.password;
-        var current_emp_no = request.payload.current_emp_no;
+        var token = request.headers.authorization.split(' ')[1];
+        var first_name = request.payload["first_name"];
+        var last_name = request.payload["last_name"];
+        var email = request.payload["email"];
+        var employer = request.payload["employer"];
+        var password = request.payload["password"];
+        var job_title = request.payload["job_title"];
+        var location = request.payload["location"];
+        var user_id = request.params["user_id"];
         var newPass;
-        bcrypt.hash(password,10,function(err,hash) {
-            newPass = hash;
-        });
-        var token = jwt.sign({
-            emp_no:current_emp_no,
-            email:email,
-            password_hashes:newPass
-        }, 'secret');
-        connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-            reply(token);
-        });
-    }
+        var flag = true;
+        try {
+            var decoded = jwt.decode(token, secretkey);
+            connection.query('SELECT * FROM employee WHERE employee_num="' + decoded.employee_num + '"', function (error, results, fields) {
+                if (error) {
+                    var response = {
+                        "success": false,
+                        "message": "Experienced error when attempting to update the user."
+                    };
+                    reply(JSON.stringify(response)).code(500);
+                }
+                else {
+                    //if there are no users that match that token
+                    if (results.length==0) {
+                        var response = {
+                            "success": false,
+                            "message": "Attempted to update a user without being logged in."
+                        };
+                        reply(JSON.stringify(response)).code(403);
+                    }
+                    else{
+                        if (first_name!==null) {
+                            connection.query('UPDATE employee SET first_name = "' + first_name + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                if (error) {
+                                    flag = false;
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to update the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                            });
+                        }
+                        if (last_name!==null) {
+                            connection.query('UPDATE employee SET last_name = "' + last_name + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                if (error) {
+                                    flag = false;
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to update the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                            });
+                        }
+                        if (email!==null) {
+                            connection.query('UPDATE employee SET email = "' + email + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                if (error) {
+                                    flag = false;
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to update the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                            });
+                        }
+                        if (employer!==null) {
+                            connection.query('UPDATE employee SET employer = "' + employer + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                if (error) {
+                                    flag = false;
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to update the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                            });
+                        }
+                        if (password!==null) {
+                            bcrypt.hash(password, 10, function(err, hash) {
+                                newPass = hash;
+                                connection.query('UPDATE employee SET password_hashes = "' + newPass + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                    if (error) {
+                                        flag = false;
+                                        var response = {
+                                            "success": false,
+                                            "message": "Experienced error when attempting to update the user."
+                                        };
+                                        reply(JSON.stringify(response)).code(500);
+                                    }
+                                });
+                            });
+                        }
+                        if (job_title!==null) {
+                            connection.query('UPDATE employee SET position = "' + job_title + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                if (error) {
+                                    flag = false;
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to update the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                            });
+                        }
+                        if (location!==null) {
+                            connection.query('UPDATE employee SET location = "' + location + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                if (error) {
+                                    flag = false;
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to update the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                            });
+                        }
+                    }
+                } 
+            });
+        } catch (err) {
+            var response = {
+                "success": false,
+                "message": "Experienced error when attempting to update the user."
+            };
+            reply(JSON.stringify(response)).code(500);
+        } 
+        if (flag) {
+            var response = {
+                "success": true,
+                "message": "Successfully updated account."
+            };
+            reply(JSON.stringify(response)).code(200);
+        }
+    }  
 });
 
 //Deleting a user and all of their reviews
-//STILL NEEDS TO BE DONE, REQUIRES ACCEPTANCE OF A TOKEN
+//Done :)
 server.route({
     method: 'DELETE',
-    path: '/deleteUser/{eid}',
+    path: '/user/{user_id}',
     handler: function (request, reply) {
-        console.log('Server processing a /deleteUser request');
-        const eid = request.params.eid;
-        connection.query('DELETE FROM employee WHERE employee_num="' + eid + '"' , function (error, results, fields) {
-            if (error)
-                throw error;
-            reply ('Account deleted for employee with id: ' + eid);
-            console.log(results);
-        });
-        connection.query('DELETE FROM employee_review WHERE employee_num="' + eid + '"' , function (error, results, fields) {
-            if (error)
-                throw error;
-            console.log(results);
-        });
+        var user_id = request.params["user_id"];
+        var token = request.headers.authorization.split(' ')[1];
+        try {
+            var decoded = jwt.decode(token, secretkey);
+            connection.query('SELECT * FROM employee WHERE employee_num ="' + decoded.employee_num + '"', function (error, results, fields) {
+                if (error) {
+                    var response = {
+                        "success": false,
+                        "message": "Experienced error when attempting to delete the user."
+                    };
+                    reply(JSON.stringify(response)).code(500);
+                }
+                else if (results.length==0) {
+                    var response = {
+                        "success": false,
+                        "message": "Attempted to delete a user without proper authorization."
+                    };
+                    reply(JSON.stringify(response)).code(403);
+                }
+                else {
+                    connection.query('DELETE FROM employee WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
+                        if (error) {
+                            var response = {
+                                "success": false,
+                                "message": "Experienced error when attempting to delete the user."
+                            };
+                            reply(JSON.stringify(response)).code(500);
+                        }
+                        else {
+                            connection.query('DELETE FROM employee_review WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
+                                if (error) {
+                                    var response = {
+                                        "success": false,
+                                        "message": "Experienced error when attempting to delete the user."
+                                    };
+                                    reply(JSON.stringify(response)).code(500);
+                                }
+                                else {
+                                    var response = {
+                                        "success": true,
+                                        "message": "Successfully deleted user with ID: " + user_id
+                                    };
+                                    reply(JSON.stringify(response)).code(200);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        } catch (err) {
+            var response = {
+                "success": false,
+                "message": "Given token could not be decoded."
+            };
+            reply (JSON.stringify(response)).code(400);
+        }
     }
 });
 
