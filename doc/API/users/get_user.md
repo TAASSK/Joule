@@ -19,7 +19,10 @@ Returns a user of a given ID.
 	"id": 101,
 	"email": "jp.joule18@gojoule.me",
 	"first_name": "James",
-	"last_name": "Joule"
+	"last_name": "Joule",
+	"job_title": "Brewer",
+	"employer": "Self Employed",
+	"location": "Lancashire, UK"
 }
 ```
 
@@ -40,16 +43,16 @@ Returns a user of a given ID.
 
 OR
 
-**HTTP Status Code** : `409 Conflict`
+**HTTP Status Code** : `404 Not Found`
 
-**Condition** : An account already exists with the given email address.
+**Condition** : The user does not exist.
 
 **Content example**
 
 ```json
 {
 	"success": false,
-	"message": "Account already exists for user with given email address."
+	"message": "The user with ID <user_id_from_request> does not exist."
 }
 ```
 

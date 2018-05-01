@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User, SignupService } from '../shared';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule , FormBuilder} from '@angular/forms';
 
+/*
+ * Angular library
+ * */
 
 @Component({
 	selector: 'app-registration',
@@ -18,6 +21,7 @@ export class RegistrationComponent implements OnInit {
 	public myForm: FormGroup;
 	titleAlert:string = 'This field is required';
 
+
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
@@ -26,6 +30,7 @@ export class RegistrationComponent implements OnInit {
 
 	ngOnInit() {
 		this.user = new User();
+
 		this.myForm = new FormGroup({
 			'firstName': new FormControl('', [Validators.required, Validators.minLength(4)]), 
 			'lastName': new FormControl('', Validators.required),
@@ -46,7 +51,5 @@ export class RegistrationComponent implements OnInit {
 			this.router.navigateByUrl('login');
 		});
 	}
-	
-	
 
 }

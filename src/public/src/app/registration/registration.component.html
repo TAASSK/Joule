@@ -1,16 +1,19 @@
-<div class="container" *ngIf="user">
-
 <nav class="navbar navbar-expand-lg navbar-light">
 	<div class="navbar-center-brand">
 		<a class="navbar-brand" [routerLink]="['/home']">
-			<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="125" height="125" alt="Joule">
-		</a> <!-- .navbar-brand -->
-	</div> <!-- .navbar-center-brand -->
-</nav> <!-- navbar -->
+			<img
+			 class="navbar-logo"
+			 src="/assets/img/logo/joule-cropped-transparent.svg"
+			 width="125"
+			 height="125"
+			 alt="Joule"
+			>
+		</a>
+	</div>
+</nav>
 
 <section class="col col-sm-4 col-md-6 col-lg-4 site-content">
 	<h1>Sign Up</h1>
-
 
 	<form [formGroup]="myForm">  
 
@@ -40,12 +43,13 @@
 
 	</form>
 
-
 	<button type="submit" class="button button-call-to-action button-block" [disabled]="!myForm.valid" (click)=save()>Sign Up</button>
+
 
 	<hr>
 
-	<p class="text-center">Already have an account? <a [routerLink]="['/login']">Log In</a></p>
+	<p class="text-center">
+		Already have an account? <a [routerLink]="['/login']">Log In</a>
+	</p>
 
-</section> <!-- .row (section) -->
-</div>
+</section>

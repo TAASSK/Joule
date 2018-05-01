@@ -14,12 +14,8 @@ COPY ./src/. $HOME/joule
 
 USER app
 WORKDIR $HOME/joule
-RUN npm install --silent --progress=false
-RUN npm install node-gyp -g
-RUN npm install bcrypt -g
-RUN npm install bcrypt -save
 
-
+RUN npm install
 
 USER root
 RUN chown -R app:app $HOME/*

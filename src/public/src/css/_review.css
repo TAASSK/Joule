@@ -1,0 +1,42 @@
+.review-comment {
+	padding-left: 1rem;
+	margin-left: 1rem;
+	border-left: 2px solid #3D0060;
+}
+
+.review-component:first-child {
+	margin-top: 0;
+	margin-right: inherit;
+	margin-bottom: 1.5rem;
+	margin-left: inherit;
+}
+
+.review-component:last-child {
+	margin: 0 auto;
+}
+
+.review-component {
+	margin-top: 0;
+	margin-right: inherit;
+	margin-bottom: 1.5rem;
+	margin-left: inherit;
+	width: 100%;
+}
+
+.review-box {
+	display: flex;
+	margin: 0 auto;
+	padding: 1.75rem 1.5rem;
+	color: #565361;
+	background: #FFF;
+	border-radius: 5px;
+	box-shadow: 0 1px 11px #dadada;
+}
+
+.review-metadata {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 12rem;
+	min-width: 11rem;
+}
