@@ -17,7 +17,7 @@ export class Review implements Serializable<Review> {
 
 	deserialize(input: object): Review {
 		var review = new Review();
-		
+
 		review.id = input['review_id'];
 		review.jobTitle = input['job_title'];
 		review.employer = input['employer'];
@@ -51,8 +51,8 @@ export class Review implements Serializable<Review> {
 	//		comment: comment,
 	//		datestamp: datestamp
 	//	}
-	serialize(): string {
-		return JSON.stringify(obj,null,2);
+	serialize(obj: object): string {
+		return JSON.stringify(obj);
 	}
 
 }
