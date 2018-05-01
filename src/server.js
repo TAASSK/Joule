@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 var id;
 var secretkey = 'whatifwearealllivinginasimulation';
 
+
 const server = new Hapi.Server();
 server.connection({
 	host: '0.0.0.0',
@@ -254,10 +255,10 @@ connection.query('SELECT COUNT (*) AS count FROM employee' , function (error, re
                     }
                 });
             }
-        }
-    });
+    }
+});
 
-    //User getting all of their reviews (PROTECTED)
+//User getting all of their reviews (PROTECTED)
     server.route({
         config: {
             cors: {
@@ -278,7 +279,7 @@ connection.query('SELECT COUNT (*) AS count FROM employee' , function (error, re
                     };
                     reply(JSON.stringify(response)).code(500);
                 }
-                //if the user does not exist
+       //if the user does not exist
                 if (results.length==0) {
                     var response = {
                         "success" : false,
