@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /*
  * Modules
@@ -37,8 +37,10 @@ let defaultRoute = 'home';
 		RegistrationComponent
 	],
 	imports: [
-        UsersModule,
+		UsersModule,
+		FormsModule,
 		BrowserModule,
+		ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
 		RouterModule.forRoot([

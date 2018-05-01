@@ -9,7 +9,8 @@ COPY ./src/package.json $HOME/joule/
 RUN chown -R app:app $HOME/*
 
 USER root
-RUN apt-get install -y openssl 
+RUN apt-get install -y openssl
+COPY ./src/. $HOME/joule
 
 USER app
 WORKDIR $HOME/joule
@@ -21,7 +22,6 @@ RUN npm install bcrypt -save
 
 
 USER root
-COPY ./src/. $HOME/joule
 RUN chown -R app:app $HOME/*
 
 USER app
