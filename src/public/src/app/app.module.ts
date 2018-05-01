@@ -29,6 +29,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
  * */
 import {
 	AuthenticationService,
+	RatingGradientService,
 	SignupService
 } from './shared';
 
@@ -60,6 +61,7 @@ let defaultRoute = 'home';
 	],
 	providers: [
 		AuthenticationService,
+		RatingGradientService,
 		SignupService
 	],
 	bootstrap: [
