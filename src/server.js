@@ -3,9 +3,11 @@
 const Hapi = require('hapi');
 var bcrypt = require('bcrypt');
 var id = Math.floor((Math.random()*800) + 120);
+
 var jwt = require('jsonwebtoken');
 var id = 6;
 var secretkey = 'whatifwearealllivinginasimulation';
+
 
 const server = new Hapi.Server();
 server.connection({
@@ -14,13 +16,16 @@ server.connection({
     routes: { cors: true }
 });
 
-/*server.auth.strategy('jwt', 'jwt',
-{ key: secret,
-  validate,
-  verifyOptions: {}
+/*
+server.auth.strategy('jwt', 'jwt',
+{ key: 'whatifwearealllivinginasimulationcreatedbynaziscientistsandtheyactuallywonwwIIandtheyareexperimentingonthehumanrace', // Never Share your secret key
+  validate: validate,            // validate function defined above
+  verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
 });
 
 server.auth.default('jwt');*/
+
+//await server.register(require('hapi-auth-jwt2'));
 
 // adds global URI path prefix to incoming requests
 // e.g. <domain>/api/dummy will get routed to /dummy
@@ -153,12 +158,12 @@ server.route({
 //Create User
 //DONE :)
 server.route({
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
-    },
+    // config: {
+    //     cors: {
+    //         origin: ['*'],
+    //         additionalHeaders: ['cache-control', 'x-requested-with']
+    //     }
+    // },
     method: 'POST',
     path: '/users',
     handler: function(request, reply) {
@@ -219,9 +224,6 @@ server.route({
         }
     }
 });
-
-//Get User
-//DONE :)
 server.route({
     method: 'GET',
     path: '/users/{user_id}',
@@ -262,7 +264,6 @@ server.route({
         }
     }
 });
-
 //Get reviews
 //Done :)
 server.route({
@@ -307,7 +308,6 @@ server.route({
         });
     }
 });
-
 //END UNAUTHENTICATED ROUTES
 //START AUTHENTICATED ROUTES
 
@@ -453,7 +453,7 @@ server.route({
             emp_no:current_emp_no,
             email:email,
             password_hashes:newPass
-        }, 'secret');
+        }, 'secret');*/
         connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
             reply(token);
         });
@@ -515,9 +515,6 @@ server.route({
         });
     }
 });
-
-//END DEBUGGING ROUTES
-
 //Start the server
 server.start((err) => {
     if (err) {

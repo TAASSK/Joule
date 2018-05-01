@@ -4,6 +4,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /*
  * Components
@@ -16,9 +17,12 @@ import { SearchBarComponent } from './components/search-bar.component';
 import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 
 @NgModule({
+
 	imports: [
 		CommonModule,
-		HttpClientModule
+    FormsModule,
+		HttpClientModule,
+    ReactiveFormsModule
 	],
 	declarations: [
 		FocusOnLoadDirective,
@@ -28,5 +32,6 @@ import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 		FocusOnLoadDirective,
 		SearchBarComponent
 	]
+
 })
 export class SharedModule { }

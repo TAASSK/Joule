@@ -14,6 +14,7 @@ COPY ./src/. $HOME/joule
 
 USER app
 WORKDIR $HOME/joule
+
 RUN npm install
 
 USER root

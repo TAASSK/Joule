@@ -20,7 +20,7 @@ constructor(protected httpClient: HttpClient) {
 
 public add(item: User): Observable<User> {
     let body = JSON.stringify(item);
-    return this.httpClient.post(`${this.endPoint}`, body, this.httpOptions).pipe(
+    return this.httpClient.post(`${this.endPoint}`, body, {responseType: 'text'}).pipe(
       catchError(this.handleException)
     );
   }
