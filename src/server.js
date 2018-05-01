@@ -50,19 +50,23 @@ var connection = mysql.createConnection({
 
 
 //REVIEW ROUTES
-//adding a new review
+//adding a new review (PROTECTED)
 server.route({
         method: 'POST',
         path: '/addReview',
         handler: function(request, reply) {
-          var employee_num = request.payload.employee_num;
-          var hotness = request.payload.hotness;
-          var accountability = request.payload.accountability;
-          var availability = request.payload.availability;
-          var politeness = request.payload.politeness;
-          var efficiency = request.payload.efficiency;
-          var comments = request.payload.comments;
-          connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments) VALUES("' + employee_num + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comments + '")', function (error, results, fields) {
+          var user_payload = request.payload;
+          var employee_num = user_payload['employee_num'];
+          var hotness = user_payload['hotness'];
+          var accountability = user_payload['accountability'];
+          var availability = user_payload['availability'];
+          var politeness = user_payload['politeness'];
+          var efficiency = user_payload['efficiency'];
+          var comments = user_payload['comments'];
+          var employer = user_payload['employer'];
+          var position = user_payload['position'];
+          var post = { employee_num:employee_num, hotness:hotness, accountability:accountability, availability:availability, politeness:politeness, efficiency:efficiency, employer:employer, position:position, comments:comments };
+          connection.query('INSERT INTO employee_review SET ?',post, function (error, results, fields) {
            if (error)
              throw error;
           reply ('Review added to employee: ' + employee_num + '. Hotness: ' + hotness + '.');
@@ -71,7 +75,7 @@ server.route({
       }
 });
 
-//USER ACCOUNT ROUTES
+//USER ACCOUNT ROUTES (PROTECTED)
 //adding a new user -> making an account
 server.route({
     config: {
@@ -89,73 +93,84 @@ server.route({
         var last_name = user_payload['last_name'];
         var email = user_payload['email'];
 
-        connection.query('SELECT first_name FROM employee WHERE email= ?',[email], function (error, results, fields) { 
-            if (error)
-                throw error;
-            if(results.length > 0)
-               reply("Account already exists for user with given email address.");//.code(409);
-            else
-                return;
-        });
-        if(password===undefined||first_name===undefined||last_name===undefined||email===undefined)
-            console.log("Request body had missing or malformed fields.").code(400);
-        else{
-            var newPass;
-            bcrypt.hash(password, 10, function(err, hash) {
-                newPass = hash;
-                console.log(password)
-                console.log(first_name)
-                console.log(last_name)
-                console.log(email)
-
-                // connection.query('INSERT INTO employee(username,password_hashes,first_name,last_name,employee_num,department_name,position,email,employer,location) VALUES(username = ?,password_hashes = ?,first_name = ?,last_name = ?,employee_num = employee_num,department_name = ?,position = ?,email = ?,employer = ?,location = ?)',[null,newPass,first_name,last_name,employee_num,null,null,email,null,null], function (error, results, fields) {
-                
-                var queryString = `INSERT INTO employee (
-                    password_hashes,
-                    first_name,
-                    last_name,
-                    email)
-                    VALUES 
-                    (
-                        password_hashes,
-                        first_name,
-                        last_name,
-                        email
-                    ) 
-                    `;
-                connection.query(
-                    queryString,
-                    [
-                        newPass,
-                        first_name,
-                        last_name,
-                        email
-                    ],
-                    function (error, results, fields) {
-                        if(error) {
-                            throw error;
-                        }
-                        
-                        if(results != []) {
-                            reply('Successfully created account').code(200);
-                        }
-                        //else
-                        //  reply("Experienced error when attempting to create the user.").code(500);
-                        console.log(results);
-                });
+        if(password===undefined||first_name===undefined||last_name===undefined||email===undefined) {
+            var response = {
+                "success": false,
+                "message": "Request body had missing or malformed fields."
+            };
+            reply(JSON.stringify(response)).code(400);
+        }
+        else
+        {
+            connection.query('SELECT first_name FROM employee WHERE email= ?',[email], function (error, results, fields) { 
+                if (error)
+                    throw error;
+                if(results.length > 0)
+                    reply("Account already exists for user with given email address.");//.code(409);
+                else{
+                    var newPass;
+                    bcrypt.hash(password, 10, function(err, hash) 
+                    {
+                        newPass = hash;
+                        console.log(password)
+                        console.log(first_name)
+                        console.log(last_name)
+                        console.log(email)
+                       
+                        var post = {password_hashes : newPass, first_name : first_name, last_name : last_name, email : email};
+                        connection.query('INSERT INTO employee SET ?', post, function (error, results, fields) 
+                            {
+                                if(error) {
+                                    throw error;
+                               }
+                            
+                               if(results != []) {
+                                  reply('Successfully created account').code(200);
+                              }
+                            else
+                            { 
+                                reply("Experienced error when attempting to create the user.").code(500);
+                            }    
+                            console.log(results);
+                            });
+                    });
+                }
             });
         }
     }
 });
+// var queryString = `INSERT INTO employee (
+                //     password_hashes,
+                //     first_name,
+                //     last_name,
+                //     email)
+                //     VALUES 
+                //     (
+                //         password_hashes,
+                //         first_name,
+                //         last_name,
+                //         email
+                //     ) 
+                //     `;
 
-//login route (NOT PROTECTED)
+                // connection.query(
+                //     queryString,
+                //     [
+                //         newPass,
+                //         first_name,
+                //         last_name,
+                //         email
+                //     ],
+
+//login route (PROTECTED)
 server.route({
         method: 'POST',
         path: '/login',
         handler: function(request, reply) {
-          var email = request.payload.email;
-          var password = request.payload.password;
-          connection.query('SELECT password_hashes FROM employee WHERE email="' + email + '"', function (error, results, fields) { 
+          var email = request.payload['email'];
+          var password = request.payload['password'];
+          var post1 ={email:email} 
+          connection.query('SELECT password_hashes FROM employee WHERE email = ?',email, function (error, results, fields) { 
               if (error)
                   throw error;
               console.log(results[0].password_hashes);
@@ -166,7 +181,7 @@ server.route({
               bcrypt.compare(password, hash, function(err, res) {
                   console.log(res);
                   if(res==true)
-                    reply("token goes here").code(200);//reply("login successful");
+                    reply("login successful").code(200);//reply("login successful");
                   else if(res==false) 
                     reply("unable to login with given credentials.").code(400);
                   else
@@ -182,9 +197,8 @@ server.route({
     path: '/getEmployeeRevs/{eid}',
     handler: function (request, reply) {
         console.log('Server processing a /getEmployeeRevs request');
-        const eid = request.params.eid;
-        var sql = 'SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num= ' + connection.escape(eid);
-        connection.query(sql, function (error, results, fields) {
+        const employee_num = request.params.eid;
+        connection.query('SELECT hotness, accountability, availability, politeness, efficiency, comments FROM employee_review WHERE employee_num = ?', employee_num, function (error, results, fields) { 
             if (error)
                 throw error;
             reply(results);
@@ -194,7 +208,7 @@ server.route({
     }
 });
 
-//SEARCH ROUTES
+//SEARCH ROUTES (PROTECTED)
 //search by company name or by name, using "first_name last_name" format (PROTECTED)
 server.route({
     method: 'GET',
@@ -202,27 +216,30 @@ server.route({
     handler: function (request, reply) {
         console.log('Server processing a /company/{name} request');
         var name = request.params.name;
-        connection.escapeId(console.log(name));
-        connection.query('SELECT first_name,last_name FROM employee WHERE employer="' + name + '"', function (error1, results1, fields1) {
-            //if (error)
-                //throw error;
-            var isEmpty = (results1 || []).length === 0;
-            if (isEmpty) {
-                var nameArr = name.split(" ");
-                connection.query('SELECT first_name,last_name FROM employee WHERE first_name="' +nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
-                    reply (results);
-                    console.log(results);
-                });
-            }
-            else {
-                reply (results1);
-                console.log(results1);
-            }
+        console.log(name);
+        connection.query('SELECT first_name,last_name FROM employee WHERE employer = ?',name, function (error1, results1, fields1) {
+        //var isEmpty = (results1 || []).length === 0;
+        // if (isEmpty) 
+        // {
+        //     console.log("hi");
+        //     var nameArr = name.split("_");
+        //     var post1 = {first_name:nameArr[0]}
+        //     var post2 = {last_name:nameArr[1]}
+        //     connection.query('SELECT first_name,last_name FROM employee WHERE first_name=? AND last_name=?"',[post1,post2], function (error, results, fields) {
+        //         reply (results);
+        //         console.log(results);
+        //     });
+        // }
+        // else 
+        // {
+            reply (results1);
+            console.log(results1);
+        // }
         });
     }
 });
 
-//Getting all employee info 
+//Getting all employee info (DOESNT NEED PROTECTION) 
 server.route({
     method: 'GET',
     path: '/getEmployees',
@@ -238,20 +255,26 @@ server.route({
     }
 });
 
-//updating a user account
+//updating a user account (NOT PROTECTED)
 server.route({
     method: 'PUT',
     path: '/updateUser',
     handler: function (request, reply) {
         console.log('Server is updating a user profile...');
-        var first_name = request.payload.first_name;
-        var last_name = request.payload.last_name;
-        var email = request.payload.email;
-        var company = request.payload.company;
-        var password = request.payload.password;
-        var current_emp_no = request.payload.current_emp_no;
-        connection.query('UPDATE employee SET first_name = "' + first_name + '", last_name = "' + last_name + '", email = "' + email + '", employer = "' + company + '", password = "' + password + '" WHERE employee_num = "' + current_emp_no + '";', function (error, results, fields) {
-            reply('Information updated for employee number: ' + current_emp_no);
+        var first_name = request.payload['first_name'];
+        var last_name = request.payload['last_name'];
+        var email = request.payload['email'];
+        var company = request.payload['company'];
+        var password = request.payload['password'];
+        var employee_num = request.payload['employee_num'];
+        var employer = request.payload['employer'];
+        var location = request.payload['location'];
+        var post = {first_name:first_name,last_name:last_name,email:email,company:company,password:password, employer:employer, location:location, employee_num:employee_num};
+        connection.query('UPDATE users SET first_name = :first_name WHERE employee_num = :employee_num',[post,employee_num],function (error, results, fields){
+       
+        // connection.query('UPDATE employee WHERE employee_num = ?',post, function (error, results, fields) {
+            reply();
+
         });
     }
 });
@@ -263,21 +286,22 @@ server.route({
     handler: function (request, reply) {
         console.log('Server processing a /deleteUser request');
         const eid = request.params.eid;
-        connection.query('DELETE FROM employee WHERE employee_num="' + eid + '"' , function (error, results, fields) {
+        var post = {employee_num : eid};
+        connection.query('DELETE FROM employee WHERE employee_num = ?',eid, function (error, results, fields) {
             if (error)
                 throw error;
             reply ('Account deleted for employee with id: ' + eid);
             console.log(results);
         });
-        connection.query('DELETE FROM employee_review WHERE employee_num="' + eid + '"' , function (error, results, fields) {
-            if (error)
-                throw error;
-            console.log(results);
-        });
+        // connection.query('DELETE FROM employee_review WHERE employee_num= ?',post, function (error, results, fields) {
+        //     if (error)
+        //         throw error;
+        //     console.log(results);
+        // });
     }
 });
 
-//Getting all employee info
+//Getting all employee info (DOESNT NEED PROTECTION)
 server.route({
     method: 'GET',
     path: '/getReviews',
