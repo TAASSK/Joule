@@ -49,7 +49,21 @@
 	 *ngFor="let result of results"
 	 class="search-result-container"
 	>
-		<p>{{ result.firstName }} {{ result.lastName }}</p>
+
+		<img
+		 class="search-result-profile-picture"
+		 src="/assets/img/np_profile.svg"
+		 alt="profile-picture"
+		>
+
+		<a class="search-result-personal-info" [routerLink]="['/user', result.id]">
+
+			<h2>{{ result.firstName }} {{ result.lastName }}</h2>
+			<p *ngIf="result.jobTitle && result.employer">{{ result.jobTitle }} at {{ result.employer }}</p>
+			<p *ngIf="result.location">{{ result.location }}</p>
+
+		</a>
+
 	</div>
 
 </section>

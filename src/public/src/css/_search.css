@@ -21,3 +21,27 @@
 	border-radius: 5px;
 	box-shadow: 0 1px 11px #dadada;
 }
+
+.search-result-profile-picture {
+	margin-right: 1.5rem;
+	border-radius: 50%;
+	width: 7rem;
+	height: 7rem;
+	background-color: #fff;
+	background-size: cover;
+	box-shadow: 0 1px 11px #dadada;
+}
+
+.search-result-personal-info > h2 {
+	margin-bottom: 0;
+}
+
+.search-result-personal-info > p {
+	margin-bottom: 0;
+}
+
+.search-result-personal-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

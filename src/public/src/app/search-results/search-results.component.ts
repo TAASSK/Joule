@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import {
 	ActivatedRoute,
-	Router
+	Router,
+	RouterLink
 } from '@angular/router';
 
 /*
@@ -50,9 +51,9 @@ export class SearchResultsComponent implements OnInit {
 		user2.email = 'jp.joule18@gojoule.me';
 		user2.firstName = 'John';
 		user2.lastName = 'Doe';
-		user2.jobTitle = 'Employee';
-		user2.employer = 'Random Corp.';
-		user2.location = 'Dallas, TX';
+		// user2.jobTitle = 'Employee';
+		// user2.employer = 'Random Corp.';
+		// user2.location = 'Dallas, TX';
 
 		user3.id = 101;
 		user3.email = 'jp.joule18@gojoule.me';
@@ -60,7 +61,7 @@ export class SearchResultsComponent implements OnInit {
 		user3.lastName = 'Doe';
 		user3.jobTitle = 'Employee';
 		user3.employer = 'Random Corp.';
-		user3.location = 'Dallas, TX';
+		// user3.location = 'Dallas, TX';
 
 		this.results.push(user1, user2, user3);
 
