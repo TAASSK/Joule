@@ -13,34 +13,35 @@ export class User implements Serializable<User> {
 
 	constructor() {}
 
-	deserialize(input: object) {
+	deserialize(input: object): User {
 		var user = new User();
 
 		user.id = input['id'];
 		user.email = input['email'];
-		user.firstName = input['firstName'];
-		user.lastName = input['lastName'];
-		user.jobTitle = input['jobTitle'];
+		user.firstName = input['first_name'];
+		user.lastName = input['last_name'];
+		user.jobTitle = input['job_title'];
 		user.employer = input['employer'];
 		user.location = input['location'];
 
 		return user;
-
 	}
 
-	serialize(): string {
-
-		var obj = {
-			email: this.email,
-			first_name: this.firstName,
-			last_name: this.lastName,
-			password: this.password,
-			job_title: this.jobTitle,
-			employer: this.employer,
-			location: this.location
-		};
-
-		return JSON.stringify(obj, null, 2);
+	// define the `obj` parameter to fit the fields
+	// necessary for the endpoint to which you're
+	// sending data
+	//
+	// e.g. `obj` parameter for the "Create User" route 
+	// would look like:
+	//
+	//	var obj = {
+	//		email: email,
+	//		first_name: firstName,
+	//		last_name: lastName,
+	//		password: password
+	//	}
+	serialize(obj: object): string {
+		return JSON.stringify(obj);
 	}
 
 }

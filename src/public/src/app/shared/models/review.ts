@@ -5,6 +5,7 @@ export class Review implements Serializable<Review> {
 	id?: number;
 	jobTitle: string;
 	employer: string;
+	hotnessRating: number;
 	accountabilityRating: number;
 	availabilityRating: number;
 	politenessRating: number;
@@ -12,60 +13,45 @@ export class Review implements Serializable<Review> {
 	comment: string;
 	datestamp: Date;
 
-	constructor(
-		id: number = 0,
-		jobTitle: string,
-		employer: string,
-		accountabilityRating: number,
-		availabilityRating: number,
-		politenessRating: number,
-		efficiencyRating: number,
-		comment: string,
-		datestamp: Date = new Date()
-	) {
-
-		this.id = id;
-		this.jobTitle = jobTitle;
-		this.employer = employer;
-		this.accountabilityRating = accountabilityRating;
-		this.availabilityRating = availabilityRating;
-		this.politenessRating = politenessRating;
-		this.efficiencyRating = efficiencyRating;
-		this.comment = comment;
-		this.datestamp = datestamp;
-
-	}
+	constructor() {}
 
 	deserialize(input: object): Review {
-		let review = new Review(
-			input['review_id'],
-			input['job_title'],
-			input['employer'],
-			input['accountability_rating'],
-			input['availability_rating'],
-			input['politeness_rating'],
-			input['efficiency_rating'],
-			input['comment'],
-			new Date(input['datestamp'])
-		);
+		var review = new Review();
+		
+		review.id = input['review_id'];
+		review.jobTitle = input['job_title'];
+		review.employer = input['employer'];
+		review.hotnessRating = input['hotness_rating'];
+		review.accountabilityRating = input['accountability_rating'];
+		review.availabilityRating = input['availability_rating'];
+		review.politenessRating = input['politeness_rating'];
+		review.efficiencyRating = input['efficiency_rating'];
+		review.comment = input['comment'];
+		review.datestamp = new Date(input['datestamp']);
 
 		return review;
 
 	}
 
+	// define the `obj` parameter to fit the fields
+	// necessary for the endpoint to which you're
+	// sending data
+	//
+	// e.g. `obj` parameter for the "Create Review for User" route 
+	// would look like:
+	//
+	//	var obj = {
+	//		job_title: jobTitle,
+	//		employer: employer,
+	//		hotness_rating: hotnessRating,
+	//		accountability_rating: accountabilityRating,
+	//		availability_rating: availabilityRating,
+	//		politeness_rating: politenessRating,
+	//		efficiency_rating: efficiencyRating,
+	//		comment: comment,
+	//		datestamp: datestamp
+	//	}
 	serialize(): string {
-
-		var obj = {
-			job_title: this.jobTitle,
-			employer: this.employer,
-			accountability_rating: this.accountabilityRating,
-			availability_rating: this.availabilityRating,
-			politeness_rating: this.politenessRating,
-			efficiency_rating: this.efficiencyRating,
-			comment: this.comment,
-			datestamp: this.datestamp
-		};
-
 		return JSON.stringify(obj,null,2);
 	}
 
