@@ -47,21 +47,24 @@ Search by company:
 	"users": [
 		{
 			"id": 101,
-			"email": "jp.joule18@gojoule.me",
 			"first_name": "James",
-			"last_name": "Joule"
+			"last_name": "Joule",
+			"job_title": "Brewer",
+			"employer": "Self Employed"
 		},
 		{
 			"id": 535,
-			"email": "jjoule@kelvin.com",
 			"first_name": "James",
-			"last_name": "Joule"
+			"last_name": "Joule",
+			"job_title": "Brewer",
+			"employer": "Self Employed"
 		},
 		{
 			"id": 27,
-			"email": "electricityluver@aol.com",
 			"first_name": "James",
-			"last_name": "Joule"
+			"last_name": "Joule",
+			"job_title": "Brewer",
+			"employer": "Self Employed"
 		}
 	]
 }

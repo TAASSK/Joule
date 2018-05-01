@@ -2,7 +2,6 @@
  * Angular library
  * */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /*
  * Models
@@ -10,16 +9,14 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { User } from '../../shared';
 
 @Component({
-	selector: 'app-account',
-	templateUrl: './account.component.html',
+	selector: 'app-profile-settings',
+	templateUrl: './profile-settings.component.html'
 })
-export class AccountComponent implements OnInit {
+export class ProfileSettingsComponent implements OnInit {
 
 	user: User;
 
-	constructor(
-		private router: Router
-	) {
+	constructor() {
 
 		this.user = new User();
 

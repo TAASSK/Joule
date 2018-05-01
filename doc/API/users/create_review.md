@@ -16,17 +16,23 @@ Authorization: Bearer <token>
 
 **Data constraints**
 
-* `quality_rating` - a rating for overall quality; must be integer between 0 and 100, inclusive
-* `recommend_rating` - a rating for "would recommend"; must be integer between 0 and 100, inclusive
+* `hotness_rating` - a rating for hotness; must be integer between 0 and 100, inclusive
+* `accountability_rating` - a rating for accountability; must be integer between 0 and 100, inclusive
+* `availability_rating` - a rating for availability; must be integer between 0 and 100, inclusive
+* `politeness_rating` - a rating for politeness; must be integer between 0 and 100, inclusive
+* `efficiency_rating` - a rating for efficiency; must be integer between 0 and 100, inclusive
 * `comment` - simple text string containing comment body
 * `datestamp` - ISO 8601 date string (ex. `"2018-04-28T01:55:51.834Z"`) representing date and time of posting of original review
 
 ```json
 {
 	"job_title": "[job title]",
-	"employer": "[employer name]"
-	"quality_rating": <integer>,
-	"recommend_rating": <integer>,
+	"employer": "[employer name]",
+	"hotness_rating": <integer>,
+	"accountability_rating": <integer>,
+	"availability_rating": <integer>,
+	"politeness_rating": <integer>,
+	"efficiency_rating": <integer>,
 	"comment": "[comment body]",
 	"datestamp": "[ISO 8601 date string]",
 }
@@ -38,8 +44,11 @@ Authorization: Bearer <token>
 {
 	"job_title": "Brewer",
 	"employer": "Self Employed",
-	"quality_rating": 78,
-	"recommend_rating": 84,
+	"hotness_rating": 78,
+	"accountability_rating": 43,
+	"availability_rating": 95,
+	"politeness_rating": 94,
+	"efficiency_rating": 93,
 	"comment": "Hard worker.",
 	"datestamp": "2018-04-28T01:55:51.834Z"
 }

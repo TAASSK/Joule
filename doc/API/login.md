@@ -63,7 +63,7 @@ OR
 
 ```json
 {
-	"success": true,
+	"success": false,
 	"message": "Experienced error when attempting to verify the credentials."
 }
 ```
