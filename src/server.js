@@ -620,33 +620,42 @@ server.route({
                     reply(JSON.stringify(response)).code(403);
                 }
                 else {
-                    connection.query('DELETE FROM employee WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
-                        if (error) {
-                            var response = {
-                                "success": false,
-                                "message": "Experienced error when attempting to delete the user."
-                            };
-                            reply(JSON.stringify(response)).code(500);
+                    if (user_id==decoded.employee_num) {
+                        connection.query('DELETE FROM employee WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
+                            if (error) {
+                                var response = {
+                                    "success": false,
+                                    "message": "Experienced error when attempting to delete the user."
+                                };
+                                reply(JSON.stringify(response)).code(500);
+                            }
+                            else {
+                                connection.query('DELETE FROM employee_review WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
+                                    if (error) {
+                                        var response = {
+                                            "success": false,
+                                            "message": "Experienced error when attempting to delete the user."
+                                        };
+                                        reply(JSON.stringify(response)).code(500);
+                                    }
+                                    else {
+                                        var response = {
+                                            "success": true,
+                                            "message": "Successfully deleted user with ID: " + user_id
+                                        };
+                                        reply(JSON.stringify(response)).code(200);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        var response = {
+                            "sucess": false,
+                            "message": "User with id: " + decoded.employee_num + " does not have access to delete user " + user_id
                         }
-                        else {
-                            connection.query('DELETE FROM employee_review WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
-                                if (error) {
-                                    var response = {
-                                        "success": false,
-                                        "message": "Experienced error when attempting to delete the user."
-                                    };
-                                    reply(JSON.stringify(response)).code(500);
-                                }
-                                else {
-                                    var response = {
-                                        "success": true,
-                                        "message": "Successfully deleted user with ID: " + user_id
-                                    };
-                                    reply(JSON.stringify(response)).code(200);
-                                }
-                            });
-                        }
-                    });
+                        reply(JSON.stringify(response)).code(403);
+                    }
                 }
             });
         } catch (err) {
