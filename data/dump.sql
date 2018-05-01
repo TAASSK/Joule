@@ -25,16 +25,16 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
-  `username` varchar(45) NOT NULL,
-  `password_hashes` varchar(65) NOT NULL,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `employee_num` int(11) NOT NULL,
-  `department_name` varchar(45) NOT NULL,
-  `position` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `employer` varchar(45) NOT NULL,
-  `location` varchar(45) NOT NULL,
+  `username` varchar(45),
+  `password_hashes` varchar(65),
+  `first_name` varchar(45),
+  `last_name` varchar(45),
+  `employee_num` int(11),
+  `department_name` varchar(45),
+  `position` varchar(45),
+  `email` varchar(45),
+  `employer` varchar(45),
+  `location` varchar(45),
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -56,20 +56,24 @@ DROP TABLE IF EXISTS `employee_review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee_review` (
-  `employee_num` int(11) NOT NULL,
-  `hotness` int(11) NOT NULL,
-  `accountability` int(11) NOT NULL,
-  `availability` int(11) NOT NULL,
-  `politeness` int(11) NOT NULL,
-  `efficiency` int(11) NOT NULL,
-  `comments` varchar(45) NOT NULL,
+  `employee_num` int(11),
+  `hotness` int(11),
+  `accountability` int(11),
+  `availability` int(11),
+  `politeness` int(11),
+  `efficiency` int(11),
+  `comments` varchar(45),
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `joule2`.`employee_review`
+ADD COLUMN `review_id` INT NOT NULL AUTO_INCREMENT FIRST,
+ADD COLUMN `employer` VARCHAR(45) NULL AFTER `efficiency`,
+ADD COLUMN `position` VARCHAR(45) NULL AFTER `employer`,
+ADD COLUMN `review_time` DATETIME NOT NULL AFTER `position`,
+ADD PRIMARY KEY (`review_id`, `employee_num`),
+ADD UNIQUE INDEX `review_id_UNIQUE` (`review_id` ASC);
+ALTER TABLE `joule2`.`employee_review`
 DROP PRIMARY KEY;
-INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments)
-VALUES(1113, 2, 3, 4, 5, 6, "you'\re an employer"),
-(1112, 3, 4, 5, 6, 7, "iTs WoRkInG");
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

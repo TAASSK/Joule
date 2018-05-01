@@ -52,10 +52,11 @@ export class AuthenticationService extends RepositoryService<User> {
 		return this.httpClient.post(
 			`${this.endPoint}`,
 			{email, password},
-			this.httpOptions)
+      {responseType: 'text'})
 		.pipe(catchError(this.handleException));
 
-	}
+	}      // this.httpOptions)
+
 
 
 
@@ -73,5 +74,4 @@ export class AuthenticationService extends RepositoryService<User> {
 		localStorage.removeItem('expires_at');
 
 	}
-
 }

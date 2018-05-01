@@ -15,66 +15,36 @@
 <section class="col col-sm-4 col-md-6 col-lg-4 site-content">
 	<h1>Sign Up</h1>
 
-	<form> 
+	<form [formGroup]="myForm">  
 
-		<!-- Email address -->
+		<!-- Email -->
 		<section class="form-group">
-			<input
-			 [(ngModel)]="user.email"
-			 type="email"
-			 class="form-control"
-			 id="registrationInputEmailAddress"
-			 placeholder="Email address"
-			 focusOnLoad
-			 [ngModelOptions]="{ standalone: true }"
-			>
+			<input [(ngModel)]="user.email" type="email" class="form-control" id="registrationInputEmailAddress" placeholder="Email address" formControlName="email">	
 		</section>
+		<div class="alert" *ngIf="!myForm.controls['email'].valid && myForm.controls['email'].touched">{{ titleAlert }}</div>
 
 		<!-- First Name -->
 		<section class="form-group">
-			<input
-			 [(ngModel)]="user.firstName"
-			 type="text"
-			 class="form-control"
-			 id="registrationInputFirstName"
-			 placeholder="First name"
-			 [ngModelOptions]="{ standalone: true }"
-			>
+			<input [(ngModel)]="user.first_name" type="text" class="form-control" id="registrationInputFirstName" placeholder="First name" formControlName="firstName">
 		</section>
+		<div class="alert" *ngIf="!myForm.controls['firstName'].valid && myForm.controls['firstName'].touched">{{ titleAlert }}</div>
 
 		<!-- Last Name -->
 		<section class="form-group">
-			<input
-			 [(ngModel)]="user.lastName"
-			 type="text"
-			 class="form-control"
-			 id="registrationInputLastName"
-			 placeholder="Last name"
-			 [ngModelOptions]="{ standalone: true }"
-			>
+			<input [(ngModel)]="user.last_name" type="text" class="form-control" id="registrationInputLastName" placeholder="Last name" formControlName="lastName">
 		</section>
+		<div class="alert" *ngIf="!myForm.controls['lastName'].valid && myForm.controls['lastName'].touched">{{ titleAlert }}</div>
 
 		<!-- Password -->
 		<section class="form-group">
-			<input
-			 [(ngModel)]="user.password"
-			 type="password"
-			 class="form-control"
-			 id="registrationInputPassword"
-			 placeholder="Create a password"
-			 [ngModelOptions]="{ standalone: true }"
-			>
+			<input [(ngModel)]="user.password"type="password" class="form-control" id="registrationInputPassword" placeholder="Create a password" formControlName="password">
 		</section>
+		<div class="alert" *ngIf="!myForm.controls['password'].valid && myForm.controls['password'].touched">{{ titleAlert }}</div>
 
 	</form>
 
-	<button
-	 type="submit"
-	 class="button button-call-to-action button-block"
-	 (click)=save()
-	>
-		Sign Up
-	</button>
+	<button type="submit" class="button button-call-to-action button-block" [disabled]="!myForm.valid" (click)=save()>Sign Up</button>
+
 
 	<hr>
 

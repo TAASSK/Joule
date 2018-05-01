@@ -12,7 +12,15 @@ localhost:8080 {
 		rotate_keep 10
 	}
 
+	header /api {
+		Access-Control-Allow-Origin *
+		Access-Control-Allow-Methods "GET, POST, PUT, DELETE"
+		Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+		-Server
+	}
+
 	proxy /api api:3000 {
+		header_downstream -Access-Control-Allow-Origin
 		fail_timeout 300s
 		transparent
 	}

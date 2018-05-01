@@ -4,8 +4,8 @@ export class User implements Serializable<User> {
 
 	id?: number;
 	email: string;
-	firstName: string;
-	lastName: string;
+	first_name: string;
+	last_name: string;
 	password?: string;
 	jobTitle?: string;
 	employer?: string;
