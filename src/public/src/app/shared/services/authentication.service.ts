@@ -2,7 +2,7 @@
  * Angular library
  * */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 /*
@@ -27,15 +27,22 @@ import { catchError } from 'rxjs/operators';
 import { RepositoryService } from './repository.service';
 
 @Injectable()
-export class AuthenticationService extends RepositoryService<User> {
+export class AuthenticationService {
 
-	protected endPoint = 'http://localhost:8080/api/login';
+  protected endPoint = 'http://localhost:8080/api/login';
+  // private httpOptions = {
+  //   headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  // };
 
+  protected httpOptions =
+{
+    headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'authorization' : this.getToken(),
+    })
+};
 	constructor(
-    protected httpClient: HttpClient
-	) {
-		super(httpClient);
-	}
+    protected httpClient: HttpClient) {}
 
 	isAuthenticated(): boolean {
     return true;
@@ -76,16 +83,21 @@ export class AuthenticationService extends RepositoryService<User> {
 
   }
 
-  getToken() {
+ public getToken() {
     const token = localStorage.getItem('token');
     console.log(token);
     return token;
-  }
+}
 
 	logOut() {
 
 		localStorage.removeItem('id_token');
 		localStorage.removeItem('expires_at');
 
-	}
+  }
+  protected handleException(exception: any) {
+    let message = `${exception.status} : ${exception.statusText}\r\n${exception.message}`;
+    alert(message);
+    return Observable.throw(exception);
+  }
 }
