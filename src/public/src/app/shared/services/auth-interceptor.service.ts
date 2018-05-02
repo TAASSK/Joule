@@ -1,8 +1,25 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from './authentication.service';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor
+} from '@angular/common/http';
 
 @Injectable()
-export class AuthInterceptorService {
+export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(public auth: AuthenticationService) { }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    request = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${this.auth.getToken()}`
+      }
+    });
+    return next.handle(request);
 
 }
