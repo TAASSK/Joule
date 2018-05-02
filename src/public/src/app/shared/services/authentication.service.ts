@@ -56,7 +56,6 @@ export class AuthenticationService {
 		// 	this.httpOptions)
 		// .do(res => this.setSession)
 		// .pipe(catchError(this.handleException));
-    console.log('test');
 		return this.httpClient.post(`${this.endPoint}`, {
       email,
       password
@@ -65,8 +64,6 @@ export class AuthenticationService {
       this.setSession(res);
     })
     .pipe(catchError(this.handleException));
-
-
   }
 
 
@@ -84,11 +81,11 @@ export class AuthenticationService {
 
 	private setSession(authResult: object) {
 		// const expiresAt = moment().add(authResult.expires_at, 'second');
+    console.log(localStorage + 'hmm');
 
     localStorage.setItem('token', authResult['token']);
     // localStorage.setItem('expires_at', authResult['expires_at']);
 
-    console.log(localStorage);
 		// localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 
   }
@@ -99,10 +96,12 @@ export class AuthenticationService {
     return token;
 }
 
-	logOut() {
+public logOut() {
+		localStorage.removeItem('token');
+    localStorage.removeItem('expires_at');
+    console.log(localStorage);
+    console.log('testStoreage');
 
-		localStorage.removeItem('id_token');
-		localStorage.removeItem('expires_at');
 
   }
   protected handleException(exception: any) {
