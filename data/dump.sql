@@ -60,22 +60,15 @@ DROP TABLE IF EXISTS `employee_review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee_review` (
-  `employee_num` int(11),
-  `hotness` int(11),
-  `accountability` int(11),
-  `availability` int(11),
-  `politeness` int(11),
-  `efficiency` int(11),
-  `comments` varchar(45),
+  `employee_num` int(11) NOT NULL,
+  `hotness` int(11) NOT NULL,
+  `accountability` int(11) NOT NULL,
+  `availability` int(11) NOT NULL,
+  `politeness` int(11) NOT NULL,
+  `efficiency` int(11) NOT NULL,
+  `comments` varchar(45) NOT NULL,
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-ALTER TABLE `joule2`.`employee_review`
-ADD COLUMN `review_id` INT NOT NULL AUTO_INCREMENT FIRST,
-ADD COLUMN `employer` VARCHAR(45) NULL AFTER `efficiency`,
-ADD COLUMN `position` VARCHAR(45) NULL AFTER `employer`,
-ADD COLUMN `review_time` DATETIME NOT NULL AFTER `position`,
-ADD PRIMARY KEY (`review_id`, `employee_num`),
-ADD UNIQUE INDEX `review_id_UNIQUE` (`review_id` ASC);
 ALTER TABLE `joule2`.`employee_review`
 DROP PRIMARY KEY;
 INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(3, 'student', 'SMU', 78, 89, 45, 67, 45, 'uses time efficiently', '2018-04-29 04:56:57');
