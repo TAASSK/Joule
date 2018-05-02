@@ -5,49 +5,101 @@
 		<div class="navbar-items">
 
 			<a class="navbar-brand" [routerLink]="['/home']">
-				<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="100" height="100" alt="Joule">
-			</a> <!-- .navbar-brand -->
+				<img
+				 class="navbar-logo"
+				 src="/assets/img/logo/joule-cropped-transparent.svg"
+				 width="100"
+				 height="100"
+				 alt="Joule"
+				>
+			</a>
 
 			<ul class="navbar-nav">
-				<input type="search" class="nav-search-bar" placeholder="Search">
+				<app-search-bar class="nav-search-bar-container"></app-search-bar>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Account</a>
+					<a
+					 class="nav-link"
+					 [routerLink]="['/user', user.id, 'account', 'profile']"
+					>
+						Account
+					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Log Out</a>
+					<a class="nav-link" href="#">
+						Log Out
+					</a>
 				</li>
 			</ul>
 
-		</div> <!-- .collapse .navbar-collapse -->
+		</div>
 
-	</nav> <!-- navbar -->
+	</nav>
 
-</header> <!-- .row (header) -->
+</header>
 
 <section class="site-content">
-	<h1>Profile Component</h1>
-	<p>The profile component <a href="#">works!</a></p>
-</section> <!-- .row (section) -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="card mb-8">
-            <div class="card-header" >
-              <h1>Tristan Knotts</h1>
-              <h3 class="strong">Southern Methodist University</h3>
-            </div>
-            <div class="card-body" style="background-color:#2D7EFF">
-              <span>
-                <h3>Overall Rating</h3>
-              </span>
 
-            </div>
+	<section class="profile-header">
 
+		<img
+		 class="profile-picture"
+		 src="/assets/img/np_profile.svg"
+		 alt="profile-picture"
+		>
 
-            </div>
-            <hr/>
+		<section class="profile-employee-information">
 
-            <app-review></app-review>
+			<h1>{{ user.first_name }} {{ user.last_name }}</h1>
+			<h2>{{ user.jobTitle }}, {{ user.employer }}</h2>
+			<h3>{{ user.location }}</h3>
 
+		</section>
 
-    </div>
-  </div>
+	</section>
+
+	<section class="profile-dashboard">
+
+		<app-rating-box
+		 [rating]="avgHotnessRating"
+		 [descriptor]="'Hotness'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgAccountabilityRating"
+		 [descriptor]="'Accountability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgAvailabilityRating"
+		 [descriptor]="'Availability'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgPolitenessRating"
+		 [descriptor]="'Politeness'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
+		 [rating]="avgEfficiencyRating"
+		 [descriptor]="'Efficiency'"
+		>
+		</app-rating-box>
+
+	</section>
+
+	<section class="profile-reviews">
+
+		<app-review
+		 *ngFor="let review of reviews"
+		 class="review-component"
+		 [review]="review"
+		>
+		</app-review>
+
+	</section>
+
+</section>

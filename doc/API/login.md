@@ -32,9 +32,12 @@ Returns a JSON Web Token for a registered user.
 
 **Content example**
 
+* `expires_at` - timestamp representing the time when the token will expire (i.e. timestamp at current time + <expiration_period>)
+
 ```json
 {
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+	"expires_at": "2018-05-01T22:11:37.914Z"
 }
 ```
 
@@ -63,7 +66,7 @@ OR
 
 ```json
 {
-	"success": true,
+	"success": false,
 	"message": "Experienced error when attempting to verify the credentials."
 }
 ```

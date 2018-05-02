@@ -1,4 +1,13 @@
+/*
+ * Angular library
+ * */
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+
+/*
+ * Models
+ * */
+import { User } from '../../shared';
 
 @Component({
 	selector: 'app-account',
@@ -6,8 +15,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-constructor() { }
+	user: User;
 
-ngOnInit() { }
+	constructor(
+		private router: Router
+	) {
+
+		this.user = new User();
+
+		this.user.id = 101;
+		this.user.email = 'jp.joule18@gojoule.me';
+		this.user.first_name = 'John';
+		this.user.last_name = 'Doe';
+		this.user.jobTitle = 'Employee';
+		this.user.employer = 'Random Corp.';
+		this.user.location = 'Dallas, TX';
+
+	}
+
+	ngOnInit() { }
 
 }

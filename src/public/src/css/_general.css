@@ -33,6 +33,12 @@ h2 {
 	font-weight: 500;
 }
 
+h3 {
+	font-family: 'Archivo-Web';
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
 hr {
 	display: block;
 	margin: 1rem auto;

@@ -5,26 +5,63 @@
 		<div class="navbar-items">
 
 			<a class="navbar-brand" [routerLink]="['/home']">
-				<img class="navbar-logo" src="/assets/img/logo/joule-cropped-transparent.svg" width="100" height="100" alt="Joule">
-			</a> <!-- .navbar-brand -->
+				<img
+				 class="navbar-logo"
+				 src="/assets/img/logo/joule-cropped-transparent.svg"
+				 width="100"
+				 height="100"
+				 alt="Joule"
+				>
+			</a>
 
 			<ul class="navbar-nav">
-				<input type="search" class="nav-search-bar" placeholder="Search">
+				<app-search-bar class="nav-search-bar-container"></app-search-bar>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Profile</a>
+					<a
+					 class="nav-link"
+					 [routerLink]="['/user', user.id]"
+					>
+						Profile
+					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Log Out</a>
 				</li>
 			</ul>
 
-		</div> <!-- .collapse .navbar-collapse -->
+		</div>
 
-	</nav> <!-- navbar -->
+	</nav>
 
-</header> <!-- .row (header) -->
+</header>
 
-<section class="site-content">
-	<h1>Account Component</h1>
-	<p>The account component <a href="#">works!</a></p>
-</section> <!-- .row (section) -->
+<section class="row site-content no-padding">
+
+		<ul class="account-tabnav">
+			<a 
+			 class="account-tabnav-link"
+			 [routerLink]="['/user', user.id, 'account', 'profile']"
+			 [routerLinkActive]="'account-tabnav-item-current'"
+			>
+				<li class="account-tabnav-item">
+					Profile
+				</li>
+			</a>
+			<a
+			 class="account-tabnav-link"
+			 [routerLink]="['/user', user.id, 'account', 'security']"
+			 [routerLinkActive]="'account-tabnav-item-current'"
+			>
+				<li class="account-tabnav-item">
+					Security
+				</li>
+			</a>
+		</ul>
+
+		<section class="col-md-6 account-settings-container">
+
+			<router-outlet></router-outlet>
+
+		</section>
+
+</section>

@@ -1,12 +1,37 @@
+/*
+ * Angular library
+ * */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+/*
+ * Components
+ * */
+import { SearchBarComponent } from './components/search-bar.component';
+
+/*
+ * Directives
+ * */
+import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule
-  ],
-  declarations: []
+
+	imports: [
+		CommonModule,
+    FormsModule,
+		HttpClientModule,
+    ReactiveFormsModule
+	],
+	declarations: [
+		FocusOnLoadDirective,
+		SearchBarComponent
+	],
+	exports: [
+		FocusOnLoadDirective,
+		SearchBarComponent
+	]
+
 })
 export class SharedModule { }

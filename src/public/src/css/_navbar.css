@@ -25,6 +25,12 @@
 	font-weight: 500;
 }
 
+.nav-search-bar-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .nav-search-bar {
 	background-image: url('../assets/img/np_magnifying-glass.svg');
 	background-repeat: no-repeat;

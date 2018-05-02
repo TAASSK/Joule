@@ -1,73 +1,59 @@
+<section class="review-box">
 
-<!-- Review List -->
-<div>
-    <h4>Tristan's reviews
-        <h4 class="text-muted d-inline">({{reviews.length}})</h4>
-      </h4>
-      <div *ngIf="reviews.length == 0 || reviews.length == undefined">
-        <br/>
-        <p>Leave a review for Tristan Knotts</p>
-      </div>
-      <div class="card mb-4" *ngFor="let review of reviews">
+	<section class="review-metadata">
 
-        <div class="card-header">
-         <!-- <app-ratings [rating]="userReview.overallRating"></app-ratings> -->
-        </div>
-        <div class="card-body bg-light">
-          <span class="col-md-12 clearfix">
-            <p class="text-muted col-md-4 float-left">{{review.revieweeName}}</p>
-            <p class="text-muted float-right">{{date | date:'MMM d, y'}}</p>
-          </span>
-          <p class="card-text col-md-4">"{{review.comment}}"</p>
-        </div>
-      </div>
+		<div class="review-metadata-employment-information">
 
+			<h2>{{ review.jobTitle }}</h2>
+			<h3>{{ review.employer }}</h3>
 
-</div>
+		</div>
 
-<!-- Add Review -->
-<div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header bg-light">
-          Add Review
-        </div>
-        <div class="card-body" style="background-color:#2D7EFF">
-          <div class="row">
-            <div class="form-group col-md-8">
-              <label class="mb-2" for="name">Your Name</label>
-              <input type="text" id="name" class="form-control expand round-edge" [(ngModel)]="userReview.revieweeName"/>
-            </div>
-            <div class="form-group col-md-4">
-                <label class="mb-2" for="rating">Overall Rating</label>
-            </div>
-            <select id="rating" class="form-control d-inline" style="width:140px" [(ngModel)]="userReview.overallRating">
-                <option value=1>1 star</option>
-                <option value=2>2 star</option>
-                <option value=3>3 star</option>
-                <option value=4>4 star</option>
-                <option value=5>5 star</option>
-              </select>
+		<p>{{ review.datestamp | date:'longDate' }}</p>
 
+	</section>
 
-          </div>
+	<section class="review-comment">
 
-          <div class="form-row" >
-            <div class="col-md-12">
-              <div class="forms-group">
-                <label class="d-block" for="comments">Comment</label>
-                <textarea class="round-edge form-control" id="comments" name="comments" [(ngModel)]="userReview.comment"></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="form-row mt-2">
-            <div class="col-md-12">
-                <input type="submit" (click)="addReview()" class=" btn btn-success" value="Submit" />
-            </div>
-          </div>
+		<p>{{ review.comment }}</p>
 
-        </div>
-      </div>
-    </div>
-  </div>
+		<table>
 
+			<thead>
+				<tr>
+					<th scope="col">Accountability</th>
+					<th scope="col">Availability</th>
+					<th scope="col">Politeness</th>
+					<th scope="col">Efficiency</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ review.accountabilityRating }}</td>
+					<td>{{ review.availabilityRating }}</td>
+					<td>{{ review.politenessRating }}</td>
+					<td>{{ review.efficiencyRating }}</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+<!-- 		<div>
+			<p>Accountability: {{ review.accountabilityRating }}</p>
+		</div>
+
+		<div>
+			<p>Availability: {{ review.availabilityRating }}</p>
+		</div>
+
+		<div>
+			<p>Politeness: {{ review.politenessRating }}</p>
+		</div>
+
+		<div>
+			<p>Efficiency: {{ review.efficiencyRating }}</p>
+		</div> -->
+
+	</section>
+
+</section>
