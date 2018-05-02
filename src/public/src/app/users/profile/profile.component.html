@@ -101,7 +101,8 @@
 					<input
 					 type="text"
 					 class="form-control"
-					 id="reviewInputJobTitle"
+           id="reviewInputJobTitle"
+           [(ngModel)]="review.jobTitle"
 					>
 
 				</div>
@@ -114,7 +115,8 @@
 					<input
 					 type="text"
 					 class="form-control"
-					 id="reviewInputEmployer"
+           id="reviewInputEmployer"
+           [(ngModel)]="review.employer"
 					>
 
 				</div>
@@ -125,22 +127,22 @@
 
 				<div class="col">
 					<label for="">Hotness %</label>
-					<input type="text" class="form-control">
+          <input type="text" class="form-control" [(ngModel)]="review.hotnessRating">
 				</div>
 
 				<div class="col">
 					<label for="">Accountability %</label>
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" [(ngModel)]="review.accountabilityRating">
 				</div>
 
 				<div class="col">
 					<label for="">Politeness %</label>
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" [(ngModel)]="review.politenessRating">
 				</div>
 
 				<div class="col">
 					<label for="">Efficiency %</label>
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" [(ngModel)]="review.efficiencyRating">
 				</div>
 
 			</div>
@@ -155,7 +157,8 @@
 					 name="comment"
 					 id="reviewInputComment"
 					 columns
-					 rows="5"
+           rows="5"
+           [(ngModel)]="review.comment"
 					></textarea>
 
 				</div>
@@ -165,7 +168,7 @@
 			<div class="row justify-content-end">
 				<div class="col-3">
 					<button
-					 class="button button-call-to-action button-block"
+           class="button button-call-to-action button-block"
 					>
 						Submit Review
 					</button>

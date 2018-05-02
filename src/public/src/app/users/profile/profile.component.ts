@@ -19,7 +19,8 @@ import { userService } from '../../shared/services/user.service';
 })
 export class ProfileComponent implements OnInit {
 
-	user: User;
+  user: User;
+  review: Review;
 	reviews: Array<Review> = new Array<Review>();
 
 	avgHotnessRating: number = 0;
@@ -119,7 +120,16 @@ export class ProfileComponent implements OnInit {
 			}
 		  });
 		  console.log(this.user);
-	 }
+   }
+
+
+// submitReview(review: Review) {
+//   const userId = this.user.id;
+//   const date = new Date();
+//   review.id = userId;
+//   review.datestamp = date;
+
+// }
 
 }
 
