@@ -1,2 +1,83 @@
 /* Home page styling */
 
+.home-page-header {
+	font-family: 'Archivo-Web';
+	text-align: center;
+	margin-bottom: 1.5rem;
+}
+
+.home-page-header-title {
+	font-size: 4rem;
+	font-weight: 500;
+}
+
+.home-page-header-body {
+	font-style: italic;
+	font-size: 2rem;
+}
+
+.home-page-body {
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+.home-page-team {
+/*	display: flex;
+	justify-content: space-between;*/
+	
+}
+
+.home-page-team .home-page-team-col {
+	width: 33.3333%;
+}
+
+.home-page-team-col {
+	flex: 1;
+}
+
+.team-members {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding: 0 2rem 1rem;
+}
+
+.team-members:last-child {
+	padding-bottom: 0;
+}
+
+.team-member {
+	width: 33.333%;
+	margin: 0 1rem 1rem;
+	/*flex: 1 0 0;*/
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.team-member-image {
+	position: relative;
+	width: 7rem;
+	height: 7rem;
+	overflow: hidden;
+	border-radius: 50%;
+	margin-bottom: 0.5rem;
+}
+
+.team-member-image img {
+	width: 100%;
+	height: auto;
+}
+
+.team-member-name {
+	display: block;
+	font-size: 1rem;
+}
+
+.team-member-title {
+	font-size: 1rem;
+}
