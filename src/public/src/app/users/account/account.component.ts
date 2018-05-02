@@ -24,7 +24,7 @@ export class AccountComponent implements OnInit {
 		private userService: userService
 	) {
 
-		/*
+	
 		this.user = new User();
 
 		this.user.id = 101;
@@ -34,11 +34,12 @@ export class AccountComponent implements OnInit {
 		this.user.jobTitle = 'Employee';
 		this.user.employer = 'Random Corp.';
 		this.user.location = 'Dallas, TX';
-		*/
+	
 
 	}
 
 	ngOnInit() {
+		/*
 		this.user = new User();
 		this.route.params.subscribe((params: any) => {
 			this.user.id = params.id;
@@ -52,6 +53,7 @@ export class AccountComponent implements OnInit {
 			}
 		  });
 		  console.log(this.user);
+		  */
 	 }
 
 }

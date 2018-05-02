@@ -25,24 +25,22 @@ import { catchError } from 'rxjs/operators';
  * Services
  * */
 import { RepositoryService } from './repository.service';
+import { userService } from './user.service';
 
 @Injectable()
-export class AuthenticationService {
 
-  protected endPoint = 'http://localhost:8080/api/login';
-  // private httpOptions = {
-  //   headers: new HttpHeaders({'Content-Type': 'application/json'}),
-  // };
+export class AuthenticationService extends RepositoryService<User> {
 
-  protected httpOptions =
-{
-    headers: new HttpHeaders({
-        'Content-Type' : 'application/json',
-        'authorization' : this.getToken(),
-    })
-};
+	protected endPoint = 'http://localhost:8080/api/login';
+	//user: User; 
+	//userServices: userService;
+
 	constructor(
-    protected httpClient: HttpClient) {}
+		protected httpClient: HttpClient,
+	) {
+		super(httpClient);
+	}
+
 
 	isAuthenticated(): boolean {
     return true;
