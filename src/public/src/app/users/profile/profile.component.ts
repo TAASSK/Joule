@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit {
 
 	avgHotnessRating: number;
 	avgAccountabilityRating: number;
-	avgAvailabilityRating: number;
 	avgPolitenessRating: number;
 	avgEfficiencyRating: number;
 
@@ -36,8 +35,8 @@ export class ProfileComponent implements OnInit {
 
 		this.user.id = 101;
 		this.user.email = 'jp.joule18@gojoule.me';
-		this.user.first_name = 'John';
-		this.user.last_name = 'Doe';
+		this.user.firstName = 'John';
+		this.user.lastName = 'Doe';
 		this.user.jobTitle = 'Employee';
 		this.user.employer = 'Random Corp.';
 		this.user.location = 'Dallas, TX';
@@ -51,7 +50,6 @@ export class ProfileComponent implements OnInit {
 		review1.jobTitle = 'Employee';
 		review1.employer = 'Random Corp.';
 		review1.hotnessRating = 59;
-		review1.availabilityRating = 85;
 		review1.accountabilityRating = 83;
 		review1.politenessRating = 34;
 		review1.efficiencyRating = 13;
@@ -62,7 +60,6 @@ export class ProfileComponent implements OnInit {
 		review2.jobTitle = 'Employee';
 		review2.employer = 'Random Corp.';
 		review2.hotnessRating = 33;
-		review2.availabilityRating = 92;
 		review2.accountabilityRating = 98;
 		review2.politenessRating = 94;
 		review2.efficiencyRating = 91;
@@ -73,7 +70,6 @@ export class ProfileComponent implements OnInit {
 		review3.jobTitle = 'Employee';
 		review3.employer = 'Random Corp.';
 		review3.hotnessRating = 68;
-		review3.availabilityRating = 98;
 		review3.accountabilityRating = 43;
 		review3.politenessRating = 51;
 		review3.efficiencyRating = 45;
@@ -91,11 +87,6 @@ export class ProfileComponent implements OnInit {
 		this.avgAccountabilityRating = Math.round(this.reviews.reduce(
 		(prevVal, elem) => {
 			return prevVal + elem.accountabilityRating
-		}, 0) / this.reviews.length) / 100;
-
-		this.avgAvailabilityRating = Math.round(this.reviews.reduce(
-		(prevVal, elem) => {
-			return prevVal + elem.availabilityRating
 		}, 0) / this.reviews.length) / 100;
 
 		this.avgPolitenessRating = Math.round(this.reviews.reduce(
