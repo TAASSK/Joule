@@ -13,18 +13,22 @@ import { CATCH_ERROR_VAR, SUPER_EXPR } from '@angular/compiler/src/output/output
  
 @Injectable()
 export class SignupService extends RepositoryService<User> {
-protected endPoint = 'http://localhost:8080/api/newUser';
+protected endPoint = 'http://localhost:8080/api/users';
 constructor(protected httpClient: HttpClient) { 
     super(httpClient);
 }
 
 public add(item: User): Observable<User> {
-   const user = item.serialize(item);
-
-    // let body = JSON.stringify(user);
+  var obj = {
+    		email: item.email,
+    		first_name: item.firstName,
+    		last_name: item.lastName,
+    		password: item.password
+    	}
+    const user = item.serialize(obj);
+    console.log(user);
     return this.httpClient.post(`${this.endPoint}`, user, this.httpOptions).pipe(
-
-      catchError(this.handleException)
+    catchError(this.handleException)
     );
   }
 

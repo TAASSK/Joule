@@ -11,6 +11,7 @@ import {
 	Review,
 	User
 } from '../../shared';
+import { userService } from '../../shared/services/user.service';
 
 @Component({
 	selector: 'app-profile',
@@ -28,11 +29,13 @@ export class ProfileComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private userService: userService
 	) {
 
-		this.user = new User();
 
+		this.user = new User();
+		/*
 		this.user.id = 101;
 		this.user.email = 'jp.joule18@gojoule.me';
 		this.user.firstName = 'John';
@@ -40,6 +43,7 @@ export class ProfileComponent implements OnInit {
 		this.user.jobTitle = 'Employee';
 		this.user.employer = 'Random Corp.';
 		this.user.location = 'Dallas, TX';
+		*/
 
 		// dummy reviews
 		var review1 = new Review();
@@ -101,7 +105,17 @@ export class ProfileComponent implements OnInit {
 
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		
+		this.route.params.subscribe((params: any) => {
+			if(params.id) {
+			console.log(params.id)
+			  this.userService.getById(+params.id).subscribe(data => {
+				this.user = data;         
+			  });
+			}
+		  });
+	 }
 
 	listReviews() {
 		console.log(this.reviews);
