@@ -31,7 +31,13 @@ export class LoginComponent implements OnInit {
 
 	public login() {
 		this.authenticate.logIn(this.email, this.password).subscribe(x => {
-			this.router.navigateByUrl('user/1');
+
+			console.log(x);
+			console.log(x.user_id);
+			let idNum = x.user_id;
+			let name = 'user/'+ idNum;
+			console.log(name)
+			this.router.navigateByUrl(name);
 		});
 	}
 
