@@ -11,6 +11,8 @@ import {
 	Review,
 	User
 } from '../../shared';
+import { AuthenticationService } from './../../shared/services/authentication.service';
+
 
 @Component({
 	selector: 'app-profile',
@@ -28,7 +30,8 @@ export class ProfileComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private router: Router
+    private router: Router,
+    protected auth: AuthenticationService,
 	) {
 
 		this.user = new User();

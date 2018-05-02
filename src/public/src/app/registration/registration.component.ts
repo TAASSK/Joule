@@ -19,7 +19,8 @@ import { Serializer } from '@angular/compiler';
 })
 export class RegistrationComponent implements OnInit {
 
-	user: User;
+myForm: FormGroup;
+user: User;
 
 	constructor(
 		private route: ActivatedRoute,

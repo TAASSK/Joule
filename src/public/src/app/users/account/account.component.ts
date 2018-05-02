@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
  * Models
  * */
 import { User } from '../../shared';
+import { AuthenticationService } from './../../shared/services/authentication.service';
 
 @Component({
 	selector: 'app-account',
