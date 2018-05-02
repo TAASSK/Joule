@@ -135,10 +135,10 @@ server.route({
                             };
                         });
                         //whether reviews exist for that user or not
-                        var response = {
-                            "users": formattedResults            
-                        }
-                        reply(JSON.stringify(response)).code(200);
+                        // var response = {
+                        //     "users": formattedResults            
+                        // }
+                        reply(JSON.stringify(formattedResults)).code(200);
                     }
                 });
             }

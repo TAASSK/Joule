@@ -28,7 +28,7 @@ export class RatingBarComponent implements AfterViewInit {
 	displayedRating: number = 0;
 
 	constructor(
-		private rg: RatingGradientService
+		public rg: RatingGradientService
 	) {
 
 		window.setTimeout(() => {

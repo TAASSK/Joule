@@ -47,7 +47,7 @@ export class RegistrationComponent implements OnInit {
 				Validators.required
 			]),
 		});
-			
+
 	}
 	public save() {
 	// this.user.id = 15789;

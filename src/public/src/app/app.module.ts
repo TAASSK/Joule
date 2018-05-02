@@ -30,6 +30,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import {
 	AuthenticationService,
 	RatingGradientService,
+	SearchService,
 	SignupService
 } from './shared';
 import { userService } from './shared/services/user.service';
@@ -64,6 +65,7 @@ let defaultRoute = 'home';
 	providers: [
 		AuthenticationService,
 		RatingGradientService,
+		SearchService,
 		SignupService,
 		userService
 	],

@@ -47,8 +47,6 @@ export class SearchBarComponent implements OnInit {
 
 		this.router.navigate(['/search'], navigationExtras);
 
-		console.log(navigationExtras);
-
 	}
 
 }

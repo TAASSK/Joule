@@ -12,9 +12,21 @@ import {
 } from '@angular/router';
 
 /*
+ * RxJS
+ * */
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators/map';
+
+/*
  * Models
  * */
 import { User } from '../shared';
+
+/*
+ * Services
+ * */
+import { SearchService } from '../shared';
 
 @Component({
 	selector: 'app-search-results',
@@ -24,16 +36,33 @@ export class SearchResultsComponent implements OnInit {
 
 	query: string;
 
-	results: Array<User> = new Array<User>();
+	public results: Array<User> = new Array<User>();
 
 	constructor(
 		private route: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private searchService: SearchService
 	) {
 
 		this.route.queryParams.subscribe(params => {
 			this.query = params['q'];
 		});
+
+		// this.searchService.search(this.query).subscribe((res: Array<User>) => {
+		// 	console.log(res, typeof(res), res[0]);
+		// 	this.results = res;
+		// });
+
+		// this.results$ = this.searchService.search(this.query).subscribe(res => {
+		// 	var users = res['users'];
+		// 	var userArray = users.map(elem => {
+		// 		var user = new User();
+		// 		user.deserialize(elem);
+		// 		return user;
+		// 	});
+
+		// 	return userArray;
+		// });
 
 		var user1 = new User();
 		var user2 = new User();

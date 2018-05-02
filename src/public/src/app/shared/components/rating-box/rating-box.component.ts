@@ -32,7 +32,7 @@ export class RatingBoxComponent implements AfterViewInit {
 	@Input() public descriptor: string;
 
 	constructor(
-		private rg: RatingGradientService
+		public rg: RatingGradientService
 	) { }
 
 	ngAfterViewInit() {
