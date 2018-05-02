@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
 
 	public login() {
 		this.authenticate.logIn(this.email, this.password).subscribe(x => {
+
 			console.log(x);
 			console.log(x.user_id);
 			let idNum = x.user_id;

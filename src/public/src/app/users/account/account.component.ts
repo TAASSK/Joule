@@ -46,9 +46,9 @@ export class AccountComponent implements OnInit {
 			let num = params.id;
 			if(num) {
 			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);     
-				console.log(data);  
-				console.log(this.user);  
+				this.user = this.user.deserialize(data);
+				console.log(data);
+				console.log(this.user);
 			  });
 			}
 		  });
