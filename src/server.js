@@ -766,6 +766,25 @@ server.route({
 });
 
 //END AUTHENTICATED ROUTES
+//GET ALL USERS 
+server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
+    method: 'GET',
+    path: '/getUsers',
+    handler: function (request, reply) {
+        connection.query('SELECT * FROM employee', function (error, results, fields) {
+            if (error) {
+                throw error;
+            }
+            reply(results);
+        });
+    }
+});
 
 //Start the server
 server.start((err) => {
