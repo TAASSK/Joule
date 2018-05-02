@@ -13,7 +13,6 @@ server.connection({
 });
 
 // adds global URI path prefix to incoming requests
-// e.g. <domain>/api/dummy will get routed to /dummy
 server.realm.modifiers.route.prefix = '/api';
 
 //Initialize the mysql variable and create the connection object with necessary values
@@ -34,12 +33,19 @@ var connection = mysql.createConnection({
 //Login
 //DONE :)
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'POST',
     path: '/login',
     handler: function(request, reply) {
         var email = request.payload['email'];
         var password = request.payload['password'];
-        connection.query('SELECT email, password_hashes, employee_num FROM employee WHERE email="' + email + '"', function (error, results, fields) {
+        var post1 = {email:email};
+        connection.query('SELECT email, password_hashes, employee_num FROM employee WHERE email = ?',email, function (error, results, fields) {
             if(error) {
                 var response = {
                     "success": false,
@@ -87,11 +93,17 @@ server.route({
 //Search
 //DONE :)
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'POST',
     path: '/search',
     handler: function (request, reply) {
         var search_term = request.payload["search_term"];
-        connection.query('SELECT employee_num, first_name,last_name, position, employer FROM employee WHERE employer="' + search_term + '"', function (error1, results1, fields1) {
+        connection.query('SELECT employee_num, first_name,last_name, position, employer FROM employee WHERE employer = ?',search_term, function (error1, results1, fields1) {
             if (error1) {
                 var response = {
                     "success": false,
@@ -149,7 +161,7 @@ server.route({
 });
 
 //Create User
-//NEEDS TO HAVE EMPLOYEE_NUM AUTO GENERATED
+//Done :)
 server.route({
     config: {
         cors: {
@@ -170,11 +182,11 @@ server.route({
                 "success": false,
                 "message": "Request body had missing or malformed fields."
             };
-            reply(JSON.stringify(response)).code(400);
+            reply(JSON.stringify(response)).code(400);
         }
         //if data is present
         else {
-            connection.query('SELECT email FROM employee WHERE email = "' + email + '"', function (error, results, fields) {
+            connection.query('SELECT email FROM employee WHERE email= ?',email, function (error, results, fields) {
                 //if a user already exists for that email
                 if (results.length>0) {
                     var response = {
@@ -188,7 +200,8 @@ server.route({
                     bcrypt.hash(password, 10, function(err, hash) {
                         newPass = hash;
                         //if all is good, insert the user into the table
-                        connection.query('INSERT INTO employee(username, password_hashes, first_name, last_name, email) VALUES(NULL,"' + newPass + '", "' + first_name + '", "' + last_name + '","'  + email + '")', function (error, results, fields) {
+                        var post = {password_hashes : newPass, first_name : first_name, last_name : last_name, email : email};
+                        connection.query('INSERT INTO employee SET ?', post, function (error, results, fields) {
                             if (error) {
                                 var response = {
                                     "success": false,
@@ -214,6 +227,12 @@ server.route({
 //Get User
 //DONE :)
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'GET',
     path: '/users/{user_id}',
     handler: function(request, reply) {
@@ -228,8 +247,7 @@ server.route({
         }
         //if the parameters are defined
         else {
-            connection.query('SELECT employee_num, email, first_name, last_name, position, employer, location FROM employee WHERE employee_num="' + user_id + '"', function (error, results, fields) {
-                
+            connection.query('SELECT employee_num, email, first_name, last_name, position, employer, location FROM employee WHERE employee_num = ? ', user_id, function (error, results, fields) {                
                 if (error) {
                     var response = {
                         "success" : false,
@@ -264,12 +282,18 @@ server.route({
 //Get reviews
 //Done :)
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'GET',
     path: '/users/{user_id}/reviews',
     handler: function (request, reply) {
         const user_id = request.params["user_id"];
         //first, checks to see if the user with given id exists
-        connection.query('SELECT * FROM employee WHERE employee_num="' + user_id + '"', function(error, results, fields) {
+        connection.query('SELECT * FROM employee WHERE employee_num= ? ', user_id , function(error, results, fields) {
             if (error) {
                 var response = {
                     "success" : false,
@@ -278,7 +302,7 @@ server.route({
                 reply(JSON.stringify(response)).code(500);
             }
             //if the user does not exist
-            if (results.length==0) {
+            else if (results.length==0) {
                 var response = {
                     "success" : false,
                     "message" : "The user with ID " +  user_id + " does not exist."
@@ -287,7 +311,7 @@ server.route({
             }
             //if the user exists
             else {
-                connection.query('SELECT * FROM employee_review WHERE employee_num="' + user_id + '"', function (error, results, fields) {
+                connection.query('SELECT * FROM employee_review WHERE employee_num = ? ', user_id , function (error, results, fields) {
                     if (error) {
                         var response = {
                             "success" : false,
@@ -370,6 +394,13 @@ server.route({
 //Creating review for user
 //Done :)
 server.route({
+    config: {
+        cors: {
+            headers: ['Authorization'],
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'POST',
     path: '/users/{user_id}/reviews',
     handler: function(request, reply) {
@@ -384,8 +415,6 @@ server.route({
         var efficiency = request.payload["efficiency_rating"];
         var comment = request.payload["comment"];
         var datestamp = request.payload["datestamp"].split('T');
-        //var datestamp = request.payload["datestamp"];
-        // console.log(datestamp);
         //if any of the fields are missing
         if (token===undefined || receiver === undefined || job_title===undefined || employer === undefined || hotness===undefined || accountability === undefined
             || availability===undefined || politeness=== undefined || efficiency===undefined || comment === undefined || datestamp===undefined) {
@@ -400,9 +429,8 @@ server.route({
             //do that  here
             try {
                 var decoded = jwt.decode(token, secretkey);
-                connection.query('SELECT * FROM employee WHERE employee_num ="' + decoded.employee_num + '"', function (error, results, fields) {
+                connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
                     if (error) {
-                        console.log(error);
                         var response = {
                             "success": false,
                             "message": "Experienced error when attempting to create a review for a user."
@@ -419,21 +447,39 @@ server.route({
                         }
                         //now we know that that token was valid
                         else {
-                            connection.query('INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments, employer, position, review_time) VALUES("' + receiver + '", "' + hotness + '", "' + accountability + '", "' + availability + '","' + politeness + '","' + efficiency + '", "' + comment + '", "' + employer + '", "' + job_title + '","' + datestamp[0] + ' ' + datestamp[1].substring(0, -1) + '")', function (error, results, fields) {
+                            connection.query('SELECT * FROM employee WHERE employee_num = ? ', receiver, function (error, results, fields) {
                                 if (error) {
-                                    console.log("ERROR HERE");
                                     var response = {
                                         "success": false,
                                         "message": "Experienced error when attempting to create a review for a user."
                                     };
                                     reply(JSON.stringify(response)).code(500);
                                 }
-                                else {
+                                else if (results.length==0) {
                                     var response = {
-                                        "success": true,
-                                        "message": "Successfully created review."
+                                        "sucess": false,
+                                        "message": "No user exists for user id: " + receiver
                                     };
-                                    reply(JSON.stringify(response)).code(200);
+                                    reply(JSON.stringify(response)).code(400);
+                                }
+                                else {
+                                    var post = { employee_num:receiver, hotness:hotness, accountability:accountability, availability:availability, politeness:politeness, efficiency:efficiency, employer:employer, position:job_title, comments:comment, review_time: datestamp[0] + datestamp[1].substring(0, -1)};
+                                    connection.query('INSERT INTO employee_review SET ?',post, function (error, results, fields) {
+                                        if (error) {
+                                            var response = {
+                                             "success": false,
+                                                "message": "Experienced error when attempting to create a review for a user."
+                                            };
+                                            reply(JSON.stringify(response)).code(500);
+                                        }
+                                        else {
+                                            var response = {
+                                                "success": true,
+                                                "message": "Successfully created review."
+                                            };
+                                            reply(JSON.stringify(response)).code(200);
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -453,6 +499,13 @@ server.route({
 //updating a user account
 //Done :)
 server.route({
+    config: {
+        cors: {
+            headers: ['Authorization'],
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'PUT',
     path: '/users/{user_id}',
     handler: function (request, reply) {
@@ -469,7 +522,8 @@ server.route({
         var flag = true;
         try {
             var decoded = jwt.decode(token, secretkey);
-            connection.query('SELECT * FROM employee WHERE employee_num="' + decoded.employee_num + '"', function (error, results, fields) {
+            console.log(decoded.employee_num);
+            connection.query('SELECT * FROM employee WHERE employee_num= ?', decoded.employee_num, function (error, results, fields) {
                 if (error) {
                     var response = {
                         "success": false,
@@ -486,9 +540,17 @@ server.route({
                         };
                         reply(JSON.stringify(response)).code(403);
                     }
+                    else if (decoded.employee_num!=user_id) {
+                        var response = {
+                            "success": false,
+                            "message": "Attempted to update a user without proper access."
+                        };
+                        reply(JSON.stringify(response)).code(400);
+                    }
                     else{
                         if (first_name!==null) {
-                            connection.query('UPDATE employee SET first_name = "' + first_name + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                            var post = {first_name:first_name};
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ?',[post,decoded.employee_num], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -500,7 +562,8 @@ server.route({
                             });
                         }
                         if (last_name!==null) {
-                            connection.query('UPDATE employee SET last_name = "' + last_name + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                            var post = {last_name:last_name};
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post ,decoded.employee_num], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -512,7 +575,8 @@ server.route({
                             });
                         }
                         if (email!==null) {
-                            connection.query('UPDATE employee SET email = "' + email + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                            var post = {email:email};
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -524,7 +588,8 @@ server.route({
                             });
                         }
                         if (employer!==null) {
-                            connection.query('UPDATE employee SET employer = "' + employer + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                            var post = {employer:employer};
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -537,8 +602,16 @@ server.route({
                         }
                         if (password!==null) {
                             bcrypt.hash(password, 10, function(err, hash) {
+                                if (err) {
+                                    var response = {
+                                        "HERE": "HERE"
+                                    };
+                                    reply(response);
+                                }
                                 newPass = hash;
-                                connection.query('UPDATE employee SET password_hashes = "' + newPass + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                                console.log(newPass)
+                                var post = {password_hashes: newPass};
+                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
                                     if (error) {
                                         flag = false;
                                         var response = {
@@ -547,11 +620,13 @@ server.route({
                                         };
                                         reply(JSON.stringify(response)).code(500);
                                     }
+                                    console.log(results);
                                 });
                             });
                         }
                         if (job_title!==null) {
-                            connection.query('UPDATE employee SET position = "' + job_title + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                            var post = {position: job_title};
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {                                
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -563,7 +638,8 @@ server.route({
                             });
                         }
                         if (location!==null) {
-                            connection.query('UPDATE employee SET location = "' + location + '" WHERE employee_num = "' + user_id + '"', function (error, results, fields) {
+                            var post = {location: location};
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {  
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -578,18 +654,19 @@ server.route({
                 } 
             });
         } catch (err) {
+            flag = false;
             var response = {
                 "success": false,
                 "message": "Experienced error when attempting to update the user."
             };
             reply(JSON.stringify(response)).code(500);
         } 
-        if (flag) {
+        if (flag==true) {
             var response = {
                 "success": true,
                 "message": "Successfully updated account."
             };
-            reply(JSON.stringify(response)).code(200);
+           reply(JSON.stringify(response)).code(200);
         }
     }  
 });
@@ -597,6 +674,13 @@ server.route({
 //Deleting a user and all of their reviews
 //Done :)
 server.route({
+    config: {
+        cors: {
+            headers: ['Authorization'],
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: 'DELETE',
     path: '/user/{user_id}',
     handler: function (request, reply) {
@@ -604,7 +688,7 @@ server.route({
         var token = request.headers.authorization.split(' ')[1];
         try {
             var decoded = jwt.decode(token, secretkey);
-            connection.query('SELECT * FROM employee WHERE employee_num ="' + decoded.employee_num + '"', function (error, results, fields) {
+            connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
                 if (error) {
                     var response = {
                         "success": false,
@@ -621,7 +705,7 @@ server.route({
                 }
                 else {
                     if (user_id==decoded.employee_num) {
-                        connection.query('DELETE FROM employee WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
+                        connection.query('DELETE FROM employee WHERE employee_num= ? ', user_id, function (error, results, fields) {
                             if (error) {
                                 var response = {
                                     "success": false,
@@ -630,7 +714,7 @@ server.route({
                                 reply(JSON.stringify(response)).code(500);
                             }
                             else {
-                                connection.query('DELETE FROM employee_review WHERE employee_num="' + user_id + '"' , function (error, results, fields) {
+                                connection.query('DELETE FROM employee_review WHERE employee_num= ? ', user_id , function (error, results, fields) {
                                     if (error) {
                                         var response = {
                                             "success": false,
@@ -669,40 +753,6 @@ server.route({
 });
 
 //END AUTHENTICATED ROUTES
-//START DEBUGGING ROUTES
-
-//Getting all employees
-server.route({
-    method: 'GET',
-    path: '/getEmployees',
-    handler: function (request, reply) {
-        console.log('Server processing a /getEmployees request');
-        connection.query('SELECT * FROM employee', function (error, results, fields) {
-            if (error)
-                throw error;
-            reply (results);
-            console.log(results);
-        });
-
-    }
-});
-
-//Getting all reviews
-server.route({
-    method: 'GET',
-    path: '/getReviews',
-    handler: function (request, reply) {
-        console.log('Server processing a /getReviews request');
-        connection.query('SELECT * FROM employee_review', function (error, results, fields) {
-            if (error)
-                throw error;
-            reply (results);
-            console.log(results);
-        });
-    }
-});
-
-//END DEBUGGING ROUTES
 
 //Start the server
 server.start((err) => {
