@@ -14,7 +14,7 @@ import {
 /*
  * Services
  * */
-import { RatingGradientService } from '../../shared';
+import { RatingGradientService } from '../../services';
 
 @Component({
 	selector: 'app-rating-box',

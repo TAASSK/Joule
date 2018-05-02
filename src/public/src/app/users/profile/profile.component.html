@@ -50,8 +50,8 @@
 		<section class="profile-employee-information">
 
 			<h1>{{ user.firstName }} {{ user.lastName }}</h1>
-			<h2>{{ user.jobTitle }}, {{ user.employer }}</h2>
-			<h3>{{ user.location }}</h3>
+			<h2 *ngIf="user.jobTitle && user.employer">{{ user.jobTitle }}, {{ user.employer }}</h2>
+			<h3 *ngIf="user.location">{{ user.location }}</h3>
 
 		</section>
 
