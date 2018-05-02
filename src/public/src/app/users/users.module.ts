@@ -18,7 +18,6 @@ import { UsersRoutingModule } from './users-routing.module';
 import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
-import { RatingBoxComponent } from './rating-box/rating-box.component';
 import { ReviewComponent } from './review/review.component';
 import { SecuritySettingsComponent } from './security-settings/security-settings.component';
 
@@ -34,7 +33,6 @@ import { SecuritySettingsComponent } from './security-settings/security-settings
 		AccountComponent,
 		ProfileComponent,
 		ProfileSettingsComponent,
-		RatingBoxComponent,
 		ReviewComponent,
 		SecuritySettingsComponent
 	],

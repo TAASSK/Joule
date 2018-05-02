@@ -22,10 +22,10 @@ export class ProfileComponent implements OnInit {
 	user: User;
 	reviews: Array<Review> = new Array<Review>();
 
-	avgHotnessRating: number;
-	avgAccountabilityRating: number;
-	avgPolitenessRating: number;
-	avgEfficiencyRating: number;
+	avgHotnessRating: number = 0;
+	avgAccountabilityRating: number = 0;
+	avgPolitenessRating: number = 0;
+	avgEfficiencyRating: number = 0;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -116,10 +116,6 @@ export class ProfileComponent implements OnInit {
 			}
 		  });
 	 }
-
-	listReviews() {
-		console.log(this.reviews);
-	}
 
 }
 

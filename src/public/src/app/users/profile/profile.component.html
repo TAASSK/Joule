@@ -50,8 +50,8 @@
 		<section class="profile-employee-information">
 
 			<h1>{{ user.firstName }} {{ user.lastName }}</h1>
-			<h2>{{ user.jobTitle }}, {{ user.employer }}</h2>
-			<h3>{{ user.location }}</h3>
+			<h2 *ngIf="user.jobTitle && user.employer">{{ user.jobTitle }}, {{ user.employer }}</h2>
+			<h3 *ngIf="user.location">{{ user.location }}</h3>
 
 		</section>
 
@@ -85,7 +85,106 @@
 
 	</section>
 
-	<section class="profile-reviews">
+	<section class="profile-review-form">
+
+		<h2 class="profile-review-form-header">Add a Review</h2>
+
+		<form>
+
+			<div class="row profile-review-form-row-buffer">
+
+				<div class="col">
+
+					<label for="reviewInputJobTitle">
+						Job Title
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="reviewInputJobTitle"
+					>
+
+				</div>
+
+				<div class="col">
+
+					<label for="reviewInputEmployer">
+						Employer
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="reviewInputEmployer"
+					>
+
+				</div>
+
+			</div>
+
+			<div class="row profile-review-form-row-buffer">
+
+				<div class="col">
+					<label for="">Hotness %</label>
+					<input type="text" class="form-control">
+				</div>
+
+				<div class="col">
+					<label for="">Accountability %</label>
+					<input type="text" class="form-control">
+				</div>
+
+				<div class="col">
+					<label for="">Politeness %</label>
+					<input type="text" class="form-control">
+				</div>
+
+				<div class="col">
+					<label for="">Efficiency %</label>
+					<input type="text" class="form-control">
+				</div>
+
+			</div>
+
+			<div class="row profile-review-form-row-buffer">
+
+				<div class="col">
+
+					<label for="reviewInputComment">Comment</label>
+					<textarea
+					 class="form-control"
+					 name="comment"
+					 id="reviewInputComment"
+					 columns
+					 rows="5"
+					></textarea>
+
+				</div>
+
+			</div>
+
+			<div class="row justify-content-end">
+				<div class="col-3">
+					<button
+					 class="button button-call-to-action button-block"
+					>
+						Submit Review
+					</button>
+				</div>
+			</div>
+
+		</form>
+
+	</section>
+
+	<section class="profile-review-list">
+
+		<h2>{{ reviews.length }} Reviews</h2>
+
+		<div *ngIf="reviews.length === 0">
+
+			<p>Be the first to add a review!</p>
+
+		</div>
 
 		<app-review
 		 *ngFor="let review of reviews"

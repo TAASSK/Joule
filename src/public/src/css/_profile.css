@@ -1,13 +1,8 @@
-.profile-dashboard {
-	display: flex;
-	flex-direction: row;
-	margin: 1.5rem auto;
-}
-
 .profile-header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin-bottom: 1.5rem;
 }
 
 .profile-picture {
@@ -19,7 +14,29 @@
 	background-size: cover;
 }
 
-.profile-reviews {
+.profile-dashboard {
+	display: flex;
+	flex-direction: row;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 1.5rem;
+	margin-left: auto;
+}
+
+.profile-review-form {
+	display: flex;
+	flex-direction: column;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 1.5rem;
+	margin-left: auto;
+}
+
+.profile-review-form-row-buffer {
+	margin-bottom: 1rem;
+}
+
+.profile-review-list {
 	display: flex;
 	flex-direction: column;
 	align-content: space-around;
