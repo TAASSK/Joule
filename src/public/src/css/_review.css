@@ -39,3 +39,36 @@
 	min-height: 12rem;
 	min-width: 11rem;
 }
+
+.inline-ratings-group {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.inline-rating {
+	flex: 1;
+	min-width: 10rem;
+	margin-top: 1rem;
+	margin-right: 1rem;
+	margin-bottom: auto;
+	margin-left: auto;
+}
+
+.inline-rating-bar, .inline-rating-bar-filled {
+	height: 0.7rem;
+	border-radius: 0.35rem;
+}
+
+.inline-rating-bar {
+	min-width: 10rem;
+	background-color: #ddd;
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.25);
+	margin: 0.7rem 0;
+}
+
+.inline-rating-bar-filled {
+	background-color: #999;
+	box-shadow: inset 0px 0px 1px rgba(0,0,0,0.7);
+	transition: 0.5s width ease-in-out;
+}
