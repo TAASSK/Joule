@@ -49,11 +49,14 @@ export class AuthenticationService extends RepositoryService<User> {
 		// 	this.httpOptions)
 		// .do(res => this.setSession)
 		// .pipe(catchError(this.handleException));
-    console.log('test');
-		return this.httpClient.post(`${this.endPoint}`, {
-      email,
-      password
-    }, this.httpOptions)
+		var obj = {
+			email: email,
+			password: password
+		}
+		const item = JSON.stringify(obj);
+    console.log(item);
+		return this.httpClient.post(`${this.endPoint}`,
+      item, this.httpOptions)
     .do(res => {
       this.setSession(res);
     })

@@ -4,7 +4,7 @@
 
 		<h1>Password</h1>
 
-		<form>
+		<form [formGroup]="myForm">
 
 			<section class="form-row">
 
@@ -17,9 +17,12 @@
 					 type="password"
 					 class="form-control"
 					 id="securityInputCurrentPassword"
+					 formControlName="currentPassword"
 					 focusOnLoad
 					>
 				</section>
+				<div class="alert" *ngIf="!myForm.controls['currentPassword'].valid && myForm.controls['currentPassword'].touched">{{ titleAlert }}</div>
+
 
 			</section>
 
@@ -34,8 +37,10 @@
 					 type="password"
 					 class="form-control"
 					 id="securityInputNewPassword"
+					 formControlName="newPassword"
 					>
 				</section>
+				<div class="alert" *ngIf="!myForm.controls['newPassword'].valid && myForm.controls['newPassword'].touched">{{ titleAlert }}</div>
 
 			</section>
 
@@ -50,14 +55,20 @@
 					 type="password"
 					 class="form-control"
 					 id="securityInputConfirmNewPassword"
+					 formControlName="confirmPassword"
 					>
 				</section>
+				<div class="alert" *ngIf="!myForm.controls['confirmPassword'].valid && myForm.controls['confirmPassword'].touched">{{ titleAlert }}</div>
+
 
 			</section>
 
+			<!--NEED TO WORK ON GETTTING THIS WORKING -->
 			<button
 			 type="submit"
 			 class="button button-regular button-block"
+			 [disabled]="myForm.controls['confirmPassword'] === myForm.controls['newPassword']" 
+			 (click)=passwordChange()
 			>
 				Save changes
 			</button>

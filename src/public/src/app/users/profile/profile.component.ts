@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
 	) {
 
 
-		this.user = new User();
+		//this.user = new User();
 		/*
 		this.user.id = 101;
 		this.user.email = 'jp.joule18@gojoule.me';
@@ -106,15 +106,19 @@ export class ProfileComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+		this.user = new User();
 		this.route.params.subscribe((params: any) => {
-			if(params.id) {
-			console.log(params.id)
-			  this.userService.getById(+params.id).subscribe(data => {
-				this.user = data;         
+			this.user.id = params.id;
+			let num = params.id;
+			if(num) {
+			  this.userService.getById(+num).subscribe(data => {
+				this.user = this.user.deserialize(data);     
+				console.log(data);  
+				console.log(this.user);  
 			  });
 			}
 		  });
+		  console.log(this.user);
 	 }
 
 }

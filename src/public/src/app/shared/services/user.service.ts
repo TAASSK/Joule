@@ -18,5 +18,10 @@ export class userService extends RepositoryService<User> {
           catchError(this.handleException)
         );
     }
+    public updatePassword(item: User, id: number): Observable<User>{
+        return this.httpClient.put(`${this.endPoint}/${id}`, item, this.httpOptions).pipe(
+            catchError(this.handleException)
+          );
+    }
 
 }

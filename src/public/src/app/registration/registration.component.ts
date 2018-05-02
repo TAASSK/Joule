@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User, SignupService } from '../shared';
 
 import { FormGroup, FormControl, Validators, ReactiveFormsModule , FormBuilder} from '@angular/forms';
-import { Serializer } from '@angular/compiler';
 import { userService } from '../shared/services/user.service';
 
 /*
@@ -52,6 +51,9 @@ export class RegistrationComponent implements OnInit {
 	}
 	public save() {
 	// this.user.id = 15789;
-	this.signup.add(this.user);
-	this.router.navigateByUrl('login');
+	this.signup.add(this.user).subscribe(x => {
+		this.router.navigateByUrl('login');
+	});
+	
+	//this.router.navigateByUrl('login');
 	}}

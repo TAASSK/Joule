@@ -3,7 +3,7 @@
  * */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 
 /*
  * Modules
@@ -21,11 +21,14 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
 import { ReviewComponent } from './review/review.component';
 import { SecuritySettingsComponent } from './security-settings/security-settings.component';
 
+
+
 @NgModule({
 	imports: [
 		CommonModule,
 		CountUpModule,
 		FormsModule,
+		ReactiveFormsModule,
 		SharedModule,
 		UsersRoutingModule
 	],
