@@ -34,6 +34,7 @@
 						New Password
 					</label>
 					<input
+					[(ngModel)]="newPassword"
 					 type="password"
 					 class="form-control"
 					 id="securityInputNewPassword"
@@ -52,6 +53,7 @@
 						Confirm new password
 					</label>
 					<input
+					[(ngModel)]="confirmPassword"
 					 type="password"
 					 class="form-control"
 					 id="securityInputConfirmNewPassword"
@@ -63,11 +65,10 @@
 
 			</section>
 
-			<!--NEED TO WORK ON GETTTING THIS WORKING -->
 			<button
 			 type="submit"
 			 class="button button-regular button-block"
-			 [disabled]="myForm.controls['confirmPassword'] === myForm.controls['newPassword']" 
+			 [disabled]="confirmPassword != newPassword"
 			 (click)=passwordChange()
 			>
 				Save changes

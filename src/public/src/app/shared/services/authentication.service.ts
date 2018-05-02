@@ -25,14 +25,17 @@ import { catchError } from 'rxjs/operators';
  * Services
  * */
 import { RepositoryService } from './repository.service';
+import { userService } from './user.service';
 
 @Injectable()
 export class AuthenticationService extends RepositoryService<User> {
 
 	protected endPoint = 'http://localhost:8080/api/login';
+	//user: User; 
+	//userServices: userService;
 
 	constructor(
-    protected httpClient: HttpClient
+		protected httpClient: HttpClient,
 	) {
 		super(httpClient);
 	}
@@ -61,7 +64,6 @@ export class AuthenticationService extends RepositoryService<User> {
       this.setSession(res);
     })
     .pipe(catchError(this.handleException));
-
 
   }
 

@@ -19,7 +19,17 @@ export class userService extends RepositoryService<User> {
         );
     }
     public updatePassword(item: User, id: number): Observable<User>{
-        return this.httpClient.put(`${this.endPoint}/${id}`, item, this.httpOptions).pipe(
+        var obj = {
+    		email: item.email
+        }
+        const user = item.serialize(obj);
+        return this.httpClient.put(`${this.endPoint}/${id}`, user, this.httpOptions).pipe(
+            catchError(this.handleException)
+          );
+    }
+    public delete(id: number): Observable<User>
+    {
+        return this.httpClient.delete(`${this.endPoint}/${id}`, this.httpOptions).pipe(
             catchError(this.handleException)
           );
     }
