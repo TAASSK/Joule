@@ -60,6 +60,12 @@
 	<section class="profile-dashboard">
 
 		<app-rating-box
+		 [rating]="avgHotnessRating"
+		 [descriptor]="'Hotness'"
+		>
+		</app-rating-box>
+
+		<app-rating-box
 		 [rating]="avgAccountabilityRating"
 		 [descriptor]="'Accountability'"
 		>

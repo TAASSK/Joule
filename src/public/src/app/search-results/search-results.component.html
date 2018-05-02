@@ -42,6 +42,28 @@
 
 <section class="site-content">
 
-	<h1>Results for: {{ query }}</h1>
+	<h1>Results</h1>
+	<p>{{ results.length }} results found for {{ query }}.</p>
+
+	<div
+	 *ngFor="let result of results"
+	 class="search-result-container"
+	>
+
+		<img
+		 class="search-result-profile-picture"
+		 src="/assets/img/np_profile.svg"
+		 alt="profile-picture"
+		>
+
+		<a class="search-result-personal-info" [routerLink]="['/user', result.id]">
+
+			<h2>{{ result.firstName }} {{ result.lastName }}</h2>
+			<p *ngIf="result.jobTitle && result.employer">{{ result.jobTitle }} at {{ result.employer }}</p>
+			<p *ngIf="result.location">{{ result.location }}</p>
+
+		</a>
+
+	</div>
 
 </section>
