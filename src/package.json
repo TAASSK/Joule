@@ -14,10 +14,8 @@
 		"hapi": "^16.6.3",
 		"hapi-auth-jwt2": "^8.1.0",
 		"jsonwebtoken": "^8.2.1",
-		"jwt-simple": "^0.5.1",
 		"mysql": "^2.15.0",
 		"node": "^9.11.0",
-		"nodemon": "^1.17.1",
-		"request": "^2.85.0"
+		"nodemon": "^1.17.1"
 	}
 }

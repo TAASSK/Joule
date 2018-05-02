@@ -66,8 +66,18 @@ export class AuthenticationService {
     })
     .pipe(catchError(this.handleException));
 
+
   }
 
+
+
+// 		return this.httpClient.post(
+// 			`${this.endPoint}`,
+// 			{email, password},
+// 			this.httpOptions)
+// 		.pipe(catchError(this.handleException));
+
+//	}
 
 
 
