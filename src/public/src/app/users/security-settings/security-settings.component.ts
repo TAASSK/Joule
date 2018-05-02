@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
  * Models
  * */
 import { User } from '../../shared';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule , FormBuilder} from '@angular/forms';
+
 
 @Component({
 	selector: 'app-security-settings',
@@ -15,8 +17,10 @@ import { User } from '../../shared';
 export class SecuritySettingsComponent implements OnInit {
 
 	user: User;
+	myForm: FormGroup;
+	titleAlert:string = 'This field is required';
 
-	constructor() {
+	constructor(private form: FormBuilder) {
 
 		this.user = new User();
 
@@ -30,6 +34,26 @@ export class SecuritySettingsComponent implements OnInit {
 
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		this.myForm = new FormGroup({
+			'currentPassword': new FormControl('', [
+				Validators.minLength(8), 
+				Validators.required
+			]),
+			'newPassword': new FormControl('', [
+				Validators.minLength(8), 
+				Validators.required
+			]),
+			'confirmPassword': new FormControl('', [
+				Validators.minLength(8), 
+				Validators.required
+			]),
+			
+		});
+	 }
+	 public passwordChange()
+	 {
+		console.log("Passwords Match");
+	 }
 
 }

@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /*
  * Modules
@@ -32,6 +32,7 @@ import {
 	RatingGradientService,
 	SignupService
 } from './shared';
+import { userService } from './shared/services/user.service';
 
 let defaultRoute = 'home';
 
@@ -56,13 +57,15 @@ let defaultRoute = 'home';
 			{ path: '', redirectTo: defaultRoute, pathMatch: 'full' },
 			{ path: '**', redirectTo: defaultRoute, pathMatch: 'full' }
 		]),
+		ReactiveFormsModule,
 		SharedModule,
 		UsersModule
 	],
 	providers: [
 		AuthenticationService,
 		RatingGradientService,
-		SignupService
+		SignupService,
+		userService
 	],
 	bootstrap: [
 		AppComponent

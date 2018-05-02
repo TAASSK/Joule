@@ -19,12 +19,16 @@ constructor(protected httpClient: HttpClient) {
 }
 
 public add(item: User): Observable<User> {
-   const user = item.serialize(item);
-
-    // let body = JSON.stringify(user);
+  var obj = {
+    		email: item.email,
+    		first_name: item.firstName,
+    		last_name: item.lastName,
+    		password: item.password
+    	}
+    const user = item.serialize(obj);
+    console.log(user);
     return this.httpClient.post(`${this.endPoint}`, user, this.httpOptions).pipe(
-
-      catchError(this.handleException)
+    catchError(this.handleException)
     );
   }
 

@@ -72,7 +72,8 @@ server.route({
                         var expiresAt = new Date(now.getTime() + 10*60000);
                         var response = {
                             "token": jwt.sign({"employee_num": results[0].employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
-                            "expires_at": expiresAt
+                            "expires_at": expiresAt,
+                            "user_id": results[0].employee_num
                         };
                         reply(JSON.stringify(response)).code(200);
                     }
@@ -382,7 +383,8 @@ server.route({
                 var expiresAt = new Date(now.getTime() + 10*60000);
                 var response = {
                         "token": jwt.sign({"employee_num": verified.employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
-                        "expires_at": expiresAt
+                        "expires_at": expiresAt,
+                        "user_id": verified.employee_num
                 };
                 reply(JSON.stringify(response)).code(200);
             //catch an error if it can't be decoded

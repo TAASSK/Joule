@@ -1,4 +1,10 @@
-/* Sitewide form styling */
+label {
+	font-family: 'Archivo-Web';
+}
+
+input.form-control {
+	font-family: system-ui;
+}
 
 .form-control {
 	font-size: inherit;

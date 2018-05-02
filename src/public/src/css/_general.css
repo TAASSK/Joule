@@ -51,3 +51,6 @@ strong {
 	font-style: bold;
 }
 
+textarea {
+	resize: none;
+}

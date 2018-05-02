@@ -56,10 +56,14 @@ export class AuthenticationService {
 		// 	this.httpOptions)
 		// .do(res => this.setSession)
 		// .pipe(catchError(this.handleException));
-		return this.httpClient.post(`${this.endPoint}`, {
-      email,
-      password
-    }, this.httpOptions)
+		var obj = {
+			email: email,
+			password: password
+		}
+		const item = JSON.stringify(obj);
+    console.log(item);
+		return this.httpClient.post(`${this.endPoint}`,
+      item, this.httpOptions)
     .do(res => {
       this.setSession(res);
     })
@@ -90,7 +94,11 @@ export class AuthenticationService {
 
   }
 
+<<<<<<< HEAD
  public getToken() {
+=======
+  public getToken() {
+>>>>>>> userService
     const token = localStorage.getItem('token');
     console.log(token);
     return token;

@@ -19,89 +19,29 @@
 
 		<section class="inline-ratings-group">
 
-			<div class="inline-rating">
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Hotness'"
+			 [rating]="review.hotnessRating"
+			></app-rating-bar>
 
-				<div class="inline-rating-text">
-					Hotness:
-					<strong>{{ review.hotnessRating / 100 | percent }}</strong>
-				</div>
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Accountability'"
+			 [rating]="review.accountabilityRating"
+			></app-rating-bar>
 
-				<div class="inline-rating-bar" aria-rating="true">
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Politeness'"
+			 [rating]="review.politenessRating"
+			></app-rating-bar>
 
-					<div
-					 class="inline-rating-bar-filled"
-					 [ngStyle]="{
-					 	'background-color': rg.ratingGradient(review.hotnessRating / 100),
-					 	'width': rg.ratingWidth(review.hotnessRating)
-					 }"
-					></div>
-
-				</div>
-
-			</div>
-
-			<div class="inline-rating">
-
-				<div class="inline-rating-text">
-					Accountability:
-					<strong>{{ review.accountabilityRating / 100 | percent }}</strong>
-				</div>
-
-				<div class="inline-rating-bar" aria-rating="true">
-
-					<div
-					 class="inline-rating-bar-filled"
-					 [ngStyle]="{
-					 	'background-color': rg.ratingGradient(review.accountabilityRating / 100),
-					 	'width': rg.ratingWidth(review.accountabilityRating)
-					 }"
-					></div>
-
-				</div>
-
-			</div>
-
-			<div class="inline-rating">
-
-				<div class="inline-rating-text">
-					Politeness:
-					<strong>{{ review.politenessRating / 100 | percent }}</strong>
-				</div>
-
-				<div class="inline-rating-bar" aria-rating="true">
-
-					<div
-					 class="inline-rating-bar-filled"
-					 [ngStyle]="{
-					 	'background-color': rg.ratingGradient(review.politenessRating / 100),
-					 	'width': rg.ratingWidth(review.politenessRating)
-					 }"
-					></div>
-
-				</div>
-
-			</div>
-
-			<div class="inline-rating">
-
-				<div class="inline-rating-text">
-					Efficiency:
-					<strong>{{ review.efficiencyRating / 100 | percent }}</strong>
-				</div>
-
-				<div class="inline-rating-bar" aria-rating="true">
-
-					<div
-					 class="inline-rating-bar-filled"
-					 [ngStyle]="{
-					 	'background-color': rg.ratingGradient(review.efficiencyRating / 100),
-					 	'width': rg.ratingWidth(review.efficiencyRating)
-					 }"
-					></div>
-
-				</div>
-
-			</div>
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Efficiency'"
+			 [rating]="review.efficiencyRating"
+			></app-rating-bar>
 
 		</section>
 
