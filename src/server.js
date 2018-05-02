@@ -31,7 +31,6 @@ var connection = mysql.createConnection({
 //START UNAUTHENTICATED ROUTES
 
 //Login
-//DONE :)
 server.route({
     config: {
         cors: {
@@ -44,6 +43,7 @@ server.route({
     handler: function(request, reply) {
         var email = request.payload['email'];
         var password = request.payload['password'];
+        //for parameterized query
         var post1 = {email:email};
         connection.query('SELECT email, password_hashes, employee_num FROM employee WHERE email = ?',email, function (error, results, fields) {
             if(error) {
@@ -91,7 +91,6 @@ server.route({
 });
 
 //Search
-//DONE :)
 server.route({
     config: {
         cors: {
@@ -112,6 +111,7 @@ server.route({
                 reply(JSON.stringify(response)).code(500);
             }
             var isEmpty = (results1 || []).length === 0;
+            //if the user searched a user instead of an employer
             if (isEmpty) {
                 var nameArr = search_term.split(" ");
                 connection.query('SELECT employee_num, first_name,last_name, position, employer FROM employee WHERE first_name="' + nameArr[0] + '" AND last_name= "' + nameArr[1] + '"', function (error, results, fields) {
@@ -123,6 +123,7 @@ server.route({
                         reply(JSON.stringify(response)).code(500);
                     }
                     else {
+                        //map the results to the proper format
                         var formattedResults = results.map( (elem) => {
                             return {
                                 id: elem.employee_num,
@@ -141,6 +142,8 @@ server.route({
                 });
             }
             else {
+                //if the user searched an employer
+                //format the results
                 var formattedResults = results1.map( (elem) => {
                     return {
                         id: elem.employee_num,
@@ -161,7 +164,6 @@ server.route({
 });
 
 //Create User
-//Done :)
 server.route({
     config: {
         cors: {
@@ -199,7 +201,7 @@ server.route({
                     var newPass;
                     bcrypt.hash(password, 10, function(err, hash) {
                         newPass = hash;
-                        //if all is good, insert the user into the table
+                        //if all is good and the password is hashed, insert the user into the table
                         var post = {password_hashes : newPass, first_name : first_name, last_name : last_name, email : email};
                         connection.query('INSERT INTO employee SET ?', post, function (error, results, fields) {
                             if (error) {
@@ -225,7 +227,6 @@ server.route({
 });
 
 //Get User
-//DONE :)
 server.route({
     config: {
         cors: {
@@ -255,6 +256,7 @@ server.route({
                     };
                     reply(JSON.stringify(response)).code(500);
                 }
+                //if the user does not exist in the database
                 else if (results.length==0) {
                     var response = {
                         "success" : false,
@@ -263,6 +265,7 @@ server.route({
                     reply(JSON.stringify(response)).code(404);
                 }
                 else {
+                    //format the results
                     var response = {
                         id: results[0].employee_num,
                         email: results[0].employee_num,
@@ -280,7 +283,6 @@ server.route({
 });
 
 //Get reviews
-//Done :)
 server.route({
     config: {
         cors: {
@@ -320,6 +322,7 @@ server.route({
                         reply(JSON.stringify(response)).code(500);
                     }
                     else {
+                        //format the results
                         var formattedResults = results.map( (elem) => {
                             return {
                                 review_id: elem.review_id,
@@ -350,7 +353,6 @@ server.route({
 //START AUTHENTICATED ROUTES
 
 //Refresh token
-//DONE :)
 server.route({
     config: {
         cors: {
@@ -362,6 +364,7 @@ server.route({
     method: 'GET',
     path: '/refreshToken',
     handler: function(request, reply) {
+        //gets the actual token part of the bearer token
         var token = request.headers.authorization.split(' ')[1];
         if (token===undefined) {
             var response =  {
@@ -371,15 +374,18 @@ server.route({
             reply(JSON.stringify(response)).code(400);
         }
         else {
+            //try to verify the token
             try {
                 var verified = jwt.verify(token, secretkey);
                 var now = new Date();
+                //give it a 10 minute expiration time
                 var expiresAt = new Date(now.getTime() + 10*60000);
                 var response = {
                         "token": jwt.sign({"employee_num": verified.employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
                         "expires_at": expiresAt
                 };
                 reply(JSON.stringify(response)).code(200);
+            //catch an error if it can't be decoded
             } catch (error) {
                 var response = {
                     "success": false,
@@ -392,7 +398,6 @@ server.route({
 });
 
 //Creating review for user
-//Done :)
 server.route({
     config: {
         cors: {
@@ -426,7 +431,7 @@ server.route({
         }
         //if the fields are there, check if the user is logged in
         else {
-            //do that  here
+            //do that here
             try {
                 var decoded = jwt.decode(token, secretkey);
                 connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
@@ -438,6 +443,7 @@ server.route({
                         reply(JSON.stringify(response)).code(500);
                     }
                     else {
+                        //if the user is not logged in
                         if (results.length==0) {
                             var response = {
                                 "success": false,
@@ -445,7 +451,7 @@ server.route({
                             };
                             reply(JSON.stringify(response)).code(403);
                         }
-                        //now we know that that token was valid
+                        //now we know that that token was valid and the user is logged in
                         else {
                             connection.query('SELECT * FROM employee WHERE employee_num = ? ', receiver, function (error, results, fields) {
                                 if (error) {
@@ -455,6 +461,7 @@ server.route({
                                     };
                                     reply(JSON.stringify(response)).code(500);
                                 }
+                                //if they try to write a review for a nonexistent user
                                 else if (results.length==0) {
                                     var response = {
                                         "sucess": false,
@@ -472,6 +479,7 @@ server.route({
                                             };
                                             reply(JSON.stringify(response)).code(500);
                                         }
+                                        //if everything is valid, return a 200 code
                                         else {
                                             var response = {
                                                 "success": true,
@@ -485,6 +493,7 @@ server.route({
                         }
                     }
                 });
+            //catch an error if the token cannot be decoded
             } catch(err) {
                 var response = {
                     "success": false,
@@ -497,7 +506,6 @@ server.route({
 });
 
 //updating a user account
-//Done :)
 server.route({
     config: {
         cors: {
@@ -519,10 +527,12 @@ server.route({
         var location = request.payload["location"];
         var user_id = request.params["user_id"];
         var newPass;
+        //this boolean flag determines if the 200 response at the end should be passed
+        //this happens in the case that there were no errors
         var flag = true;
         try {
+            //decode the token
             var decoded = jwt.decode(token, secretkey);
-            console.log(decoded.employee_num);
             connection.query('SELECT * FROM employee WHERE employee_num= ?', decoded.employee_num, function (error, results, fields) {
                 if (error) {
                     var response = {
@@ -540,6 +550,7 @@ server.route({
                         };
                         reply(JSON.stringify(response)).code(403);
                     }
+                    //make sure that the logged in user can only update their own account
                     else if (decoded.employee_num!=user_id) {
                         var response = {
                             "success": false,
@@ -548,6 +559,9 @@ server.route({
                         reply(JSON.stringify(response)).code(400);
                     }
                     else{
+                        //checks every possible input to see if it is null
+                        //ignores the values that are null
+                        //updates values that aren't null, set flag to false in the case of an error
                         if (first_name!==null) {
                             var post = {first_name:first_name};
                             connection.query('UPDATE employee SET ? WHERE employee_num = ?',[post,decoded.employee_num], function (error, results, fields) {
@@ -601,15 +615,9 @@ server.route({
                             });
                         }
                         if (password!==null) {
+                            //if the password is getting updated, we hash it first
                             bcrypt.hash(password, 10, function(err, hash) {
-                                if (err) {
-                                    var response = {
-                                        "HERE": "HERE"
-                                    };
-                                    reply(response);
-                                }
                                 newPass = hash;
-                                console.log(newPass)
                                 var post = {password_hashes: newPass};
                                 connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
                                     if (error) {
@@ -620,7 +628,6 @@ server.route({
                                         };
                                         reply(JSON.stringify(response)).code(500);
                                     }
-                                    console.log(results);
                                 });
                             });
                         }
@@ -653,6 +660,7 @@ server.route({
                     }
                 } 
             });
+        //catch an error decoding the initial token
         } catch (err) {
             flag = false;
             var response = {
@@ -661,6 +669,7 @@ server.route({
             };
             reply(JSON.stringify(response)).code(500);
         } 
+        //if there were no errors, send a success result
         if (flag==true) {
             var response = {
                 "success": true,
@@ -672,7 +681,6 @@ server.route({
 });
 
 //Deleting a user and all of their reviews
-//Done :)
 server.route({
     config: {
         cors: {
@@ -687,6 +695,7 @@ server.route({
         var user_id = request.params["user_id"];
         var token = request.headers.authorization.split(' ')[1];
         try {
+            //decode the token
             var decoded = jwt.decode(token, secretkey);
             connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
                 if (error) {
@@ -696,6 +705,7 @@ server.route({
                     };
                     reply(JSON.stringify(response)).code(500);
                 }
+                //if the user is not logged in
                 else if (results.length==0) {
                     var response = {
                         "success": false,
@@ -704,6 +714,7 @@ server.route({
                     reply(JSON.stringify(response)).code(403);
                 }
                 else {
+                    //only works if the user tries to delete their own account, otherwise will skip this if statement
                     if (user_id==decoded.employee_num) {
                         connection.query('DELETE FROM employee WHERE employee_num= ? ', user_id, function (error, results, fields) {
                             if (error) {
@@ -733,6 +744,7 @@ server.route({
                             }
                         });
                     }
+                    //if the user tries to delete an account that is not their own
                     else {
                         var response = {
                             "sucess": false,
@@ -742,6 +754,7 @@ server.route({
                     }
                 }
             });
+        //catch an error decoding the token
         } catch (err) {
             var response = {
                 "success": false,
@@ -753,6 +766,25 @@ server.route({
 });
 
 //END AUTHENTICATED ROUTES
+//GET ALL USERS 
+server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
+    method: 'GET',
+    path: '/getUsers',
+    handler: function (request, reply) {
+        connection.query('SELECT * FROM employee', function (error, results, fields) {
+            if (error) {
+                throw error;
+            }
+            reply(results);
+        });
+    }
+});
 
 //Start the server
 server.start((err) => {

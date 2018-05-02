@@ -40,6 +40,7 @@ services:
             - ./Caddyfile:/etc/Caddyfile
             - ./log/caddy:/var/log/caddy
             - ./src/public/dist:/var/www/joule
+
 volumes:
     caddy-data:
     db-data:
