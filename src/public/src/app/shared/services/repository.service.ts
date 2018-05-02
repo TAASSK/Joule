@@ -1,23 +1,28 @@
+import { AuthenticationService } from './authentication.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-//import { HttpClient } from 'selenium-webdriver/http';
+// import { HttpClient } from 'selenium-webdriver/http';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 
 
 @Injectable()
 export abstract class RepositoryService<T> {
 protected abstract endPoint;
+protected auth: AuthenticationService;
 
-protected httpOptions = 
-{
-    headers: new HttpHeaders({
-        'Content-Type' : 'application/json'
-    })
-};
+
 
 constructor(protected httpClient: HttpClient) {}
+
+protected httpOptions =
+{
+    headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'autherization' : this.auth.getToken()
+    })
+};
 
 public add(item: T): Observable<T> {
     return this.httpClient.post(`${this.endPoint}`, item, this.httpOptions).pipe(

@@ -32,7 +32,7 @@ export class AuthenticationService extends RepositoryService<User> {
 	protected endPoint = 'http://localhost:8080/api/login';
 
 	constructor(
-		protected httpClient: HttpClient
+    protected httpClient: HttpClient
 	) {
 		super(httpClient);
 	}

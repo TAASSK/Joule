@@ -4,8 +4,8 @@ export class User implements Serializable<User> {
 
 	id?: number;
 	email: string;
-	first_name: string;
-	last_name: string;
+	firstName: string;
+	lastName: string;
 	password?: string;
 	jobTitle?: string;
 	employer?: string;
@@ -31,7 +31,7 @@ export class User implements Serializable<User> {
 	// necessary for the endpoint to which you're
 	// sending data
 	//
-	// e.g. `obj` parameter for the "Create User" route 
+	// e.g. `obj` parameter for the "Create User" route
 	// would look like:
 	//
 	//	var obj = {

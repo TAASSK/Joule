@@ -19,8 +19,10 @@ constructor(protected httpClient: HttpClient) {
 }
 
 public add(item: User): Observable<User> {
-    let body = JSON.stringify(item);
-    return this.httpClient.post(`${this.endPoint}`, body, {responseType: 'text'}).pipe(
+   const user = item.serialize(item);
+
+    // let body = JSON.stringify(user);
+    return this.httpClient.post(`${this.endPoint}`, user, this.httpOptions).pipe(
       catchError(this.handleException)
     );
   }
