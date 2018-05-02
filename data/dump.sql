@@ -25,18 +25,22 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
-  `username` varchar(45) NOT NULL,
-  `password_hashes` varchar(65) NOT NULL,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `employee_num` int(11) NOT NULL,
-  `department_name` varchar(45) NOT NULL,
-  `position` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `employer` varchar(45) NOT NULL,
-  `location` varchar(45) NOT NULL,
+  `password_hashes` varchar(65),
+  `first_name` varchar(45),
+  `last_name` varchar(45),
+  `employee_num` int(11),
+  `department_name` varchar(45),
+  `position` varchar(45),
+  `email` varchar(45),
+  `employer` varchar(45),
+  `location` varchar(45),
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ALTER TABLE employee DROP COLUMN employee_num;
+ALTER TABLE employee ADD employee_num INT NOT NULL PRIMARY KEY AUTO_INCREMENT;
+INSERT INTO employee (email, first_name, last_name, password_hashes) VALUES('joeg@smu.edu', 'Joe', 'Gray', '$2a$10$bmP/A.KC3amPQ6ydmPDGbOWbxsPa24XfQFY43wbBWKDB7XNs9Rn4C');
+INSERT INTO employee (email, first_name, last_name, password_hashes) VALUES('susandoe@smu.edu', 'Susan', 'Doe', '$2a$10$j5pGk8zTluzL6OJmCbXjfOabG7e8SLZPd21XKDVKgS3FsXrY4sWZO');
+INSERT INTO employee(email, first_name, last_name, password_hashes) VALUES ('jameseaster@smu.edu', 'James', 'Easter', '$2a$10$NgU41MMYgFhGSYongX.cLuKZDfbqmf.jMmMFcvS.VO3PnAyvbN6PO');
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,9 +71,12 @@ CREATE TABLE `employee_review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `joule2`.`employee_review`
 DROP PRIMARY KEY;
-INSERT INTO employee_review(employee_num, hotness, accountability, availability, politeness, efficiency, comments)
-VALUES(1113, 2, 3, 4, 5, 6, "you'\re an employer"),
-(1112, 3, 4, 5, 6, 7, "iTs WoRkInG");
+INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(3, 'student', 'SMU', 78, 89, 45, 67, 45, 'uses time efficiently', '2018-04-29 04:56:57');
+INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(3, 'student', 'SMU', 78, 75, 77, 79, 73, 'GREAT WORKER', '2018-04-01 11:32:01');
+INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(4, 'student', 'SMU', 91, 82, 93, 85, 91, 'very organized', '2018-04-19 07:00:12');
+INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(4, 'student', 'SMU', 78, 81, 79, 80, 72, 'on time', '2018-04-17 03:23:01');
+INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(5, 'student', 'SMU', 90, 89, 88, 87, 86, 'very helpful and friendly', '2018-04-21 12:13:23');
+INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(5, 'student', 'SMU', 91, 83, 86, 90, 87, 'reliable and predictable', '2018-04-04 03:45:02');
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
