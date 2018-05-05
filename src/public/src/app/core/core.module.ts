@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 import {
 	AuthenticationService,
 	AuthInterceptorService,
-	RepositoryService,
 	ReviewService,
 	SearchService,
 	SignupService,
