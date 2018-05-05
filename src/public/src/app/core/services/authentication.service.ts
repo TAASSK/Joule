@@ -43,7 +43,7 @@ export class AuthenticationService {
 		})
 	};
 
-	public isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(null);
+	public isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(
 		protected httpClient: HttpClient,
