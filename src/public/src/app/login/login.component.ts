@@ -35,10 +35,9 @@ export class LoginComponent implements OnInit {
 			this.email,
 			this.password
 		).subscribe(auth_info => {
+			this.authentication.isAuthenticated.next(true);
 			this.router.navigate(['user', auth_info['user_id']]);
 		});
-
-		console.log(this.authentication.isAuthenticated.value);
 
 	}
 
