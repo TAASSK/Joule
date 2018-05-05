@@ -269,7 +269,7 @@ server.route({
                     //format the results
                     var response = {
                         id: results[0].employee_num,
-                        email: results[0].employee_num,
+                        email: results[0].email,
                         first_name: results[0].first_name,
                         last_name: results[0].last_name,
                         job_title: results[0].position,
