@@ -6,6 +6,16 @@ import {
 	HttpClient,
 	HttpHeaders
 } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+/*
+ * RxJS
+ * */
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { catchError } from 'rxjs/operators';
+import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/do';
 
 /*
  * 3rd party libraries
@@ -16,14 +26,6 @@ import * as moment from 'moment';
  * Models
  * */
 import { User } from '../../shared';
-
-/*
- * RxJS
- * */
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
-import 'rxjs/add/operator/do';
 
 /*
  * Services
@@ -45,14 +47,25 @@ export class AuthenticationService {
 
 	constructor(
 		protected httpClient: HttpClient,
-	) { }
+		private router: Router,
+		private userService: UserService
+	) {
+		let authStatus = this.isLoggedIn();
+		this.isAuthenticated.next(authStatus);
+	}
 
-	// isAuthenticated(): boolean {
-	// 	return true;
-	// }
+	public isLoggedIn(): boolean {
+		return moment().isBefore(this.getExpiration());
+	}
+
+	isLoggedOut(): boolean {
+		return !this.isLoggedIn();
+	}
 
 	login(email: string, password: string) {
 
+		// hit the login endpoint;
+		// shareReplay to prevent multiple POST requests
 		return this.httpClient.post(
 			`${this.endPoint}`,
 			{
@@ -62,33 +75,51 @@ export class AuthenticationService {
 			this.httpOptions
 		).do(res => {
 			this.setSession(res);
-		}).pipe(
-			catchError(this.handleException)
-		);
+		}).shareReplay();
+	}
+
+	logout() {
+
+		// remove token from storage
+		localStorage.removeItem('token');
+		localStorage.removeItem('expires_at');
+
+		// remove current global user
+		this.userService.setCurrentUser(null);
+
+		// set authentication flag to false
+		this.isAuthenticated.next(false);
+
+		// navigate to home page
+		this.router.navigate(['home']);
+
 	}
 
 	private setSession(authResult: object) {
-			// const expiresAt = moment().add(authResult.expires_at, 'second');
-			console.log(localStorage + 'hmm');
 
-			localStorage.setItem('token', authResult['token']);
-	    // localStorage.setItem('expires_at', authResult['expires_at']);
+		const expiresAt = moment().add(authResult['expires_at'], 'second');
 
-			// localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+		sessionStorage.setItem('token', authResult['token']);
+		sessionStorage.setItem('expires_at', expiresAt.toString());
 
-		}
+		// create a global user object once authenticated
+		this.userService.getById(
+			authResult['user_id']
+		).subscribe(user => {
+			let currentUser = new User();
 
-		public getToken() {
-		const token = localStorage.getItem('token');
-		console.log(token);
-		return token;
+			this.userService.setCurrentUser(
+				currentUser.deserialize(user)
+			);
+
+		});
+
 	}
 
-	public logout() {
-		localStorage.removeItem('token');
-		localStorage.removeItem('expires_at');
-		console.log(localStorage);
-		console.log('testStoreage');
+	getExpiration() {
+		const expiresAt = sessionStorage.getItem('expires_at');
+
+		return moment(expiresAt);
 	}
 
 	protected handleException(exception: any) {

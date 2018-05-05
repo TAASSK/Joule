@@ -42,10 +42,12 @@ export class UserService {
 	}
 
 	public getById(id: number): Observable<User> {
-		return this.httpClient.get(`${this.endPoint}/${id}`, this.httpOptions)
-			.pipe(
-				catchError(this.handleException)
-			);
+		return this.httpClient.get(
+			`${this.endPoint}/${id}`,
+			this.httpOptions
+		).pipe(
+			catchError(this.handleException)
+		);
 	}
 
 	public updatePassword(item: User, id: number): Observable<User> {

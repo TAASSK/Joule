@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
  * */
 import {
 	AuthenticationService,
-	AuthInterceptorService,
+	AuthInterceptor,
 	ReviewService,
 	SearchService,
 	SignupService,
@@ -27,7 +27,7 @@ import {
 	declarations: [],
 	providers: [
 		AuthenticationService,
-		AuthInterceptorService,
+		AuthInterceptor,
 		ReviewService,
 		SearchService,
 		SignupService,
