@@ -19,7 +19,12 @@ import {
 /*
  * Directives
  * */
-import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
+import { FocusOnLoadDirective } from './directives';
+
+/*
+ * Services (NOT shared)
+ * */
+import { RatingGradientService } from './components/ratings/rating-gradient.service';
 
 @NgModule({
 	imports: [
@@ -37,6 +42,9 @@ import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 		RatingBarComponent,
 		RatingBoxComponent,
 		SearchBarComponent
+	],
+	providers: [
+		RatingGradientService
 	]
 })
 export class SharedModule { }

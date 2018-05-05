@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /*
  * Services
  * */
-import { AuthenticationService } from '../shared';
+import { AuthenticationService } from '../core/services';
 
 @Component({
 	selector: 'app-login',

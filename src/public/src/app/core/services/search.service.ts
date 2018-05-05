@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
 /*
  * Models
  * */
-import { User } from '../models';
+import { User } from '../../shared';
 
 @Injectable()
 export class SearchService {
@@ -36,7 +36,7 @@ export class SearchService {
 		.map((res: Response) => {
 			var users = Array(res);
 
-			var userArray = Array<User>;
+			var userArray = Array<User>();
 			users.forEach(elem => {
 				var user = new User();
 				user.deserialize(elem);

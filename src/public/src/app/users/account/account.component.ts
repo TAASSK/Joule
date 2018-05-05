@@ -8,7 +8,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
  * Models
  * */
 import { User } from '../../shared';
-import { userService } from '../../shared/services/user.service';
+
+/*
+ * Services
+ * */
+import { UserService } from '../../core/services';
 
 @Component({
 	selector: 'app-account',
@@ -21,7 +25,7 @@ export class AccountComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private userService: userService
+		private userService: UserService
 	) {
 
 	

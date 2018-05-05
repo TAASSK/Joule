@@ -11,7 +11,11 @@ import {
 	Review,
 	User
 } from '../../shared';
-import { userService } from '../../shared/services/user.service';
+
+/*
+ * Models
+ * */
+import { UserService } from '../../core/services';
 
 @Component({
 	selector: 'app-profile',
@@ -19,8 +23,8 @@ import { userService } from '../../shared/services/user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: User;
-  review: Review;
+	user: User;
+	review: Review;
 	reviews: Array<Review> = new Array<Review>();
 
 	avgHotnessRating: number = 0;
@@ -31,12 +35,12 @@ export class ProfileComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private userService: userService
+		private userService: UserService
 	) {
 
 
-		//this.user = new User();
-		/*
+		this.user = new User();
+		
 		this.user.id = 101;
 		this.user.email = 'jp.joule18@gojoule.me';
 		this.user.firstName = 'John';
@@ -44,7 +48,7 @@ export class ProfileComponent implements OnInit {
 		this.user.jobTitle = 'Employee';
 		this.user.employer = 'Random Corp.';
 		this.user.location = 'Dallas, TX';
-		*/
+		
 
 		// dummy reviews
 		var review1 = new Review();
@@ -107,19 +111,19 @@ export class ProfileComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.user = new User();
-		this.route.params.subscribe((params: any) => {
-			this.user.id = params.id;
-			let num = params.id;
-			if(num) {
-			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);
-				console.log(data);
-				console.log(this.user);
-			  });
-			}
-		  });
-		  console.log(this.user);
+		// this.user = new User();
+		// this.route.params.subscribe((params: any) => {
+		// 	this.user.id = params.id;
+		// 	let num = params.id;
+		// 	if(num) {
+		// 	  this.userService.getById(+num).subscribe(data => {
+		// 		this.user = this.user.deserialize(data);
+		// 		console.log(data);
+		// 		console.log(this.user);
+		// 	  });
+		// 	}
+		//   });
+		//   console.log(this.user);
    }
 
 

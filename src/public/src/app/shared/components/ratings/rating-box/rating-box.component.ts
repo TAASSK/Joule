@@ -14,7 +14,7 @@ import {
 /*
  * Services
  * */
-import { RatingGradientService } from '../../services';
+import { RatingGradientService } from '../rating-gradient.service';
 
 @Component({
 	selector: 'app-rating-box',

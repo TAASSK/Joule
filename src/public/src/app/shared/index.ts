@@ -1,5 +1,3 @@
-export * from './components';
-export * from './directives';
-export * from './interfaces';
+// only export models from this module, nothing else
+
 export * from './models';
-export * from './services';

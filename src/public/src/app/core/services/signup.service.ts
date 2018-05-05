@@ -5,7 +5,7 @@ import { RepositoryService } from './repository.service';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-import { User } from '..';
+import { User } from '../../shared';
 import { Observable } from "rxjs";
 
 //import { Observable } from 'rxjs/Observable';

@@ -26,7 +26,7 @@ import { User } from '../shared';
 /*
  * Services
  * */
-import { SearchService } from '../shared';
+import { SearchService } from '../core/services';
 
 @Component({
 	selector: 'app-search-results',

@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 /*
  * Modules
  * */
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { UsersModule } from './users/users.module';
 
@@ -23,17 +24,6 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './users/profile/profile.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
-
-/*
- * Services
- * */
-import {
-	AuthenticationService,
-	RatingGradientService,
-	SearchService,
-	SignupService
-} from './shared';
-import { userService } from './shared/services/user.service';
 
 let defaultRoute = 'home';
 
@@ -48,6 +38,7 @@ let defaultRoute = 'home';
 	imports: [
 		BrowserAnimationsModule,
 		BrowserModule,
+		CoreModule,
 		FormsModule,
 		HttpClientModule,
 		RouterModule.forRoot([
@@ -61,13 +52,6 @@ let defaultRoute = 'home';
 		ReactiveFormsModule,
 		SharedModule,
 		UsersModule
-	],
-	providers: [
-		AuthenticationService,
-		RatingGradientService,
-		SearchService,
-		SignupService,
-		userService
 	],
 	bootstrap: [
 		AppComponent

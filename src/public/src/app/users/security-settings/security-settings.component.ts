@@ -1,16 +1,31 @@
 /*
  * Angular library
  * */
-import { Component, OnInit } from '@angular/core';
+import {
+	Component,
+	OnInit
+	} from '@angular/core';
+import {
+	Router,
+	ActivatedRoute
+} from '@angular/router';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators
+} from '@angular/forms';
 
 /*
  * Models
  * */
 import { User } from '../../shared';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule , FormBuilder} from '@angular/forms';
-import { userService } from '../../shared/services/user.service';
-import { Router, ActivatedRoute } from '@angular/router';
 
+/*
+ * Services
+ * */
+import { UserService } from '../../core/services';
 
 @Component({
 	selector: 'app-security-settings',
@@ -25,7 +40,7 @@ export class SecuritySettingsComponent implements OnInit {
 	confirmPassword: string;
 
 	constructor(private form: FormBuilder, 
-		private userService: userService,
+		private userService: UserService,
 		private router: Router,
 		private route: ActivatedRoute,
 	) {

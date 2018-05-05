@@ -9,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
-import { userService } from '../../shared/services/user.service';
+
+/*
+ * Services
+ * */
+import { UserService } from '../../core/services';
 
 @Component({
 	selector: 'app-profile-settings',
@@ -22,7 +26,7 @@ export class ProfileSettingsComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private userService: userService
+		private userService: UserService
 	) {
 
 		/*

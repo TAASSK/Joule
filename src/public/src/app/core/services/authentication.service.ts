@@ -25,7 +25,7 @@ import { catchError } from 'rxjs/operators';
  * Services
  * */
 import { RepositoryService } from './repository.service';
-import { userService } from './user.service';
+import { UserService } from './user.service';
 
 @Injectable()
 

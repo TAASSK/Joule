@@ -1,17 +1,35 @@
 /*
  * Angular library
  * */
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-//import { SignupService } from '../shared/services/index';
-import { User, SignupService } from '../shared';
+import {
+	Component,
+	OnInit
+} from '@angular/core';
+import {
+	ActivatedRoute,
+	Router
+} from '@angular/router';
 
-import { FormGroup, FormControl, Validators, ReactiveFormsModule , FormBuilder} from '@angular/forms';
-import { userService } from '../shared/services/user.service';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators
+} from '@angular/forms';
 
 /*
- * Angular library
+ * Models
  * */
+import { User } from '../shared';
+
+/*
+ * Services
+ * */
+import {
+	SignupService,
+	UserService
+} from '../core/services';
 
 @Component({
 	selector: 'app-registration',
@@ -28,7 +46,7 @@ export class RegistrationComponent implements OnInit {
 		private router: Router,
 		private signup: SignupService,
 		private form: FormBuilder,
-		private userService: userService
+		private userService: UserService
 	) {	}
 
 	ngOnInit() {
