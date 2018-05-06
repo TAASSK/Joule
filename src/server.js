@@ -366,25 +366,25 @@ server.route({
     path: '/refreshToken',
     handler: function(request, reply) {
         //gets the actual token part of the bearer token
-        var token = request.headers.authorization.split(' ')[1];
-        if (token===undefined) {
+        //var token = request.headers.authorization.split(' ')[1];
+        /*if (token===undefined) {
             var response =  {
                 "success": false,
                 "message": "Request body has missing fields."
             };
             reply(JSON.stringify(response)).code(400);
-        }
-        else {
+        }*/
+        //else {
             //try to verify the token
             try {
-                var verified = jwt.verify(token, secretkey);
+                //var verified = jwt.verify(token, secretkey);
                 var now = new Date();
                 //give it a 10 minute expiration time
                 var expiresAt = new Date(now.getTime() + 10*60000);
                 var response = {
-                        "token": jwt.sign({"employee_num": verified.employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
+                        //"token": jwt.sign({"employee_num": verified.employee_num, exp: expiresAt.getTime() / 1000}, secretkey),
                         "expires_at": expiresAt,
-                        "user_id": verified.employee_num
+                        //"user_id": verified.employee_num
                 };
                 reply(JSON.stringify(response)).code(200);
             //catch an error if it can't be decoded
@@ -395,7 +395,7 @@ server.route({
                 };
                 reply(JSON.stringify(response)).code(400);
             }
-        }
+        //}
     }
 });
 
@@ -412,7 +412,7 @@ server.route({
     path: '/users/{user_id}/reviews',
     handler: function(request, reply) {
         var receiver = request.params["user_id"];
-        var token = request.headers.authorization.split(' ')[1];
+        //var token = request.headers.authorization.split(' ')[1];
         var job_title = request.payload["job_title"];
         var employer = request.payload["employer"];
         var hotness = request.payload["hotness_rating"];
@@ -423,7 +423,7 @@ server.route({
         var comment = request.payload["comment"];
         var datestamp = request.payload["datestamp"].split('T');
         //if any of the fields are missing
-        if (token===undefined || receiver === undefined || job_title===undefined || employer === undefined || hotness===undefined || accountability === undefined
+        if (/*token===undefined || */receiver === undefined || job_title===undefined || employer === undefined || hotness===undefined || accountability === undefined
             || availability===undefined || politeness=== undefined || efficiency===undefined || comment === undefined || datestamp===undefined) {
             var response =  {
                 "success": false,
@@ -435,8 +435,8 @@ server.route({
         else {
             //do that here
             try {
-                var decoded = jwt.decode(token, secretkey);
-                connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
+                //var decoded = jwt.decode(token, secretkey);
+                connection.query('SELECT * FROM employee WHERE employee_num = ? ', /*decoded.employee_num*/receiver, function (error, results, fields) {
                     if (error) {
                         var response = {
                             "success": false,
@@ -519,7 +519,7 @@ server.route({
     method: 'PUT',
     path: '/users/{user_id}',
     handler: function (request, reply) {
-        var token = request.headers.authorization.split(' ')[1];
+        //var token = request.headers.authorization.split(' ')[1];
         var first_name = request.payload["first_name"];
         var last_name = request.payload["last_name"];
         var email = request.payload["email"];
@@ -534,8 +534,8 @@ server.route({
         var flag = true;
         try {
             //decode the token
-            var decoded = jwt.decode(token, secretkey);
-            connection.query('SELECT * FROM employee WHERE employee_num= ?', decoded.employee_num, function (error, results, fields) {
+            //var decoded = jwt.decode(token, secretkey);
+            connection.query('SELECT * FROM employee WHERE employee_num= ?', /*decoded.employee_num*/user_id, function (error, results, fields) {
                 if (error) {
                     var response = {
                         "success": false,
@@ -553,20 +553,20 @@ server.route({
                         reply(JSON.stringify(response)).code(403);
                     }
                     //make sure that the logged in user can only update their own account
-                    else if (decoded.employee_num!=user_id) {
+                    /*else if (decoded.employee_num!=user_id) {
                         var response = {
                             "success": false,
                             "message": "Attempted to update a user without proper access."
                         };
                         reply(JSON.stringify(response)).code(400);
-                    }
+                    }*/
                     else{
                         //checks every possible input to see if it is null
                         //ignores the values that are null
                         //updates values that aren't null, set flag to false in the case of an error
                         if (first_name!==null) {
                             var post = {first_name:first_name};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ?',[post,decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ?',[post,/*decoded.employee_num*/user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -579,7 +579,7 @@ server.route({
                         }
                         if (last_name!==null) {
                             var post = {last_name:last_name};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post ,decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post ,/*decoded.employee_num*/user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -592,7 +592,7 @@ server.route({
                         }
                         if (email!==null) {
                             var post = {email:email};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -605,7 +605,7 @@ server.route({
                         }
                         if (employer!==null) {
                             var post = {employer:employer};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -621,7 +621,7 @@ server.route({
                             bcrypt.hash(password, 10, function(err, hash) {
                                 newPass = hash;
                                 var post = {password_hashes: newPass};
-                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
+                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/user_id], function (error, results, fields) {
                                     if (error) {
                                         flag = false;
                                         var response = {
@@ -635,7 +635,7 @@ server.route({
                         }
                         if (job_title!==null) {
                             var post = {position: job_title};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {                                
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/user_id], function (error, results, fields) {                                
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -648,7 +648,7 @@ server.route({
                         }
                         if (location!==null) {
                             var post = {location: location};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {  
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/user_id], function (error, results, fields) {  
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -695,11 +695,11 @@ server.route({
     path: '/user/{user_id}',
     handler: function (request, reply) {
         var user_id = request.params["user_id"];
-        var token = request.headers.authorization.split(' ')[1];
+        //var token = request.headers.authorization.split(' ')[1];
         try {
             //decode the token
-            var decoded = jwt.decode(token, secretkey);
-            connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
+            //var decoded = jwt.decode(token, secretkey);
+            connection.query('SELECT * FROM employee WHERE employee_num = ? ', /*decoded.employee_num*/user_id, function (error, results, fields) {
                 if (error) {
                     var response = {
                         "success": false,
@@ -717,7 +717,7 @@ server.route({
                 }
                 else {
                     //only works if the user tries to delete their own account, otherwise will skip this if statement
-                    if (user_id==decoded.employee_num) {
+                    if (user_id==/*decoded.employee_num*/user_id) {
                         connection.query('DELETE FROM employee WHERE employee_num= ? ', user_id, function (error, results, fields) {
                             if (error) {
                                 var response = {
@@ -750,7 +750,7 @@ server.route({
                     else {
                         var response = {
                             "sucess": false,
-                            "message": "User with id: " + decoded.employee_num + " does not have access to delete user " + user_id
+                            "message": "User with id: " + /*decoded.employee_num*/user_id + " does not have access to delete user " + user_id
                         }
                         reply(JSON.stringify(response)).code(403);
                     }
