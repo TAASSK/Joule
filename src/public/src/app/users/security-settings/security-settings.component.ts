@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 /*
  * Models
  * */
-import { User } from '../../shared';
+import { User, AuthenticationService } from '../../shared';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule , FormBuilder} from '@angular/forms';
 import { userService } from '../../shared/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -28,6 +28,7 @@ export class SecuritySettingsComponent implements OnInit {
 		private userService: userService,
 		private router: Router,
 		private route: ActivatedRoute,
+		private auth: AuthenticationService
 	) {
 
 		/*
@@ -45,17 +46,11 @@ export class SecuritySettingsComponent implements OnInit {
 	}
 	ngOnInit() {
 		this.user = new User();
-		this.route.params.subscribe((params: any) => {
-			this.user.id = params.user_id;
-			console.log(params);
-			let num = params.user_id;
-			if(num) {
-			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);     
-				console.log(data);  
-				console.log(this.user);  
-			  });
-			}
+		this.user.id = +this.auth.getId();
+		this.userService.getById(this.user.id).subscribe(data => {
+			this.user = this.user.deserialize(data);
+			console.log(data);
+			console.log(this.user);
 		});
 		console.log(this.user);
 
@@ -78,10 +73,11 @@ export class SecuritySettingsComponent implements OnInit {
 	 public passwordChange()
 	 {
 		console.log("Passwords Match");
-
 		this.userService.updatePassword(this.user, this.user.id).subscribe(x => {
-			this.router.navigateByUrl('login');
+			//this.router.navigateByUrl('login');
+			console.log(x);
 		});
+		console.log('Back in the function');
 	 }
 	 public delete()
 	 {

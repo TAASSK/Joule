@@ -10,6 +10,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export abstract class RepositoryService<T> {
 protected abstract endPoint;
+protected auth: AuthenticationService;
 
 
 
@@ -19,6 +20,7 @@ protected httpOptions =
 {
     headers: new HttpHeaders({
         'Content-Type' : 'application/json',
+        //'Authorization': `Bearer ${this.auth.getToken()}`
     })
 };
 public add(item: T): Observable<T> {

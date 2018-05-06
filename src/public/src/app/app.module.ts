@@ -34,6 +34,7 @@ import {
 	SignupService
 } from './shared';
 import { userService } from './shared/services/user.service';
+import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 
 let defaultRoute = 'home';
 

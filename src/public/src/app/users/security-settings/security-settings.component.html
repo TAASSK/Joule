@@ -53,6 +53,7 @@
 						Confirm new password
 					</label>
 					<input
+					[(ngModel)]="user.password"
 					[(ngModel)]="confirmPassword"
 					 type="password"
 					 class="form-control"
@@ -89,7 +90,7 @@
 			</strong>
 		</p>
 
-		<button class="button button-call-to-action button-block">
+		<button class="button button-call-to-action button-block" (click)="delete()">
 			Delete Account
 		</button>
 

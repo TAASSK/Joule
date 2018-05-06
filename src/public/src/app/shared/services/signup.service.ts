@@ -24,7 +24,7 @@ public add(item: User): Observable<User> {
     		first_name: item.firstName,
     		last_name: item.lastName,
     		password: item.password
-    	}
+    }
     const user = item.serialize(obj);
     console.log(user);
     return this.httpClient.post(`${this.endPoint}`, user, this.httpOptions).pipe(

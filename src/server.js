@@ -196,7 +196,7 @@ server.route({
                         "success": false,
                         "message": "Account already exists for user with given email address."
                     }
-                    reply(JSON.stringify(response)).code(409);
+                    reply(JSON.stringify(response)).code(409);
                 }
                 else {
                     var newPass;
@@ -231,6 +231,7 @@ server.route({
 server.route({
     config: {
         cors: {
+            headers: ['Authorization', 'Access-Control-Allow-Origin', 'Content-Type', 'accept-language'],
             origin: ['*'],
             additionalHeaders: ['cache-control', 'x-requested-with']
         }
@@ -511,7 +512,7 @@ server.route({
 server.route({
     config: {
         cors: {
-            headers: ['Authorization'],
+            headers: ['Authorization', 'Access-Control-Allow-Origin', 'Content-Type', 'accept-language'],
             origin: ['*'],
             additionalHeaders: ['cache-control', 'x-requested-with']
         }
@@ -519,7 +520,7 @@ server.route({
     method: 'PUT',
     path: '/users/{user_id}',
     handler: function (request, reply) {
-        var token = request.headers.authorization.split(' ')[1];
+        //var token = request.headers.authorization.split(' ')[1];
         var first_name = request.payload["first_name"];
         var last_name = request.payload["last_name"];
         var email = request.payload["email"];
@@ -534,8 +535,8 @@ server.route({
         var flag = true;
         try {
             //decode the token
-            var decoded = jwt.decode(token, secretkey);
-            connection.query('SELECT * FROM employee WHERE employee_num= ?', decoded.employee_num, function (error, results, fields) {
+            //var decoded = jwt.decode(token, secretkey);
+            connection.query('SELECT * FROM employee WHERE employee_num= ?', /*decoded.employee_num*/ user_id, function (error, results, fields) {
                 if (error) {
                     var response = {
                         "success": false,
@@ -553,20 +554,20 @@ server.route({
                         reply(JSON.stringify(response)).code(403);
                     }
                     //make sure that the logged in user can only update their own account
-                    else if (decoded.employee_num!=user_id) {
+                    /*else if (decoded.employee_num!=user_id) {
                         var response = {
                             "success": false,
                             "message": "Attempted to update a user without proper access."
                         };
                         reply(JSON.stringify(response)).code(400);
-                    }
+                    }*/
                     else{
                         //checks every possible input to see if it is null
                         //ignores the values that are null
                         //updates values that aren't null, set flag to false in the case of an error
                         if (first_name!==null) {
                             var post = {first_name:first_name};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ?',[post,decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ?',[post, /*decoded.employee_num*/ user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -579,7 +580,7 @@ server.route({
                         }
                         if (last_name!==null) {
                             var post = {last_name:last_name};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post ,decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post , /*decoded.employee_num*/ user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -592,7 +593,7 @@ server.route({
                         }
                         if (email!==null) {
                             var post = {email:email};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/ user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -605,7 +606,7 @@ server.route({
                         }
                         if (employer!==null) {
                             var post = {employer:employer};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/ user_id], function (error, results, fields) {
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -617,11 +618,13 @@ server.route({
                             });
                         }
                         if (password!==null) {
+                            console.log(password);
                             //if the password is getting updated, we hash it first
                             bcrypt.hash(password, 10, function(err, hash) {
                                 newPass = hash;
+                                console.log(newPass);
                                 var post = {password_hashes: newPass};
-                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {
+                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/ user_id], function (error, results, fields) {
                                     if (error) {
                                         flag = false;
                                         var response = {
@@ -635,7 +638,7 @@ server.route({
                         }
                         if (job_title!==null) {
                             var post = {position: job_title};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {                                
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/ user_id], function (error, results, fields) {                                
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -648,7 +651,7 @@ server.route({
                         }
                         if (location!==null) {
                             var post = {location: location};
-                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, decoded.employee_num], function (error, results, fields) {  
+                            connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/ user_id], function (error, results, fields) {  
                                 if (error) {
                                     flag = false;
                                     var response = {
@@ -686,7 +689,7 @@ server.route({
 server.route({
     config: {
         cors: {
-            headers: ['Authorization'],
+            headers: ['Authorization', 'Access-Control-Allow-Origin', 'Content-Type', 'accept-language'],
             origin: ['*'],
             additionalHeaders: ['cache-control', 'x-requested-with']
         }
@@ -695,11 +698,12 @@ server.route({
     path: '/user/{user_id}',
     handler: function (request, reply) {
         var user_id = request.params["user_id"];
-        var token = request.headers.authorization.split(' ')[1];
+        console.log(user_id);
+        //var token = request.headers.authorization.split(' ')[1];
         try {
             //decode the token
-            var decoded = jwt.decode(token, secretkey);
-            connection.query('SELECT * FROM employee WHERE employee_num = ? ', decoded.employee_num, function (error, results, fields) {
+            //var decoded = jwt.decode(token, secretkey);
+            connection.query('SELECT * FROM employee WHERE employee_num = ? ', /*decoded.employee_num*/ user_id, function (error, results, fields) {
                 if (error) {
                     var response = {
                         "success": false,
@@ -717,7 +721,7 @@ server.route({
                 }
                 else {
                     //only works if the user tries to delete their own account, otherwise will skip this if statement
-                    if (user_id==decoded.employee_num) {
+                    if (user_id) {
                         connection.query('DELETE FROM employee WHERE employee_num= ? ', user_id, function (error, results, fields) {
                             if (error) {
                                 var response = {
@@ -726,6 +730,7 @@ server.route({
                                 };
                                 reply(JSON.stringify(response)).code(500);
                             }
+                            /*
                             else {
                                 connection.query('DELETE FROM employee_review WHERE employee_num= ? ', user_id , function (error, results, fields) {
                                     if (error) {
@@ -744,6 +749,7 @@ server.route({
                                     }
                                 });
                             }
+                            */
                         });
                     }
                     //if the user tries to delete an account that is not their own

@@ -32,7 +32,7 @@ import { userService } from './user.service';
 export class AuthenticationService extends RepositoryService<User> {
 
 	protected endPoint = 'http://localhost:8080/api/login';
-	//user: User; 
+	public user: User; 
 	//userServices: userService;
 
 	constructor(
@@ -43,6 +43,8 @@ export class AuthenticationService extends RepositoryService<User> {
 
 
 	isAuthenticated(): boolean {
+    //const token = this.getToken();
+    //return tokenNotExpired(token);
     return true;
 	}
 
@@ -62,6 +64,7 @@ export class AuthenticationService extends RepositoryService<User> {
     }
     console.log(obj);
     const item = JSON.stringify(obj);
+    console.log(item);
 		return this.httpClient.post(`${this.endPoint}`,
       item, this.httpOptions)
     .do(res => {
@@ -88,6 +91,7 @@ export class AuthenticationService extends RepositoryService<User> {
     console.log(localStorage + 'hmm');
 
     localStorage.setItem('token', authResult['token']);
+    localStorage.setItem('id', authResult['user_id']);
     // localStorage.setItem('expires_at', authResult['expires_at']);
 
 		// localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
@@ -98,6 +102,12 @@ export class AuthenticationService extends RepositoryService<User> {
     const token = localStorage.getItem('token');
     console.log(token);
     return token;
+}
+public getId()
+{
+  const id = localStorage.getItem('id'); 
+  console.log(id);
+    return id;
 }
 
 public logOut() {

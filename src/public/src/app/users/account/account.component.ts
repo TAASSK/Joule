@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /*
  * Models
  * */
-import { User } from '../../shared';
+import { User, AuthenticationService } from '../../shared';
 import { userService } from '../../shared/services/user.service';
 
 @Component({
@@ -21,10 +21,12 @@ export class AccountComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private userService: userService
+		private userService: userService,
+		private auth: AuthenticationService
 	) {
 
 	
+		/*
 		this.user = new User();
 
 		this.user.id = 101;
@@ -34,11 +36,20 @@ export class AccountComponent implements OnInit {
 		this.user.jobTitle = 'Employee';
 		this.user.employer = 'Random Corp.';
 		this.user.location = 'Dallas, TX';
+		*/
 	
 
 	}
 
 	ngOnInit() {
+		this.user = new User();
+		this.user.id = +this.auth.getId();
+		this.userService.getById(this.user.id).subscribe(data => {
+			this.user = this.user.deserialize(data);
+			console.log(data);
+			console.log(this.user);
+		});
+		console.log(this.user);
 		/*
 		this.user = new User();
 		this.route.params.subscribe((params: any) => {

@@ -9,7 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
  * */
 import {
 	Review,
-	User
+	User,
+	AuthenticationService
 } from '../../shared';
 import { userService } from '../../shared/services/user.service';
 
@@ -31,7 +32,8 @@ export class ProfileComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private userService: userService
+		private userService: userService,
+		private auth: AuthenticationService
 	) {
 
 
@@ -108,18 +110,13 @@ export class ProfileComponent implements OnInit {
 
 	ngOnInit() {
 		this.user = new User();
-		this.route.params.subscribe((params: any) => {
-			this.user.id = params.id;
-			let num = params.id;
-			if(num) {
-			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);
-				console.log(data);
-				console.log(this.user);
-			  });
-			}
-		  });
-		  console.log(this.user);
+		this.user.id = +this.auth.getId();
+		this.userService.getById(this.user.id).subscribe(data => {
+			this.user = this.user.deserialize(data);
+			console.log(data);
+			console.log(this.user);
+		});
+		console.log(this.user);
    }
 
 

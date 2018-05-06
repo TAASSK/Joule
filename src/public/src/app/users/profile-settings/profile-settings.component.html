@@ -51,7 +51,6 @@
 					 class="form-control"
 					 id="profileInputEmailAddress"
 					 placeholder="Email address"
-					 [value]="user.email"
 					>
 					<small id="profileInputEmailAddressHelpText" class="form-text text-muted">
 						Email will not be displayed publicly.
@@ -68,11 +67,13 @@
 						Job Title
 					</label>
 					<input
+					[(ngModel)]="user.jobTitle"
 					 type="text"
 					 class="form-control"
 					 id="profileInputJobTitle"
 					 placeholder="Job title"
 					 [value]="user.jobTitle"
+					 [ngModelOptions]="{standalone: true}"
 					>
 				</section>
 
@@ -86,11 +87,13 @@
 						Employer
 					</label>
 					<input
+					[(ngModel)]="user.employer"
 					 type="text"
 					 class="form-control"
 					 id="profileInputEmployer"
 					 placeholder="Employer"
 					 [value]="user.employer"
+					 [ngModelOptions]="{standalone: true}"
 					>
 				</section>
 
@@ -104,18 +107,20 @@
 						Location
 					</label>
 					<input
+					[(ngModel)]="user.location"
 					 type="text"
 					 class="form-control"
 					 id="profileInputLocation"
 					 placeholder="Location"
 					 [value]="user.location"
+					 [ngModelOptions]="{standalone: true}"
 					>
 				</section>
 
 			</section>
 
 		</form>
-
+		<button type="button" class="btn btn-warning" (click)="update()">Update</button>
 	</section>
 
 </section>
