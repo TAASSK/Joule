@@ -43,31 +43,29 @@ Search by company:
 **Content example**
 
 ```json
-{
-	"users": [
-		{
-			"id": 101,
-			"first_name": "James",
-			"last_name": "Joule",
-			"job_title": "Brewer",
-			"employer": "Self Employed"
-		},
-		{
-			"id": 535,
-			"first_name": "James",
-			"last_name": "Joule",
-			"job_title": "Brewer",
-			"employer": "Self Employed"
-		},
-		{
-			"id": 27,
-			"first_name": "James",
-			"last_name": "Joule",
-			"job_title": "Brewer",
-			"employer": "Self Employed"
-		}
-	]
-}
+[
+	{
+		"id": 101,
+		"first_name": "James",
+		"last_name": "Joule",
+		"job_title": "Brewer",
+		"employer": "Self Employed"
+	},
+	{
+		"id": 535,
+		"first_name": "James",
+		"last_name": "Joule",
+		"job_title": "Brewer",
+		"employer": "Self Employed"
+	},
+	{
+		"id": 27,
+		"first_name": "James",
+		"last_name": "Joule",
+		"job_title": "Brewer",
+		"employer": "Self Employed"
+	}
+]
 ```
 
 \* it is possible for the list of users to be an empty list
