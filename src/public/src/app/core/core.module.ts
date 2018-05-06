@@ -16,7 +16,6 @@ import {
 	AuthInterceptor,
 	ReviewService,
 	SearchService,
-	SignupService,
 	UserService
 } from './services';
 
@@ -30,7 +29,6 @@ import {
 		AuthInterceptor,
 		ReviewService,
 		SearchService,
-		SignupService,
 		UserService
 	]
 })

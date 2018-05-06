@@ -14,7 +14,6 @@ import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
-	ReactiveFormsModule,
 	Validators
 } from '@angular/forms';
 
@@ -26,10 +25,7 @@ import { User } from '../shared';
 /*
  * Services
  * */
-import {
-	SignupService,
-	UserService
-} from '../core/services';
+import { UserService } from '../core/services';
 
 @Component({
 	selector: 'app-registration',
@@ -37,41 +33,68 @@ import {
 })
 export class RegistrationComponent implements OnInit {
 
-	user: User;
-	myForm: FormGroup;
-	titleAlert:string = 'This field is required';
+	user: User = new User();
+	registrationForm: FormGroup;
+	titleAlert: string = 'This field is required';
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private signup: SignupService,
-		private form: FormBuilder,
+		private fb: FormBuilder,
 		private userService: UserService
-	) {	}
+	) {
+		this.createRegistrationForm();
+	}
 
-	ngOnInit() {
-		this.user = new User();
+	ngOnInit() { }
 
-		this.myForm = new FormGroup({
-			'firstName': new FormControl('', [Validators.required, Validators.minLength(4)]), 
-			'lastName': new FormControl('', Validators.required),
-			'email': new FormControl('', [ 
-				Validators.required,
-				Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$') 
-				///^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-			]),
-			'password': new FormControl('', [
-				Validators.minLength(8), 
+	createRegistrationForm() {
+
+		this.registrationForm = this.fb.group({
+			email: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.pattern(
+						'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+					)
+				])
+			],
+			firstName: [
+				'',
 				Validators.required
-			]),
+			],
+			lastName: [
+				'',
+				Validators.required
+			],
+			password: [
+				'', Validators.compose([
+					Validators.minLength(8),
+					Validators.required
+				])
+			]
 		});
 
 	}
-	public save() {
-	// this.user.id = 15789;
-	this.signup.add(this.user).subscribe(x => {
-		this.router.navigateByUrl('login');
-	});
-	
-	//this.router.navigateByUrl('login');
-	}}
+
+	onSubmit() {
+		this.user = this.prepareUser();
+		this.userService.add(this.user);
+		this.router.navigate(['login']);
+	}
+
+	prepareUser(): User {
+
+		const formModel = this.registrationForm.value;
+
+		var saveUser: User = new User();
+
+		saveUser.email = formModel.email as string;
+		saveUser.firstName = formModel.firstName as string;
+		saveUser.lastName = formModel.lastName as string;
+		saveUser.password = formModel.password as string;
+
+		return saveUser;
+	}
+
+}
