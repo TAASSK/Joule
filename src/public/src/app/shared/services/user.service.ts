@@ -28,7 +28,8 @@ export class userService extends RepositoryService<User> {
             password: item.password,
             job_title: item.jobTitle,
             employer: item.employer,
-            location: item.location
+            location: item.location,
+            email: item.email
     	}
         const user = item.serialize(obj);
         console.log(user);
@@ -43,9 +44,11 @@ export class userService extends RepositoryService<User> {
             password: item.password,
             job_title: item.jobTitle,
             employer: item.employer,
-            location: item.location
+            location: item.location,
+            email: item.email
         }
         console.log(obj.password);
+        console.log(obj);
         const user = item.serialize(obj);
         console.log(user);
         return this.httpClient.put(`${this.endPoint}/${id}`, user, this.httpOptions).pipe(

@@ -42,10 +42,12 @@ server.route({
     path: '/login',
     handler: function(request, reply) {
         var email = request.payload['email'];
+        console.log(email)
         var password = request.payload['password'];
         //for parameterized query
         var post1 = {email:email};
         connection.query('SELECT email, password_hashes, employee_num FROM employee WHERE email = ?',email, function (error, results, fields) {
+            console.log(results);
             if(error) {
                 var response = {
                     "success": false,
@@ -54,7 +56,7 @@ server.route({
                 reply(JSON.stringify(response)).code(500);
             }
             //if the email doesn't match any in the table
-            if (results.length == 0) {
+            if (results.length === 0) {
                 var response = {
                     "success": false,
                     "message": "Unable to log in with provided credentials."
@@ -270,7 +272,7 @@ server.route({
                     //format the results
                     var response = {
                         id: results[0].employee_num,
-                        email: results[0].employee_num,
+                        email: results[0].email,
                         first_name: results[0].first_name,
                         last_name: results[0].last_name,
                         job_title: results[0].position,
@@ -624,7 +626,7 @@ server.route({
                                 newPass = hash;
                                 console.log(newPass);
                                 var post = {password_hashes: newPass};
-                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/ user_id], function (error, results, fields) {
+                                connection.query('UPDATE employee SET ? WHERE employee_num = ? ', [post, /*decoded.employee_num*/user_id], function (error, results, fields) {
                                     if (error) {
                                         flag = false;
                                         var response = {
@@ -698,7 +700,6 @@ server.route({
     path: '/user/{user_id}',
     handler: function (request, reply) {
         var user_id = request.params["user_id"];
-        console.log(user_id);
         //var token = request.headers.authorization.split(' ')[1];
         try {
             //decode the token
@@ -712,13 +713,13 @@ server.route({
                     reply(JSON.stringify(response)).code(500);
                 }
                 //if the user is not logged in
-                else if (results.length==0) {
+                /*else if (results.length===0) {
                     var response = {
                         "success": false,
                         "message": "Attempted to delete a user without proper authorization."
                     };
                     reply(JSON.stringify(response)).code(403);
-                }
+                }*/
                 else {
                     //only works if the user tries to delete their own account, otherwise will skip this if statement
                     if (user_id) {
@@ -729,6 +730,13 @@ server.route({
                                     "message": "Experienced error when attempting to delete the user."
                                 };
                                 reply(JSON.stringify(response)).code(500);
+                            }
+                            else {
+                                var response = {
+                                    "success": true,
+                                    "message": "Successfully deleted user with ID: " + user_id
+                                };
+                                reply(JSON.stringify(response)).code(200);
                             }
                             /*
                             else {
@@ -753,13 +761,13 @@ server.route({
                         });
                     }
                     //if the user tries to delete an account that is not their own
-                    else {
+                    /*else {
                         var response = {
                             "sucess": false,
                             "message": "User with id: " + decoded.employee_num + " does not have access to delete user " + user_id
                         }
                         reply(JSON.stringify(response)).code(403);
-                    }
+                    } */
                 }
             });
         //catch an error decoding the token
