@@ -19,9 +19,7 @@ import { User } from '../../shared';
 @Injectable()
 export class SearchService {
 
-	// protected endPoint: string = 'http://localhost:8080/api/search';
-
-	protected endPoint: string = 'https://1cf79ace-771a-4d21-aa17-9f5d8e761aa5.mock.pstmn.io/search';
+	protected endPoint: string = 'http://localhost:8080/api/search';
 
 	constructor(
 		protected httpClient: HttpClient

@@ -21,7 +21,7 @@ import { Review } from '../../shared';
 @Injectable()
 export class ReviewService {
 
-	protected endPoint = 'https://1cf79ace-771a-4d21-aa17-9f5d8e761aa5.mock.pstmn.io/users';
+	protected endPoint = 'http://localhost:8080/api/users';
 
 	protected httpOptions = {
 		headers: new HttpHeaders({
