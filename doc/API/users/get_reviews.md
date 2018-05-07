@@ -15,37 +15,33 @@ Returns all reviews for a user of a given ID.
 **Content example**
 
 ```json
-{
-	"reviews": [
-		{
-			"review_id": 101,
-			"job_title": "Brewer",
-			"employer": "Self Employed",
-			"hotness_rating": 78,
-			"accountability_rating": 43,
-			"availability_rating": 95,
-			"politeness_rating": 94,
-			"efficiency_rating": 93,
-			"comment": "Shows up to work.",
-			"datestamp": "2018-04-28T01:55:51.834Z"
-		},
-		
-		...
+[
+	{
+		"review_id": 101,
+		"job_title": "Brewer",
+		"employer": "Self Employed",
+		"hotness_rating": 78,
+		"accountability_rating": 43,
+		"politeness_rating": 94,
+		"efficiency_rating": 93,
+		"comment": "Shows up to work.",
+		"datestamp": "2018-04-28T01:55:51.834Z"
+	},
 
-		{
-			"review_id": 694,
-			"job_title": "Scientist",
-			"employer": "London Electrical Society",
-			"hotness_rating": 78,
-			"accountability_rating": 43,
-			"availability_rating": 95,
-			"politeness_rating": 94,
-			"efficiency_rating": 93,
-			"comment": "Pretty good, I guess.",
-			"datestamp": "2018-04-28T02:09:09.724Z"
-		}
-	]
-}
+	...
+
+	{
+		"review_id": 694,
+		"job_title": "Scientist",
+		"employer": "London Electrical Society",
+		"hotness_rating": 78,
+		"accountability_rating": 43,
+		"politeness_rating": 94,
+		"efficiency_rating": 93,
+		"comment": "Pretty good, I guess.",
+		"datestamp": "2018-04-28T02:09:09.724Z"
+	}
+]
 ```
 
 \* it is possible for the list of reviews to be an empty list
