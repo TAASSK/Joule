@@ -4,7 +4,10 @@
 
 		<h1>Password</h1>
 
-		<form [formGroup]="myForm">
+		<form
+		 [formGroup]="passwordChangeForm"
+		 (ngSubmit)="onSubmit();"
+		>
 
 			<section class="form-row">
 
@@ -21,8 +24,6 @@
 					 focusOnLoad
 					>
 				</section>
-				<div class="alert" *ngIf="!myForm.controls['currentPassword'].valid && myForm.controls['currentPassword'].touched">{{ titleAlert }}</div>
-
 
 			</section>
 
@@ -34,14 +35,13 @@
 						New Password
 					</label>
 					<input
-					[(ngModel)]="newPassword"
 					 type="password"
 					 class="form-control"
 					 id="securityInputNewPassword"
 					 formControlName="newPassword"
+					 reverse="true"
 					>
 				</section>
-				<div class="alert" *ngIf="!myForm.controls['newPassword'].valid && myForm.controls['newPassword'].touched">{{ titleAlert }}</div>
 
 			</section>
 
@@ -53,23 +53,20 @@
 						Confirm new password
 					</label>
 					<input
-					[(ngModel)]="confirmPassword"
 					 type="password"
 					 class="form-control"
 					 id="securityInputConfirmNewPassword"
-					 formControlName="confirmPassword"
+					 formControlName="confirmNewPassword"
+					 validateEqual="newPassword"
 					>
 				</section>
-				<div class="alert" *ngIf="!myForm.controls['confirmPassword'].valid && myForm.controls['confirmPassword'].touched">{{ titleAlert }}</div>
-
 
 			</section>
 
 			<button
 			 type="submit"
 			 class="button button-regular button-block"
-			 [disabled]="confirmPassword != newPassword"
-			 (click)=passwordChange()
+			 [disabled]="!passwordChangeForm.valid"
 			>
 				Save changes
 			</button>
@@ -84,12 +81,14 @@
 
 		<p>
 			<strong>
-				This action cannot be undone. You will be asked for your password
-				to confirm.
+				This action cannot be undone.
 			</strong>
 		</p>
 
-		<button class="button button-call-to-action button-block">
+		<button
+		 class="button button-call-to-action button-block"
+		 (click)="deleteUser();"
+		>
 			Delete Account
 		</button>
 

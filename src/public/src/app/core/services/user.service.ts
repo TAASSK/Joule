@@ -21,7 +21,7 @@ import { User } from '../../shared';
 @Injectable()
 export class UserService {
 
-	protected endPoint = 'http://localhost:8080/api/users';
+	protected endPoint = 'https://1cf79ace-771a-4d21-aa17-9f5d8e761aa5.mock.pstmn.io/users';
 
 	protected httpOptions = {
 		headers: new HttpHeaders({
@@ -51,9 +51,12 @@ export class UserService {
 	}
 
 	public delete(id: number): Observable<User> {
-		return this.httpClient.delete(`${this.endPoint}/${id}`, this.httpOptions).pipe(
+		return this.httpClient.delete(
+			`${this.endPoint}/${id}`,
+			this.httpOptions
+		).pipe(
 			catchError(this.handleException)
-			);
+		);
 	}
 
 	public getById(id: number): Observable<User> {
@@ -69,16 +72,25 @@ export class UserService {
 		this.currentUser = user;
 	}
 
-	public updatePassword(item: User, id: number): Observable<User> {
+	public update(updatedUser: User): Observable<User> {
 
 		var obj = {
-			email: item.email
-		}
-		const user = item.serialize(obj);
+			email: updatedUser.email || null,
+			first_name: updatedUser.firstName || null,
+			last_name: updatedUser.lastName || null,
+			password: updatedUser.password || null,
+			job_title: updatedUser.jobTitle || null,
+			employer: updatedUser.employer || null,
+			location: updatedUser.location || null
+		};
 
-		return this.httpClient.put(`${this.endPoint}/${id}`, user, this.httpOptions).pipe(
+		return this.httpClient.put(
+			`${this.endPoint}/${updatedUser.id}`,
+			obj, 
+			this.httpOptions
+		).pipe(
 			catchError(this.handleException)
-			);
+		);
 
 	}
 

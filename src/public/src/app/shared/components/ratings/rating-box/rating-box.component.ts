@@ -23,7 +23,7 @@ import { RatingGradientService } from '../rating-gradient.service';
 export class RatingBoxComponent implements AfterViewInit {
 
 	// must be a number between 0 and 1
-	@Input() public rating: number;
+	@Input() public rating: number = 0;
 
 	// shown rating
 	public displayedRating: number = 0;

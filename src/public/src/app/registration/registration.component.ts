@@ -35,7 +35,6 @@ export class RegistrationComponent implements OnInit {
 
 	user: User = new User();
 	registrationForm: FormGroup;
-	titleAlert: string = 'This field is required';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -79,8 +78,9 @@ export class RegistrationComponent implements OnInit {
 
 	onSubmit() {
 		this.user = this.prepareUser();
-		this.userService.add(this.user);
-		this.router.navigate(['login']);
+		this.userService.add(this.user).subscribe(x => {
+			this.router.navigate(['login']);
+		});
 	}
 
 	prepareUser(): User {

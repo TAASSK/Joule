@@ -4,7 +4,10 @@
 
 		<h1>Profile Information</h1>
 
-		<form>
+		<form
+		 [formGroup]="settingsChangeForm"
+		 (ngSubmit)="updateUser();"
+		>
 
 			<section class="form-row">
 
@@ -18,7 +21,8 @@
 					 class="form-control"
 					 id="profileInputFirstName"
 					 placeholder="First name"
-					 [value]="user.firstName"
+					 formControlName="firstName"
+					 (change)="updateUser();"
 					 focusOnLoad
 					>
 				</section>
@@ -33,7 +37,8 @@
 					 class="form-control"
 					 id="profileInputLastName"
 					 placeholder="Last name"
-					 [value]="user.lastName"
+					 formControlName="lastName"
+					 (change)="updateUser();"
 					>
 				</section>
 
@@ -51,7 +56,8 @@
 					 class="form-control"
 					 id="profileInputEmailAddress"
 					 placeholder="Email address"
-					 [value]="user.email"
+					 formControlName="email"
+					 (change)="updateUser();"
 					>
 					<small id="profileInputEmailAddressHelpText" class="form-text text-muted">
 						Email will not be displayed publicly.
@@ -72,7 +78,8 @@
 					 class="form-control"
 					 id="profileInputJobTitle"
 					 placeholder="Job title"
-					 [value]="user.jobTitle"
+					 formControlName="jobTitle"
+					 (change)="updateUser();"
 					>
 				</section>
 
@@ -90,7 +97,8 @@
 					 class="form-control"
 					 id="profileInputEmployer"
 					 placeholder="Employer"
-					 [value]="user.employer"
+					 formControlName="employer"
+					 (change)="updateUser();"
 					>
 				</section>
 
@@ -108,7 +116,8 @@
 					 class="form-control"
 					 id="profileInputLocation"
 					 placeholder="Location"
-					 [value]="user.location"
+					 formControlName="location"
+					 (change)="updateUser();"
 					>
 				</section>
 

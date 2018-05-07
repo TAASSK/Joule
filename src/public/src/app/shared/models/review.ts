@@ -7,7 +7,6 @@ export class Review implements Serializable<Review> {
 	employer: string;
 	hotnessRating: number;
 	accountabilityRating: number;
-	availabilityRating: number;
 	politenessRating: number;
 	efficiencyRating: number;
 	comment: string;
@@ -23,7 +22,6 @@ export class Review implements Serializable<Review> {
 		review.employer = input['employer'];
 		review.hotnessRating = input['hotness_rating'];
 		review.accountabilityRating = input['accountability_rating'];
-		review.availabilityRating = input['availability_rating'];
 		review.politenessRating = input['politeness_rating'];
 		review.efficiencyRating = input['efficiency_rating'];
 		review.comment = input['comment'];
@@ -45,7 +43,6 @@ export class Review implements Serializable<Review> {
 	//		employer: employer,
 	//		hotness_rating: hotnessRating,
 	//		accountability_rating: accountabilityRating,
-	//		availability_rating: availabilityRating,
 	//		politeness_rating: politenessRating,
 	//		efficiency_rating: efficiencyRating,
 	//		comment: comment,

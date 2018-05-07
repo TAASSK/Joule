@@ -25,7 +25,10 @@ import { User } from '../../shared';
 /*
  * Services
  * */
-import { UserService } from '../../core/services';
+import {
+	AuthenticationService,
+	UserService
+} from '../../core/services';
 
 @Component({
 	selector: 'app-security-settings',
@@ -33,76 +36,95 @@ import { UserService } from '../../core/services';
 })
 export class SecuritySettingsComponent implements OnInit {
 
-	user: User;
-	myForm: FormGroup;
-	titleAlert:string = 'This field is required';
-	newPassword: string;
-	confirmPassword: string;
+	user: User = new User();
+	passwordChangeForm: FormGroup;
 
-	constructor(private form: FormBuilder, 
-		private userService: UserService,
-		private router: Router,
+	constructor(
+		private authentication: AuthenticationService,
+		private fb: FormBuilder, 
 		private route: ActivatedRoute,
+		private router: Router,
+		private userService: UserService
 	) {
+		this.createPasswordChangeForm();
+	}
 
-		/*
-		this.user = new User();
+	ngOnInit() {
 
-		this.user.id = 101;
-		this.user.email = 'jp.joule18@gojoule.me';
-		this.user.firstName = 'John';
-		this.user.lastName = 'Doe';
-		this.user.jobTitle = 'Employee';
-		this.user.employer = 'Random Corp.';
-		this.user.location = 'Dallas, TX';
-		*/
+		// this.user = this.userService.currentUser;
+
+		this.route.params.subscribe(params => {
+			this.userService.getById(+params['id']).subscribe(res => {
+				var tmpUser = new User();
+				this.user = tmpUser.deserialize(res);
+			});
+		});
 
 	}
-	ngOnInit() {
-		this.user = new User();
-		this.route.params.subscribe((params: any) => {
-			this.user.id = params.user_id;
-			console.log(params);
-			let num = params.user_id;
-			if(num) {
-			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);     
-				console.log(data);  
-				console.log(this.user);  
-			  });
-			}
+
+	createPasswordChangeForm() {
+
+		// TODO: currentPassword form element actually needs to call
+		// the login input to, you know, actually check the password
+		this.passwordChangeForm = this.fb.group({
+			currentPassword: [
+				'',
+				Validators.compose([
+					Validators.required,
+					Validators.minLength(8)
+				])
+			],
+			newPassword: [
+				'',
+				Validators.compose([
+					Validators.required,
+					Validators.minLength(8)
+				])
+			],
+			confirmNewPassword: [
+				'',
+				Validators.compose([
+					Validators.required,
+					Validators.minLength(8)
+				])
+			]
 		});
-		console.log(this.user);
 
+	}
 
-		this.myForm = new FormGroup({
-			'currentPassword': new FormControl('', [
-				Validators.minLength(8), 
-				Validators.required
-			]),
-			'newPassword': new FormControl('', [
-				Validators.minLength(8), 
-				Validators.required
-			]),
-			'confirmPassword': new FormControl('', [
-				Validators.minLength(8), 
-				Validators.required
-			]),
-		});
-	 }
-	 public passwordChange()
-	 {
-		console.log("Passwords Match");
+	onSubmit() {
 
-		this.userService.updatePassword(this.user, this.user.id).subscribe(x => {
+		this.user = this.prepareUser();
+
+		this.userService.update(
+			this.user
+		).subscribe(x => {
 			this.router.navigateByUrl('login');
 		});
-	 }
-	 public delete()
-	 {
-		this.userService.delete(this.user.id).subscribe(x => {
-			this.router.navigateByUrl('home');
-		});
-	 }
+
+	}
+
+	prepareUser(): User {
+
+		const formModel = this.passwordChangeForm.value;
+
+		var updateUser: User = new User();
+
+		updateUser.id = this.user.id;
+		updateUser.password = formModel.newPassword as string;
+
+		return updateUser;
+
+	}
+
+	deleteUser() {
+
+		if(confirm('This action cannot be undone. Only click \'OK\' if you\'re certain that you wish to delete your account')) {
+			this.userService.delete(this.user.id).subscribe(x => {
+				this.router.navigate(['home']);
+			});
+		}
+
+	}
 
 }

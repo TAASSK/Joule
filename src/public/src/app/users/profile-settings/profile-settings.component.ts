@@ -1,19 +1,34 @@
 /*
  * Angular library
  * */
-import { Component, OnInit } from '@angular/core';
+import {
+	Component,
+	OnInit
+} from '@angular/core';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators
+} from '@angular/forms';
+import {
+	ActivatedRoute,
+	Router
+} from '@angular/router';
 
 /*
  * Models
  * */
 import { User } from '../../shared';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 
 /*
  * Services
  * */
-import { UserService } from '../../core/services';
+import {
+	AuthenticationService,
+	UserService
+} from '../../core/services';
 
 @Component({
 	selector: 'app-profile-settings',
@@ -21,45 +36,90 @@ import { UserService } from '../../core/services';
 })
 export class ProfileSettingsComponent implements OnInit {
 
-	user: User;
+	user: User = new User();
+	settingsChangeForm: FormGroup;
 
 	constructor(
+		private authentication: AuthenticationService,
+		private fb: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
 		private userService: UserService
 	) {
 
-		/*
-		this.user = new User();
+		// this.user = this.userService.currentUser;
 
-		this.user.id = 101;
-		this.user.email = 'jp.joule18@gojoule.me';
-		this.user.firstName = 'John';
-		this.user.lastName = 'Doe';
-		this.user.jobTitle = 'Employee';
-		this.user.employer = 'Random Corp.';
-		this.user.location = 'Dallas, TX';
-		*/
+		// ***********************************
+		// THIS IS DUMMY DATA -- REMOVE WITH WORKING API
+		// ***********************************
+		this.user.firstName = "James";
+		this.user.lastName = "Joule";
+		this.user.email = "jp.joule18@gojoule.me";
+		// ***********************************
+		// THIS IS DUMMY DATA -- REMOVE WITH WORKING API
+		// ***********************************
+
+		this.route.params.subscribe(params => {
+			this.userService.getById(+params['id']).subscribe(res => {
+				var tmpUser = new User();
+				this.user = tmpUser.deserialize(res);
+			});
+		});
+
+		this.createSettingsChangeForm();
+
 	}
 
-	ngOnInit() {
-		//NOT WORKING!!
-		this.user = new User();
-		
-		this.route.params.subscribe((params: any) => {
-			this.user.id = params.id;
-			let num = params.id;
-			console.log(num); 
-			console.log(this.route.params);
-			if(num) {
-			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);     
-				console.log(data);  
-				console.log(this.user);  
-			  });
-			}
-		  });
-		  console.log(this.user);
-	 }
+	ngOnInit() { }
+
+	createSettingsChangeForm() {
+
+		this.settingsChangeForm = this.fb.group({
+			firstName: [
+				this.user.firstName,
+				Validators.required
+			],
+			lastName: [
+				this.user.lastName,
+				Validators.required
+			],
+			email: [
+				this.user.email,
+				Validators.required
+			],
+			jobTitle: this.user.jobTitle || '',
+			employer: this.user.employer || '',
+			location: this.user.location || ''
+		});
+
+	}
+
+	prepareUser(): User {
+
+		const formModel = this.settingsChangeForm.value;
+
+		var updatedUser: User = new User();
+
+		updatedUser.firstName = formModel.firstName as string;
+		updatedUser.lastName = formModel.lastName as string;
+		updatedUser.email = formModel.email as string;
+		updatedUser.jobTitle = formModel.jobTitle as string;
+		updatedUser.employer = formModel.employer as string;
+		updatedUser.location = formModel.location as string;
+
+		return updatedUser;
+	}
+
+	updateUser() {
+
+		this.user = this.prepareUser();
+
+		this.userService.update(
+			this.user
+		).subscribe(x => {
+			console.log('Successfully updated user: ', this.user);
+		});
+
+	}
 
 }

@@ -56,6 +56,7 @@
 }
 
 .account-settings-pane-row {
+	width: 100%;
 	margin-top: 0;
 	margin-right: inherit;
 	margin-bottom: 1.5rem;

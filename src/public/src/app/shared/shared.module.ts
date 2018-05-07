@@ -19,7 +19,10 @@ import {
 /*
  * Directives
  * */
-import { FocusOnLoadDirective } from './directives';
+import {
+	EqualValidator,
+	FocusOnLoadDirective
+} from './directives';
 
 /*
  * Services (NOT shared)
@@ -32,12 +35,14 @@ import { RatingGradientService } from './components/ratings/rating-gradient.serv
 		HttpClientModule
 	],
 	declarations: [
+		EqualValidator,
 		FocusOnLoadDirective,
 		RatingBarComponent,
 		RatingBoxComponent,
 		SearchBarComponent
 	],
 	exports: [
+		EqualValidator
 		FocusOnLoadDirective,
 		RatingBarComponent,
 		RatingBoxComponent,

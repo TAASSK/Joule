@@ -20,7 +20,7 @@ import { UserService } from '../../core/services';
 })
 export class AccountComponent implements OnInit {
 
-	user: User;
+	user: User = new User();
 
 	constructor(
 		private route: ActivatedRoute,
@@ -28,36 +28,26 @@ export class AccountComponent implements OnInit {
 		private userService: UserService
 	) {
 
-	
-		this.user = new User();
+		// this.user = this.userService.currentUser;
 
-		this.user.id = 101;
-		this.user.email = 'jp.joule18@gojoule.me';
-		this.user.firstName = 'John';
-		this.user.lastName = 'Doe';
-		this.user.jobTitle = 'Employee';
-		this.user.employer = 'Random Corp.';
-		this.user.location = 'Dallas, TX';
-	
+		// ***********************************
+		// THIS IS DUMMY DATA -- REMOVE WITH WORKING API
+		// ***********************************
+		this.user.id = 4;
+		// ***********************************
+		// THIS IS DUMMY DATA -- REMOVE WITH WORKING API
+		// ***********************************
+
+		// this route works assuming a working API
+		this.route.params.subscribe(params => {
+			this.userService.getById(+params['id']).subscribe(res => {
+				var tmpUser = new User();
+				this.user = tmpUser.deserialize(res);
+			});
+		});
 
 	}
 
-	ngOnInit() {
-		/*
-		this.user = new User();
-		this.route.params.subscribe((params: any) => {
-			this.user.id = params.id;
-			let num = params.id;
-			if(num) {
-			  this.userService.getById(+num).subscribe(data => {
-				this.user = this.user.deserialize(data);
-				console.log(data);
-				console.log(this.user);
-			  });
-			}
-		  });
-		  console.log(this.user);
-		  */
-	 }
+	ngOnInit() { }
 
 }
