@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+# temp files
+*.swp
+.DS_Store
+
+# stupid VSCode file
+.angulardoc.json

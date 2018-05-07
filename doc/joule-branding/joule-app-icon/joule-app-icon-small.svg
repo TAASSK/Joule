@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFF8DE;">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>joule-app-icon-small</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="joule-app-icon-small" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Crimson-Jewel" transform="translate(9.846154, 15.348416)">
+            <polygon id="Path-2" fill="#FF4444" points="22.2676736 33.494838 0.191673023 11.3020883 14.261501 11.3020883"></polygon>
+            <polygon id="Path-2-Copy" fill="#FF5252" transform="translate(33.305674, 22.407489) scale(-1, 1) translate(-33.305674, -22.407489) " points="44.3436741 33.5038641 22.2676736 11.3111144 36.3375016 11.3111144"></polygon>
+            <polygon id="Path-3" fill="#FF6868" points="22.2677433 33.5038641 30.5678932 11.3031586 14.2591823 11.3031586"></polygon>
+            <polygon id="Path-4" fill="#FB7A7A" points="44.3407098 11.3110241 30.5642276 11.3110241 37.4524687 0.232283643"></polygon>
+            <polygon id="Path-4-Copy-2" fill="#FF5E5E" points="14.2591823 11.3111144 0.191673023 11.3111144 7.22542768 0.232373944"></polygon>
+            <polygon id="Path-4-Copy-3" fill="#FF8181" transform="translate(14.847422, 5.822195) scale(1, -1) translate(-14.847422, -5.822195) " points="22.4694157 11.4120167 7.22542768 11.4120167 14.1696486 0.232373944"></polygon>
+            <polygon id="Path-4-Copy-4" fill="#FDA0A0" transform="translate(29.830475, 5.822105) scale(-1, -1) translate(-29.830475, -5.822105) " points="37.4524687 11.4119264 22.2084807 11.4119264 29.1527017 0.232283643"></polygon>
+            <polygon id="Path-4-Copy" fill="#FF8B8B" points="30.5642276 11.3020883 14.2555167 11.3020883 22.4098722 0.223347853"></polygon>
+        </g>
+        <polygon id="Jewel-Outline" stroke="#3D0060" stroke-width="4" points="32.1143152 48.8454773 10.0419786 26.6539777 17.0707603 15.5785605 47.2973108 15.5785605 54.1709079 26.6539777"></polygon>
+    </g>
+</svg>

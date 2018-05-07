@@ -1,0 +1,50 @@
+<section class="review-box">
+
+	<section class="review-metadata">
+
+		<div class="review-metadata-employment-information">
+
+			<h2>{{ review.jobTitle }}</h2>
+			<h3>{{ review.employer }}</h3>
+
+		</div>
+
+		<p>{{ review.datestamp | date:'longDate' }}</p>
+
+	</section>
+
+	<section class="review-comment">
+
+		<p>{{ review.comment }}</p>
+
+		<section class="inline-ratings-group">
+
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Hotness'"
+			 [rating]="review.hotnessRating"
+			></app-rating-bar>
+
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Accountability'"
+			 [rating]="review.accountabilityRating"
+			></app-rating-bar>
+
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Politeness'"
+			 [rating]="review.politenessRating"
+			></app-rating-bar>
+
+			<app-rating-bar
+			 class="inline-rating"
+			 [descriptor]="'Efficiency'"
+			 [rating]="review.efficiencyRating"
+			></app-rating-bar>
+
+		</section>
+
+	</section>
+
+</section>

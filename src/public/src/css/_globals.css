@@ -1,0 +1,72 @@
+
+
+/*
+ * Button Fonts
+ * */
+@font-face {
+	font-family: 'Archivo-Web';
+	src: url('../assets/fonts/Archivo-Regular.ttf') format('truetype');
+	font-weight: 400; /* Normal */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Archivo-Web';
+	src: url('../assets/fonts/Archivo-Italic.ttf') format('truetype');
+	font-weight: 400; /* Normal Italic */
+	font-style: italic;
+}
+
+/*
+ * Heading Fonts
+ * */
+@font-face {
+	font-family: 'Archivo-Web';
+	src: url('../assets/fonts/Archivo-Medium.ttf') format('truetype');
+	font-weight: 500; /* Medium */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Archivo-Web';
+	src: url('../assets/fonts/Archivo-MediumItalic.ttf') format('truetype');
+	font-weight: 500; /* Medium Italic */
+	font-style: italic;
+}
+
+/*
+ * Body Fonts
+ *
+ * System font stack credit goes to Jonathan Neal:
+ * - https://github.com/jonathantneal/system-font-css/blob/gh-pages/system-font.css
+ * */
+@font-face {
+	font-family: system-ui;
+	src:
+	local('.SFNSText-Regular'),
+	local('.HelveticaNeueDeskInterface-Regular'),
+	local('.LucidaGrandeUI'),
+	local('Segoe UI'),
+	local('Ubuntu'),
+	local('Roboto-Regular'),
+	local('DroidSans'),
+	local('Tahoma');
+	font-weight: 400; /* Normal */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: system-ui;
+	src:
+	local('.SFNSText-Regular'),
+	local('.HelveticaNeueDeskInterface-Regular'),
+	local('.LucidaGrandeUI'),
+	local('Segoe UI'),
+	local('Ubuntu'),
+	local('Roboto-Regular'),
+	local('DroidSans'),
+	local('Tahoma');
+	font-weight: 400; /* Normal Italic */
+	font-style: italic;
+}
+

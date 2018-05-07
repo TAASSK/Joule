@@ -1,0 +1,14 @@
+<section
+ class="rating-box"
+ [ngStyle]="{ 
+ 	'background-color': rg.ratingGradient(displayedRating), 
+ 	'color': rg.ratingText(displayedRating)
+ }"
+>
+	<div class="rating-number">
+		{{ displayedRating? displayedRating : 0 | percent }}
+	</div>
+
+	<div class="rating-label">{{ descriptor }}</div>
+
+</section>

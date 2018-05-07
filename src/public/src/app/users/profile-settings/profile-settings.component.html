@@ -1,0 +1,130 @@
+<section class="account-settings-pane">
+
+	<section class="account-settings-pane-row">
+
+		<h1>Profile Information</h1>
+
+		<form
+		 [formGroup]="settingsChangeForm"
+		 (ngSubmit)="updateUser();"
+		>
+
+			<section class="form-row">
+
+				<!-- First name -->
+				<section class="form-group col-md-6">
+					<label for="profileInputFirstName">
+						First Name
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputFirstName"
+					 placeholder="First name"
+					 formControlName="firstName"
+					 (change)="updateUser();"
+					 focusOnLoad
+					>
+				</section>
+
+				<!-- Last name -->
+				<section class="form-group col-md-6">
+					<label for="profileInputLastName">
+						Last Name
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputLastName"
+					 placeholder="Last name"
+					 formControlName="lastName"
+					 (change)="updateUser();"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Email address -->
+				<section class="form-group col-md-12">
+					<label for="profileInputEmailAddress">
+						Email address
+					</label>
+					<input
+					 type="email"
+					 class="form-control"
+					 id="profileInputEmailAddress"
+					 placeholder="Email address"
+					 formControlName="email"
+					 (change)="updateUser();"
+					>
+					<small id="profileInputEmailAddressHelpText" class="form-text text-muted">
+						Email will not be displayed publicly.
+					</small>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Job title -->
+				<section class="form-group col-md-12">
+					<label for="profileInputJobTitle">
+						Job Title
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputJobTitle"
+					 placeholder="Job title"
+					 formControlName="jobTitle"
+					 (change)="updateUser();"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Employer -->
+				<section class="form-group col-md-12">
+					<label for="profileInputEmployer">
+						Employer
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputEmployer"
+					 placeholder="Employer"
+					 formControlName="employer"
+					 (change)="updateUser();"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Location -->
+				<section class="form-group col-md-12">
+					<label for="profileInputLocation">
+						Location
+					</label>
+					<input
+					 type="text"
+					 class="form-control"
+					 id="profileInputLocation"
+					 placeholder="Location"
+					 formControlName="location"
+					 (change)="updateUser();"
+					>
+				</section>
+
+			</section>
+
+		</form>
+
+	</section>
+
+</section>

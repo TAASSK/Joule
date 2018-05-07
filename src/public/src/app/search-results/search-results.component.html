@@ -1,0 +1,69 @@
+<header class="row">
+
+	<nav class="navbar navbar-expand-lg navbar-light">
+
+		<div class="navbar-items">
+			
+			<a class="navbar-brand" [routerLink]="['/home']">
+				<img
+				 class="navbar-logo"
+				 src="/assets/img/logo/joule-cropped-transparent.svg"
+				 width="100"
+				 height="100"
+				 alt="Joule"
+				>
+			</a>
+
+			<ul class="navbar-nav">
+
+				<app-search-bar
+				 class="nav-search-bar-container"
+				 [query]="query"
+				>
+				</app-search-bar>
+
+				<li class="nav-item">
+					<a class="nav-link" [routerLink]="['/registration']">
+						Sign Up
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" [routerLink]="['/login']">
+						Log In
+					</a>
+				</li>
+			</ul>
+
+		</div>
+
+	</nav>
+
+</header>
+
+<section class="site-content">
+
+	<h1>Results</h1>
+	<p>{{ results.length }} results found for {{ query }}.</p>
+
+	<div
+	 *ngFor="let result of results"
+	 class="search-result-container"
+	>
+
+		<img
+		 class="search-result-profile-picture"
+		 src="/assets/img/np_profile.svg"
+		 alt="profile-picture"
+		>
+
+		<a class="search-result-personal-info" [routerLink]="['/user', result.id]">
+
+			<h2>{{ result.firstName }} {{ result.lastName }}</h2>
+			<p *ngIf="result.jobTitle && result.employer">{{ result.jobTitle }} at {{ result.employer }}</p>
+			<p *ngIf="result.location">{{ result.location }}</p>
+
+		</a>
+
+	</div>
+
+</section>

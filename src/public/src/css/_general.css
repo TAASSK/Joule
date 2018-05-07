@@ -1,0 +1,56 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+
+a {
+	color: #2D7EFF;
+}
+
+body {
+	background: #FFF8DE;
+	font-family: system-ui;
+	font-size: 18px;
+	color: #3D0060;
+}
+
+em {
+	font-style: italic;
+}
+
+h1 {
+	font-family: 'Archivo-Web';
+	font-size: 2rem;
+	font-weight: 500;
+}
+
+h2 {
+	font-family: 'Archivo-Web';
+	font-size: 1.5rem;
+	font-weight: 500;
+}
+
+h3 {
+	font-family: 'Archivo-Web';
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
+hr {
+	display: block;
+	margin: 1rem auto;
+	clear: both;
+	border: none;
+	border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+strong {
+	font-style: bold;
+}
+
+textarea {
+	resize: none;
+}

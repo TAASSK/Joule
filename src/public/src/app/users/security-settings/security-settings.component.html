@@ -1,0 +1,97 @@
+<section class="account-settings-pane">
+
+	<section class="account-settings-pane-row">
+
+		<h1>Password</h1>
+
+		<form
+		 [formGroup]="passwordChangeForm"
+		 (ngSubmit)="onSubmit();"
+		>
+
+			<section class="form-row">
+
+				<!-- Current password -->
+				<section class="form-group col-md-12">
+					<label for="securityInputCurrentPassword">
+						Current Password
+					</label>
+					<input
+					 type="password"
+					 class="form-control"
+					 id="securityInputCurrentPassword"
+					 formControlName="currentPassword"
+					 focusOnLoad
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- New password -->
+				<section class="form-group col-md-12">
+					<label for="securityInputNewPassword">
+						New Password
+					</label>
+					<input
+					 type="password"
+					 class="form-control"
+					 id="securityInputNewPassword"
+					 formControlName="newPassword"
+					 reverse="true"
+					>
+				</section>
+
+			</section>
+
+			<section class="form-row">
+
+				<!-- Confirm new password -->
+				<section class="form-group col-md-12">
+					<label for="securityInputConfirmNewPassword">
+						Confirm new password
+					</label>
+					<input
+					 type="password"
+					 class="form-control"
+					 id="securityInputConfirmNewPassword"
+					 formControlName="confirmNewPassword"
+					 validateEqual="newPassword"
+					>
+				</section>
+
+			</section>
+
+			<button
+			 type="submit"
+			 class="button button-regular button-block"
+			 [disabled]="!passwordChangeForm.valid"
+			>
+				Save changes
+			</button>
+
+		</form>
+
+	</section>
+
+	<section class="account-settings-pane-row">
+
+		<h1>Delete Account</h1>
+
+		<p>
+			<strong>
+				This action cannot be undone.
+			</strong>
+		</p>
+
+		<button
+		 class="button button-call-to-action button-block"
+		 (click)="deleteUser();"
+		>
+			Delete Account
+		</button>
+
+	</section>
+
+</section>

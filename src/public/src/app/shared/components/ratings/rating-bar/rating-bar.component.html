@@ -1,0 +1,16 @@
+<div class="inline-rating-text">
+	{{ descriptor }}:
+	<strong>{{ displayedRating / 100 | percent }}</strong>
+</div>
+
+<div class="inline-rating-bar" aria-rating="true">
+
+	<div
+	 class="inline-rating-bar-filled"
+	 [ngStyle]="{
+	 	'background-color': rg.ratingGradient(displayedRating / 100),
+	 	'width': rg.ratingWidth(displayedRating)
+	 }"
+	></div>
+
+</div>

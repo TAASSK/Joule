@@ -1,0 +1,161 @@
+<header class="row">
+
+	<nav class="navbar navbar-expand-lg navbar-light">
+
+		<div class="navbar-items">
+			
+			<a class="navbar-brand" [routerLink]="['/home']">
+				<img
+				 class="navbar-logo"
+				 src="/assets/img/logo/joule-cropped-transparent.svg"
+				 width="100"
+				 height="100"
+				 alt="Joule"
+				>
+			</a>
+
+			<ul class="navbar-nav">
+				<app-search-bar class="nav-search-bar-container"></app-search-bar>
+				<li class="nav-item">
+					<a class="nav-link" [routerLink]="['/registration']">
+						Sign Up
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" [routerLink]="['/login']">
+						Log In
+					</a>
+				</li>
+			</ul>
+
+		</div>
+
+	</nav>
+
+</header>
+
+<section class="site-content">
+
+	<div class="home-page-header">
+		<div class="home-page-header-title">joule</div>
+		<div class="home-page-header-body">the international unit of work</div>
+	</div>
+
+	<div class="home-page-body">
+
+		<p>Joule provides a platform for researching and rating for the other unit of work—employees. </p>
+
+	</div>
+
+	<hr>
+
+	<h1>The Development Team</h1>
+	<p>We are the team that brings you Joule.</p>
+
+	<div class="home-page-team">
+
+		<!-- frontend -->
+		<div class="team-members">
+
+			<div class="team-member">
+
+				<div class="team-member-image">
+					<img
+					 src="/assets/img/team-images/frontend/glasford-samantha.jpg"
+					 alt="samantha-glasford"
+					>
+				</div>
+				<span class="team-member-name">
+					<strong>Samantha Glasford</strong>
+				</span>
+				<span class="team-member-title">Frontend Logic</span>
+
+			</div>
+
+			<div class="team-member">
+
+				<div class="team-member-image">
+					<img
+					 src="/assets/img/team-images/frontend/knotts-tristan.jpg"
+					 alt="tristan-knotts"
+					>
+				</div>
+				<span class="team-member-name">
+					<strong>Tristan Knotts</strong>
+				</span>
+				<span class="team-member-title">Frontend Logic</span>
+
+			</div>
+
+			<div class="team-member">
+
+				<div class="team-member-image">
+
+					<img
+					 src="/assets/img/team-images/frontend/rash-robert.jpg"
+					 alt="robert-rash"
+					>
+
+				</div>
+				<span class="team-member-name">
+					<strong>Robert Rash</strong>
+				</span>
+				<span class="team-member-title">Frontend Design</span>
+
+			</div>
+
+		</div>
+
+		<!-- Backend -->
+		<div class="team-members">
+
+			<div class="team-member">
+
+				<div class="team-member-image">
+					<img
+					 src="/assets/img/team-images/backend/alcantara-arely.jpg"
+					 alt="arely-alcantara"
+					>
+				</div>
+				<span class="team-member-name">
+					<strong>Arely Alcantara</strong>
+				</span>
+				<span class="team-member-title">DB Admin</span>
+
+			</div>
+
+			<div class="team-member">
+
+				<div class="team-member-image">
+					<img
+					 src="/assets/img/team-images/backend/dunn-katelyn.jpg"
+					 alt="katelyn-dunn"
+					>
+				</div>
+				<span class="team-member-name">
+					<strong>Katelyn Dunn</strong>
+				</span>
+				<span class="team-member-title">Backend Security</span>
+
+			</div>
+
+			<div class="team-member">
+
+				<div class="team-member-image">
+					<img
+					 src="/assets/img/team-images/backend/giles-sam.jpg"
+					 alt="sam-giles"
+					>
+				</div>
+				<span class="team-member-name">
+					<strong>Sam Giles</strong>
+				</span>
+				<span class="team-member-title">Backend Authentication</span>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
