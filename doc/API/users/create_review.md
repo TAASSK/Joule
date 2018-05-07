@@ -18,7 +18,6 @@ Authorization: Bearer <token>
 
 * `hotness_rating` - a rating for hotness; must be integer between 0 and 100, inclusive
 * `accountability_rating` - a rating for accountability; must be integer between 0 and 100, inclusive
-* `availability_rating` - a rating for availability; must be integer between 0 and 100, inclusive
 * `politeness_rating` - a rating for politeness; must be integer between 0 and 100, inclusive
 * `efficiency_rating` - a rating for efficiency; must be integer between 0 and 100, inclusive
 * `comment` - simple text string containing comment body
@@ -30,7 +29,6 @@ Authorization: Bearer <token>
 	"employer": "[employer name]",
 	"hotness_rating": <integer>,
 	"accountability_rating": <integer>,
-	"availability_rating": <integer>,
 	"politeness_rating": <integer>,
 	"efficiency_rating": <integer>,
 	"comment": "[comment body]",
@@ -46,7 +44,6 @@ Authorization: Bearer <token>
 	"employer": "Self Employed",
 	"hotness_rating": 78,
 	"accountability_rating": 43,
-	"availability_rating": 95,
 	"politeness_rating": 94,
 	"efficiency_rating": 93,
 	"comment": "Hard worker.",
