@@ -9,3 +9,19 @@ input.form-control {
 .form-control {
 	font-size: inherit;
 }
+
+input.ng-invalid.ng-touched:not(form) {
+	border-color: #dc3545 ;
+}
+
+input.ng-valid.ng-touched, input.ng-valid.ng-touched {
+	border-color: #28a745;
+}
+
+input.ng-valid[required], input.ng-valid.required {
+	border-color: #28a745;
+}
+
+input:required {}
+
+input:required:invalid {}

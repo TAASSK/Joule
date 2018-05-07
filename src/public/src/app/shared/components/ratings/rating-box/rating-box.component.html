@@ -6,7 +6,7 @@
  }"
 >
 	<div class="rating-number">
-		{{ displayedRating | percent }}
+		{{ displayedRating? displayedRating : 0 | percent }}
 	</div>
 
 	<div class="rating-label">{{ descriptor }}</div>

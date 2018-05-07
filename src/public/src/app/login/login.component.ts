@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /*
  * Services
  * */
-import { AuthenticationService } from '../shared';
+import { AuthenticationService } from '../core/services';
 
 @Component({
 	selector: 'app-login',
@@ -15,13 +15,13 @@ import { AuthenticationService } from '../shared';
 })
 export class LoginComponent implements OnInit {
 
-	public email: string;
-	public password: string;
+	email: string;
+	password: string;
 
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private authenticate: AuthenticationService
+		private authentication: AuthenticationService
 		) { }
 
 	ngOnInit() {
@@ -30,15 +30,15 @@ export class LoginComponent implements OnInit {
 	}
 
 	public login() {
-		this.authenticate.logIn(this.email, this.password).subscribe(x => {
 
-			console.log(x);
-			console.log(x.user_id);
-			let idNum = x.user_id;
-			let name = 'user/'+ idNum;
-			console.log(name)
-			this.router.navigateByUrl(name);
+		this.authentication.login(
+			this.email,
+			this.password
+		).subscribe(auth_info => {
+			this.authentication.isAuthenticated.next(true);
+			this.router.navigate(['user', auth_info['user_id']]);
 		});
+
 	}
 
 }

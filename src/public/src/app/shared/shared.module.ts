@@ -19,7 +19,15 @@ import {
 /*
  * Directives
  * */
-import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
+import {
+	EqualValidator,
+	FocusOnLoadDirective
+} from './directives';
+
+/*
+ * Services (NOT shared)
+ * */
+import { RatingGradientService } from './components/ratings/rating-gradient.service';
 
 @NgModule({
 	imports: [
@@ -27,16 +35,21 @@ import { FocusOnLoadDirective } from './directives/focus-on-load.directive';
 		HttpClientModule
 	],
 	declarations: [
+		EqualValidator,
 		FocusOnLoadDirective,
 		RatingBarComponent,
 		RatingBoxComponent,
 		SearchBarComponent
 	],
 	exports: [
+		EqualValidator
 		FocusOnLoadDirective,
 		RatingBarComponent,
 		RatingBoxComponent,
 		SearchBarComponent
+	],
+	providers: [
+		RatingGradientService
 	]
 })
 export class SharedModule { }

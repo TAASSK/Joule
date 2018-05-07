@@ -16,7 +16,7 @@
 
 			<ul class="navbar-nav">
 				<app-search-bar class="nav-search-bar-container"></app-search-bar>
-				<li class="nav-item">
+				<li class="nav-item" *ngIf="this.isLoggedIn === true">
 					<a
 					 class="nav-link"
 					 [routerLink]="['/user', user.id, 'account', 'profile']"
@@ -24,9 +24,22 @@
 						Account
 					</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item" *ngIf="this.isLoggedIn === true">
 					<a class="nav-link" href="#">
 						Log Out
+					</a>
+				</li>
+				<li class="nav-item" *ngIf="this.isLoggedIn === false">
+					<a
+					 class="nav-link"
+					 [routerLink]="['/registration']"
+					>
+						Sign Up
+					</a>
+				</li>
+				<li class="nav-item" *ngIf="this.isLoggedIn === false">
+					<a class="nav-link" [routerLink]="['/login']">
+						Log In
 					</a>
 				</li>
 			</ul>
@@ -49,9 +62,15 @@
 
 		<section class="profile-employee-information">
 
-			<h1>{{ user.firstName }} {{ user.lastName }}</h1>
-			<h2 *ngIf="user.jobTitle && user.employer">{{ user.jobTitle }}, {{ user.employer }}</h2>
-			<h3 *ngIf="user.location">{{ user.location }}</h3>
+			<h1 *ngIf="user?.firstName && user?.lastName">
+				{{ user.firstName }} {{ user.lastName }}
+			</h1>
+			<h2 *ngIf="user?.jobTitle && user?.employer">
+				<span>{{ user.jobTitle }}</span>, <span>{{ user.employer }}</span>
+			</h2>
+			<h3 *ngIf="user?.location">
+				{{ user.location }}
+			</h3>
 
 		</section>
 
@@ -89,7 +108,10 @@
 
 		<h2 class="profile-review-form-header">Add a Review</h2>
 
-		<form>
+		<form
+		 [formGroup]="reviewForm"
+		 (ngSubmit)="addReview();"
+		>
 
 			<div class="row profile-review-form-row-buffer">
 
@@ -101,8 +123,8 @@
 					<input
 					 type="text"
 					 class="form-control"
-           id="reviewInputJobTitle"
-           [(ngModel)]="review.jobTitle"
+					 id="reviewInputJobTitle"
+					 formControlName="jobTitle"
 					>
 
 				</div>
@@ -115,8 +137,8 @@
 					<input
 					 type="text"
 					 class="form-control"
-           id="reviewInputEmployer"
-           [(ngModel)]="review.employer"
+					 id="reviewInputEmployer"
+					 formControlName="employer"
 					>
 
 				</div>
@@ -127,22 +149,38 @@
 
 				<div class="col">
 					<label for="">Hotness %</label>
-          <input type="text" class="form-control" [(ngModel)]="review.hotnessRating">
+					<input
+					 type="text"
+					 class="form-control"
+					 formControlName="hotnessRating"
+					>
 				</div>
 
 				<div class="col">
 					<label for="">Accountability %</label>
-					<input type="text" class="form-control" [(ngModel)]="review.accountabilityRating">
+					<input
+					 type="text"
+					 class="form-control"
+					 formControlName="accountabilityRating"
+					>
 				</div>
 
 				<div class="col">
 					<label for="">Politeness %</label>
-					<input type="text" class="form-control" [(ngModel)]="review.politenessRating">
+					<input
+					 type="text"
+					 class="form-control"
+					 formControlName="politenessRating"
+					>
 				</div>
 
 				<div class="col">
 					<label for="">Efficiency %</label>
-					<input type="text" class="form-control" [(ngModel)]="review.efficiencyRating">
+					<input
+					 type="text"
+					 class="form-control"
+					 formControlName="efficiencyRating"
+					>
 				</div>
 
 			</div>
@@ -156,9 +194,8 @@
 					 class="form-control"
 					 name="comment"
 					 id="reviewInputComment"
-					 columns
-           rows="5"
-           [(ngModel)]="review.comment"
+					 formControlName="comment"
+					 rows="5"
 					></textarea>
 
 				</div>
@@ -168,7 +205,8 @@
 			<div class="row justify-content-end">
 				<div class="col-3">
 					<button
-           class="button button-call-to-action button-block"
+					 class="button button-call-to-action button-block"
+					 [disabled]="!reviewForm.valid"
 					>
 						Submit Review
 					</button>

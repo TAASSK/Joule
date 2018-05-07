@@ -1,8 +1,9 @@
+
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: Joule
 -- ------------------------------------------------------
--- Server version	5.7.21
+-- Server version 5.7.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,6 +26,7 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
+  `username` varchar(45),
   `password_hashes` varchar(65),
   `first_name` varchar(45),
   `last_name` varchar(45),
@@ -36,11 +38,6 @@ CREATE TABLE `employee` (
   `location` varchar(45),
   PRIMARY KEY (`employee_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-ALTER TABLE employee DROP COLUMN employee_num;
-ALTER TABLE employee ADD employee_num INT NOT NULL PRIMARY KEY AUTO_INCREMENT;
-INSERT INTO employee (email, first_name, last_name, password_hashes) VALUES('joeg@smu.edu', 'Joe', 'Gray', '$2a$10$bmP/A.KC3amPQ6ydmPDGbOWbxsPa24XfQFY43wbBWKDB7XNs9Rn4C');
-INSERT INTO employee (email, first_name, last_name, password_hashes) VALUES('susandoe@smu.edu', 'Susan', 'Doe', '$2a$10$j5pGk8zTluzL6OJmCbXjfOabG7e8SLZPd21XKDVKgS3FsXrY4sWZO');
-INSERT INTO employee(email, first_name, last_name, password_hashes) VALUES ('jameseaster@smu.edu', 'James', 'Easter', '$2a$10$NgU41MMYgFhGSYongX.cLuKZDfbqmf.jMmMFcvS.VO3PnAyvbN6PO');
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,23 +57,21 @@ DROP TABLE IF EXISTS `employee_review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee_review` (
-  `employee_num` int(11) NOT NULL,
-  `hotness` int(11) NOT NULL,
-  `accountability` int(11) NOT NULL,
-  `availability` int(11) NOT NULL,
-  `politeness` int(11) NOT NULL,
-  `efficiency` int(11) NOT NULL,
-  `comments` varchar(45) NOT NULL,
-  PRIMARY KEY (`employee_num`)
+  `employee_num` int(11),
+  `hotness` int(11),
+  `accountability` int(11),
+  `availability` int(11),
+  `politeness` int(11),
+  `efficiency` int(11),
+  `comments` varchar(45)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `joule2`.`employee_review`
-DROP PRIMARY KEY;
-INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(3, 'student', 'SMU', 78, 89, 45, 67, 45, 'uses time efficiently', '2018-04-29 04:56:57');
-INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(3, 'student', 'SMU', 78, 75, 77, 79, 73, 'GREAT WORKER', '2018-04-01 11:32:01');
-INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(4, 'student', 'SMU', 91, 82, 93, 85, 91, 'very organized', '2018-04-19 07:00:12');
-INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(4, 'student', 'SMU', 78, 81, 79, 80, 72, 'on time', '2018-04-17 03:23:01');
-INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(5, 'student', 'SMU', 90, 89, 88, 87, 86, 'very helpful and friendly', '2018-04-21 12:13:23');
-INSERT INTO employee_review (employee_num, position, employer, hotness, accountability, availability, politeness, efficiency, comments, review_time) VALUES(5, 'student', 'SMU', 91, 83, 86, 90, 87, 'reliable and predictable', '2018-04-04 03:45:02');
+ADD COLUMN `review_id` INT NOT NULL AUTO_INCREMENT FIRST,
+ADD COLUMN `employer` VARCHAR(45) NULL AFTER `efficiency`,
+ADD COLUMN `position` VARCHAR(45) NULL AFTER `employer`,
+ADD COLUMN `review_time` DATETIME NOT NULL AFTER `position`,
+ADD PRIMARY KEY (`review_id`),
+ADD UNIQUE INDEX `review_id_UNIQUE` (`review_id` ASC);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

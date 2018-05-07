@@ -14,38 +14,27 @@ import 'rxjs/add/operator/map';
 /*
  * Models
  * */
-import { User } from '../models';
+import { User } from '../../shared';
 
 @Injectable()
 export class SearchService {
 
-	protected endPoint: string = 'http://localhost:8080/api/search';
+	// protected endPoint: string = 'http://localhost:8080/api/search';
+
+	protected endPoint: string = 'https://1cf79ace-771a-4d21-aa17-9f5d8e761aa5.mock.pstmn.io/search';
 
 	constructor(
 		protected httpClient: HttpClient
 	) {}
 
-	public search(query: string): Observable<Array<User>> {
+	public search(query: string): Observable<User[]> {
 
 		return this.httpClient.post(
 			`${this.endPoint}`,
 			{
 				search_term: query
 			}
-		)
-		.map((res: Response) => {
-			var users = Array(res);
-
-			var userArray = Array<User>;
-			users.forEach(elem => {
-				var user = new User();
-				user.deserialize(elem);
-				userArray.push(user);
-			});
-
-			return userArray;
-		})
-		.pipe(
+		).pipe(
 			catchError(this.handleException)
 		);
 
