@@ -42,7 +42,7 @@ import { RatingGradientService } from './components/ratings/rating-gradient.serv
 		SearchBarComponent
 	],
 	exports: [
-		EqualValidator
+		EqualValidator,
 		FocusOnLoadDirective,
 		RatingBarComponent,
 		RatingBoxComponent,
